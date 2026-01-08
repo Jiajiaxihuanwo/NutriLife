@@ -19,6 +19,9 @@ Cada usuario dispone de su propio perfil, calendario y planificación alimentari
 ---
 
 ### Perfil del usuario
+
+![](IMG/datos_usuario.png)
+
 El apartado de **perfil** permite:
 - Visualizar y editar información personal
 - Gestionar datos relacionados con la nutrición (edad, peso, altura, objetivos)
@@ -29,6 +32,9 @@ El perfil centraliza la experiencia personalizada del usuario.
 ---
 
 ### Sección de calendario
+
+![](IMG/comida_semanal.png)
+
 La aplicación incluye un **calendario nutricional**, donde el usuario puede:
 - Visualizar su planificación alimentaria por día
 - Navegar entre fechas
@@ -40,6 +46,9 @@ Este módulo facilita el seguimiento continuo de los hábitos alimenticios.
 ---
 
 ### Apartado de comida diaria
+
+![](IMG/comida_diaria.png)
+
 En la sección de **comida diaria**, el usuario puede:
 - Registrar las comidas del día (desayuno, merienda, cena y snacks)
 - Asociar alimentos a cada comida
@@ -61,6 +70,9 @@ Este módulo actúa como gestor principal de la alimentación.
 ---
 
 ### Datos de alimentos
+
+![](IMG/dashboard.png)
+
 La aplicación incluye un sistema de **gestión de alimentos**, que permite:
 - Consultar información nutricional básica
 - Utilizar los alimentos como base para generar comidas
