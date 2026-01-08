@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NutriLife">
         <activity
+            android:name=".auth.Login"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="false">
             <intent-filter>
