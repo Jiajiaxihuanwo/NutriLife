@@ -5,11 +5,10 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".auth.Login"
-    android:background="@color/fondo">
+    tools:context=".auth.Login">
 
     <ImageView
-        android:id="@+id/girl"
+        android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -17,10 +16,21 @@
         />
 
     <ImageView
+        android:id="@+id/girl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/gradient2"
+        android:alpha=".30"
+        />
+
+    <ImageView
         android:id="@+id/ic_icon"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="160dp"
+        android:src="@drawable/logo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -37,6 +47,7 @@
         <EditText
             android:id="@+id/userName"
             android:layout_width="match_parent"
+            android:background="@drawable/corner"
             android:layout_height="wrap_content"
             android:drawablePadding="10dp"
             android:hint="Tu Usuario"/>
@@ -53,6 +64,7 @@
 
         <EditText
             android:id="@+id/password"
+            android:background="@drawable/corner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Contraseña"
@@ -64,24 +76,22 @@
         android:id="@+id/btn_login"
         android:layout_width="0dp"
         android:layout_height="60dp"
-
         android:layout_marginTop="20dp"
-
         android:text="login"
-
+        android:textColor="@color/verde"
         app:layout_constraintStart_toStartOf="@id/gl1"
         app:layout_constraintEnd_toEndOf="@id/gl2"
         app:layout_constraintTop_toBottomOf="@id/til2"
-        style="@style/Widget.MaterialComponents.Button"/>
+        style="@style/Button1"/>
 
     <Button
         android:id="@+id/btn_signUp"
 
         android:layout_width="0dp"
         android:layout_height="60dp"
-
+        android:layout_marginTop="8dp"
         android:text="Sign Up"
-
+        style="@style/Button2"
         app:layout_constraintStart_toStartOf="@id/gl1"
         app:layout_constraintEnd_toEndOf="@id/gl2"
         app:layout_constraintTop_toBottomOf="@id/btn_login"/>
