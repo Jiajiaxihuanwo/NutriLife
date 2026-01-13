@@ -100,7 +100,9 @@
         app:layout_constraintStart_toStartOf="@id/gl1"
         app:layout_constraintEnd_toEndOf="@id/gl2"
         app:layout_constraintTop_toBottomOf="@id/til3"
-        style="@style/Button1"/>
+        style="@style/Button1"
+
+        android:onClick="Register"/>
 
     <Button
         android:id="@+id/btn_signUp"
@@ -112,7 +114,9 @@
         style="@style/Button2"
         app:layout_constraintStart_toStartOf="@id/gl1"
         app:layout_constraintEnd_toEndOf="@id/gl2"
-        app:layout_constraintTop_toBottomOf="@id/btn_login"/>
+        app:layout_constraintTop_toBottomOf="@id/btn_login"
+
+        android:onClick="Cancel"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/gl1"

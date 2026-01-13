@@ -30,11 +30,17 @@ public class SignUp extends AppCompatActivity {
                 .into(foton);
     }
 
-    public void createAccount(View v){
-        Intent intent = new Intent(SignUp.this, Login.class);
+    public void Register(View v){
+        crearCuenta();
 
+        Intent intent = new Intent(SignUp.this, Login.class);
         startActivity(intent);
     }
 
+    public void Cancel(View v){
+        Intent intent = new Intent(SignUp.this, Login.class);
+        startActivity(intent);
+    }
 
+    private void crearCuenta(){}
 }
