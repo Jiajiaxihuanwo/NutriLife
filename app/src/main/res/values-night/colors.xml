@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="grey">#B0B0B0</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="transparente">#00000000</color>
+
+    <color name="verde">#00A445</color>
+    <color name="verdeoscuro">#004616</color>
+
+    <color name="primary">#00A445</color>
+    <color name="primary_dark">#007333</color>
+    <color name="primary_light">#2EA864</color>
+    <color name="surface">#121212</color>
+    <color name="on_surface">#E0E0E0</color>
+    <color name="accent">#FF8C53</color>
+
+    <color name="greenApp">#00B76B</color>
+
+    <!-- meals -->
+    <color name="whiteMeals">#1E1E1E</color>
+    <color name="yellowMeals">#3D3A2D</color>
+    <color name="purpleMeals">#2B2233</color>
+    <color name="blueMeals">#262E3C</color>
+
+    <!-- Dashboard -->
+    <color name="greenGoalDeshboard">#1B3B2E</color>
+    <color name="blueProteinDeshboard">#1E2E42</color>
+    <color name="yellowCarbsDeshboard">#3C3724</color>
+    <color name="redFatsDeshboard">#3E2C26</color>
+    <color name="blueWaterDeshboard">#1A3B3F</color>
+    <color name="verdeProgress1Deshboard">#0F5E3C</color>
+    <color name="verdeProgress2Deshboard">#077E54</color>
+
+    <!-- Planner -->
+    <color name="greenBreackfastPlanner">#164731</color>
+    <color name="tipsPlanner">#1C362C</color>
+
+    <!-- Goals -->
+    <color name="weightGoals">#164731</color>
+    <color name="exerciseGoal">#1B2D40</color>
+    <color name="calorieGoal">#2B2233</color>
+    <color name="achievements1Goal">#3B3020</color>
+    <color name="achievements2Goal">#3C3724</color>
+</resources>
