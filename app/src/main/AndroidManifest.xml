@@ -18,6 +18,9 @@
             android:name=".auth.Login"
             android:exported="false" />
         <activity
+            android:name=".auth.SignUp"
+            android:exported="false" />
+        <activity
             android:name=".auth.Splash"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.NoActionBar">
