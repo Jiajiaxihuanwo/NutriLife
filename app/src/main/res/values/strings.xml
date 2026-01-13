@@ -1,3 +1,11 @@
 <resources>
-    <string name="app_name">NutriLife</string>
+    <string name="app_name" translatable="false">NutriLife</string>
+    <string name="login">Login</string>
+    <string name="signup">Sign Up</string>
+    <string name="user">User</string>
+    <string name="psw">Password</string>
+    <string name="psw2">Repeat password</string>
+    <string name="create_account">Create account</string>
+    <string name="cancel">Cancel</string>
+    <string name="new_user">New user</string>
 </resources>

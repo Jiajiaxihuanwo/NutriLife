@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NutriLife</string>
+    <string name="login">Iniciar Sesión</string>
+    <string name="signup">Registrarse</string>
+    <string name="user">Tu Usuario</string>
+    <string name="psw">Contraseña</string>
+    <string name="psw2">Repite la contraseña</string>
+    <string name="create_account">Crear cuenta</string>
+    <string name="cancel">Cancelar</string>
+    <string name="new_user">Nuevo usuario</string>
+</resources>

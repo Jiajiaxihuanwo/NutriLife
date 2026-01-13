@@ -50,7 +50,7 @@
             android:background="@drawable/corner"
             android:layout_height="wrap_content"
             android:drawablePadding="10dp"
-            android:hint="@string/user"/>
+            android:hint="@string/new_user"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -72,16 +72,34 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til3"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        app:layout_constraintStart_toStartOf="@id/gl1"
+        app:layout_constraintEnd_toEndOf="@id/gl2"
+        app:layout_constraintTop_toBottomOf="@id/til2">
+
+        <EditText
+            android:id="@+id/password2"
+            android:background="@drawable/corner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/psw2"
+            android:drawablePadding="10dp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
     <Button
         android:id="@+id/btn_login"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_marginTop="20dp"
-        android:text="@string/login"
+        android:text="@string/create_account"
         android:textColor="@color/verde"
         app:layout_constraintStart_toStartOf="@id/gl1"
         app:layout_constraintEnd_toEndOf="@id/gl2"
-        app:layout_constraintTop_toBottomOf="@id/til2"
+        app:layout_constraintTop_toBottomOf="@id/til3"
         style="@style/Button1"/>
 
     <Button
@@ -90,7 +108,7 @@
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_marginTop="8dp"
-        android:text="@string/signup"
+        android:text="@string/cancel"
         style="@style/Button2"
         app:layout_constraintStart_toStartOf="@id/gl1"
         app:layout_constraintEnd_toEndOf="@id/gl2"
