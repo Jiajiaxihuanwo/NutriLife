@@ -43,5 +43,6 @@
     <color name="achievements1Goal">#fffcea</color>
     <color name="achievements2Goal">#fef3c6</color>
 
-
+    <color name="colorSelected">#009e59</color> <!-- Verde -->
+    <color name="colorUnselected">#555555</color> <!-- Gris -->
 </resources>
