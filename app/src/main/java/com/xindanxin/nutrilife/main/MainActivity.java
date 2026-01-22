@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.xindanxin.nutrilife.R;
 import com.xindanxin.nutrilife.dashboard.Dashboard;
+import com.xindanxin.nutrilife.meals.Meals;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
             if (item.getItemId() == R.id.nav_dashboard) {
                 fragment = new Dashboard();
             } else if (item.getItemId() == R.id.nav_meals) {
-//                fragment = new Meals();
+                fragment = new Meals();
             } else if (item.getItemId() == R.id.nav_calendar) {
 //                fragment = new Planner();
             } else if (item.getItemId() == R.id.nav_goals) {
