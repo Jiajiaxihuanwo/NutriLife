@@ -1,0 +1,15 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:height="30dp"
+    android:viewportHeight="363.87"
+    android:viewportWidth="363.87"
+    android:width="30dp">
+
+    <!-- 最大方框 - 从(0,0)到(363.87,363.87) -->
+
+    <path
+        android:fillColor="@color/greenApp"
+        android:strokeWidth="2"
+        android:strokeColor="@color/black"
+        android:pathData="M358.12,150.72c3.17,3.18 5.75,2.11 5.75,-2.38V32.19c0,-8.32 -7.97,-15.6 -16.23,-15.6H232.16c-4.49,0 -5.56,2.58 -2.38,5.76l41.07,41.11l-16.75,16.68l-77.7,77.77L135.3,116.82c-3.18,-3.18 -8.32,-3.17 -11.49,0L9.52,231.19C-3.18,243.89 -3.17,264.48 9.53,277.18l0.8,0.81c12.7,12.7 33.29,12.7 45.97,-0.01l73.25,-73.29l41.1,41.06c3.18,3.17 8.32,3.17 11.5,0l135.48,-135.5L358.12,150.72z" />
+
+</vector>

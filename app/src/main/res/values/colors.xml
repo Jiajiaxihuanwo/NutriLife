@@ -17,6 +17,7 @@
 
 
     <color name="greenApp">#009e59</color>
+    <color name="bgApp">#E0E0E0</color>
     <!-- meals -->
     <color name="whiteMeals">#D0E0ED</color>
     <color name="yellowMeals">#EFE0BE</color>
@@ -43,6 +44,10 @@
     <color name="achievements1Goal">#fffcea</color>
     <color name="achievements2Goal">#fef3c6</color>
 
+    <!--Gradient-->
+    <color name="v1">#00a63e</color>
+    <color name="v2">#00a34a</color>
+    <color name="v3">#009e59</color>
     <color name="colorSelected">#009e59</color> <!-- Verde -->
     <color name="colorUnselected">#555555</color> <!-- Gris -->
 
