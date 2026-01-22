@@ -12,8 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NutriLife">
         <activity
-            android:name=".dashboard.Meals"
-            android:exported="false" />
+            android:name=".main.MainActivity"
+            android:exported="true" >
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".profile.Profile"
             android:exported="false" />
@@ -21,14 +28,12 @@
             android:name=".auth.Login"
             android:exported="false" />
         <activity
+            android:name=".auth.SignUp"
+            android:exported="false" />
+        <activity
             android:name=".auth.Splash"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

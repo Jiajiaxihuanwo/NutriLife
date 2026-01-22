@@ -1,0 +1,31 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:height="30dp"
+    android:viewportHeight="24"
+    android:viewportWidth="24"
+    android:width="30dp">
+
+    <path
+        android:fillColor="@color/blueWaterDeshboard"
+        android:strokeColor="@color/black"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:strokeWidth="0.31"
+        android:pathData="M12,0.5C5.649,0.5 0.5,5.649 0.5,12S5.649,23.5 12,23.5 23.5,18.351 23.5,12 18.351,0.5 12,0.5Z" />
+    <path
+        android:fillColor="#17A8B4"
+        android:strokeColor="@color/black"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:strokeWidth="1"
+        android:pathData="M19,13.692C19,7.115 12,2 12,2C12,2 5,7.115 5,13.692C5,15.63 5.738,17.489 7.05,18.86C8.363,20.23 10.144,20.999 12,20.999C13.857,20.999 15.637,20.23 16.95,18.859C18.263,17.489 19,15.63 19,13.692Z" />
+
+    <!-- 火焰内部细节 - 浅橙色 -->
+    <path
+        android:fillColor="@color/tipsPlanner"
+        android:strokeColor="@color/tipsPlanner"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:strokeWidth="1"
+        android:pathData="M16,13.385C16,14.609 15.526,15.783 14.682,16.648C14.203,17.14 13.627,17.509 13,17.736" />
+
+</vector>
