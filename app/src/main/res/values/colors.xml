@@ -13,5 +13,35 @@
     <color name="primary_light">#4DBF72</color>
     <color name="surface">#FFFFFF</color>
     <color name="on_surface">#1A1A1A</color>
-    <color name="accent">#FF6B35</color> <!-- 橙色点缀 -->
+    <color name="accent">#FF6B35</color>
+
+
+    <color name="greenApp">#009e59</color>
+    <!-- meals -->
+    <color name="whiteMeals">#f9fafb</color>
+    <color name="yellowMeals">#fffbeb</color>
+    <color name="purpleMeals">#faf5ff</color>
+    <color name="blueMeals">#eef2ff</color>
+
+    <!-- Deshboard -->
+    <color name="greenGoalDeshboard">#eefdf5</color>
+    <color name="blueProteinDeshboard">#dbeafe</color>
+    <color name="yellowCarbsDeshboard">#fef3c6</color>
+    <color name="redFatsDeshboard">#ffedd4</color>
+    <color name="blueWaterDeshboard">#cefafe</color>
+    <color name="verdeProgress1Deshboard">#b9f8cf</color>
+    <color name="verdeProgress2Deshboard">#7bf1a8</color>
+
+    <!-- Planner -->
+    <color name="greenBreackfastPlanner">#dbfce7</color>
+    <color name="tipsPlanner">#eefdf4</color>
+
+    <!-- Goals -->
+    <color name="weightGoals">#dbfce7</color>
+    <color name="exerciseGoal">#eff6ff</color>
+    <color name="calorieGoal">#faf5ff</color>
+    <color name="achievements1Goal">#fffcea</color>
+    <color name="achievements2Goal">#fef3c6</color>
+
+
 </resources>
