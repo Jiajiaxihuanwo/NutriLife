@@ -1,6 +1,9 @@
 package com.xindanxin.nutrilife.auth;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
@@ -18,7 +21,7 @@ public class SignUp extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_sign_up);
 
         ImageView foton = findViewById(R.id.background);
         Glide.with(this)
@@ -26,4 +29,18 @@ public class SignUp extends AppCompatActivity {
                 .centerCrop()
                 .into(foton);
     }
+
+    public void Register(View v){
+        crearCuenta();
+
+        Intent intent = new Intent(SignUp.this, Login.class);
+        startActivity(intent);
+    }
+
+    public void Cancel(View v){
+        Intent intent = new Intent(SignUp.this, Login.class);
+        startActivity(intent);
+    }
+
+    private void crearCuenta(){}
 }
