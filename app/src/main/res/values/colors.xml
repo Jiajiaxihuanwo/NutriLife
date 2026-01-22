@@ -45,4 +45,5 @@
 
     <color name="colorSelected">#009e59</color> <!-- Verde -->
     <color name="colorUnselected">#555555</color> <!-- Gris -->
+
 </resources>

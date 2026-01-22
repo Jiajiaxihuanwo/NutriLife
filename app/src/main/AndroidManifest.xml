@@ -22,9 +22,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".dashboard.Meals"
-            android:exported="false" />
-        <activity
             android:name=".profile.Profile"
             android:exported="false" />
         <activity

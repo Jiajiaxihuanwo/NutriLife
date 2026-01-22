@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.xindanxin.nutrilife.R;
+import com.xindanxin.nutrilife.dashboard.Dashboard;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,10 +24,10 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
 
         bottomNav.setOnItemSelectedListener(item -> {
-            Fragment fragment = null;
+            Fragment fragment = new Dashboard();
 
             if (item.getItemId() == R.id.nav_dashboard) {
-//                fragment = new Dashboard();
+                fragment = new Dashboard();
             } else if (item.getItemId() == R.id.nav_meals) {
 //                fragment = new Meals();
             } else if (item.getItemId() == R.id.nav_calendar) {
@@ -37,14 +38,14 @@ public class MainActivity extends AppCompatActivity {
 //                fragment = new Profile();
             }
 
-//            getSupportFragmentManager()
-//                    .beginTransaction()
-//                    .replace(R.id.fragment_container, fragment)
-//                    .commit();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, fragment)
+                    .commit();
 
             return true;
         });
 
-        bottomNav.setSelectedItemId(R.id.nav_profile);
+        bottomNav.setSelectedItemId(R.id.nav_dashboard);
     }
 }
