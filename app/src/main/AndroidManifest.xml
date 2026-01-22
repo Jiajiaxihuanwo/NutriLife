@@ -34,7 +34,6 @@
             android:name=".auth.Splash"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.NoActionBar">
-
         </activity>
     </application>
 

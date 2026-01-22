@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.xindanxin.nutrilife.R;
+import com.xindanxin.nutrilife.main.MainActivity;
 import com.xindanxin.nutrilife.profile.Profile;
 
 public class Login extends AppCompatActivity {
@@ -31,7 +32,7 @@ public class Login extends AppCompatActivity {
     public void openProfile(View v){
         EditText nombre = findViewById(R.id.userName);
 
-        Intent intent = new Intent(Login.this, Profile.class);
+        Intent intent = new Intent(Login.this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 

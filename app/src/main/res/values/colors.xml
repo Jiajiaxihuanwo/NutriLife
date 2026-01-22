@@ -17,6 +17,7 @@
 
 
     <color name="greenApp">#009e59</color>
+    <color name="bgApp">#E0E0E0</color>
     <!-- meals -->
     <color name="whiteMeals">#D0E0ED</color>
     <color name="yellowMeals">#EFE0BE</color>

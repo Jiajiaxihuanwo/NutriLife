@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -44,6 +45,10 @@ public class Dashboard extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        //ELIMINABLE
+        ProgressBar progressBar = view.findViewById(R.id.calorieProgress);
+        progressBar.setProgress(60);
 
         // 找到柱状图容器
         barChartContainer = view.findViewById(R.id.barChartContainer);
