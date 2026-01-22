@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
@@ -48,7 +49,7 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealsViewHol
         LinearLayout cardHeader;
         ImageView icon;
         TextView title;
-        Button btnToggle, btnAdd;
+        ImageButton btnToggle, btnAdd;
         LinearLayout expandableContent;
 
         public MealsViewHolder(@NonNull View itemView) {
@@ -108,16 +109,13 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealsViewHol
 
         // Inicializamos el contenido como oculto
         holder.expandableContent.setVisibility(View.GONE);
-        holder.btnToggle.setText("Expandir");
 
         // Toggle expandir / comprimir
         holder.btnToggle.setOnClickListener(v -> {
             if (holder.expandableContent.getVisibility() == View.GONE) {
                 holder.expandableContent.setVisibility(View.VISIBLE);
-                holder.btnToggle.setText("Comprimir");
             } else {
                 holder.expandableContent.setVisibility(View.GONE);
-                holder.btnToggle.setText("Expandir");
             }
         });
 
