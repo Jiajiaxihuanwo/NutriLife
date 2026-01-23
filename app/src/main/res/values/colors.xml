@@ -3,7 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="grey">#959595</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="light_grey">#999999</color>
+    <color name="light_grey">#BBBBBB</color>
     <color name="transparente">#00000000</color>
 
     <color name="verde">#00A445</color>
@@ -18,12 +18,13 @@
 
 
     <color name="greenApp">#009e59</color>
-    <color name="bgApp">#E0E0E0</color>
+    <color name="bgApp">#F9FAFB</color>
     <!-- meals -->
-    <color name="whiteMeals">#D0E0ED</color>
-    <color name="yellowMeals">#EFE0BE</color>
-    <color name="purpleMeals">#C4B3D7</color>
-    <color name="blueMeals">#A6B2D9</color>
+    <color name="whiteMeals">#FFFBEB</color>
+    <color name="yellowMeals">#FFF7ED</color>
+    <color name="purpleMeals">#FAF5FF</color>
+    <color name="blueMeals">#EEF2FF</color>
+    <color name="defaultMeals">#DDDDDD</color>
 
     <!-- Deshboard -->
     <color name="greenGoalDeshboard">#eefdf5</color>
