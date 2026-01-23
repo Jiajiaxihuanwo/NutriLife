@@ -1,32 +1,24 @@
 package com.xindanxin.nutrilife.meals;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Icon;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.xindanxin.nutrilife.R;
+import com.xindanxin.nutrilife.util.MealsStorage;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -85,13 +77,13 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealsViewHol
      */
     @Override
     public void onBindViewHolder(@NonNull MealsViewHolder holder, int position) {
-        String eatName = items.get(position);
-        holder.title.setText(eatName);
+        String mealType = items.get(position);
+        holder.title.setText(mealType);
 
         //asignamos los iconos correspondientes
         Icon icon;
         int color;
-        switch (eatName){
+        switch (mealType){
             case "Breakfast":
                 icon = Icon.createWithResource(context,R.drawable.ic_breakfast);
                 color = holder.itemView.getContext().getColor(R.color.whiteMeals);
@@ -116,9 +108,9 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealsViewHol
         holder.cardHeader.setBackgroundColor(color);
 
         //Inyectamos la comida guardada
-        List<FoodItem> savedItems = loadFoodList("foodList_"+eatName);
+        List<FoodItem> savedItems = MealsStorage.loadFoodList(context,mealType);
         for (FoodItem f : savedItems) {
-            LinearLayout itemContent = createItemLayout(eatName,f);
+            LinearLayout itemContent = createItemLayout(mealType,f);
             holder.expandableContent.addView(itemContent);
         }
 
@@ -139,16 +131,16 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealsViewHol
         // Añadir elemento dinámicamente
         holder.btnAdd.setOnClickListener(v -> {
             // Crear nuevo item
-            FoodItem newItem = new FoodItem("Grilled Chicken Salad", "12:30 PM", "420 cal", "P:35g C:25g F:18g");
+            FoodItem newItem = new FoodItem(MealsStorage.getNextFoodId(context),"Grilled Chicken Salad", "12:30 PM", "420 cal", "P:35g C:25g F:18g");
 
             // Añadir visualmente
-            LinearLayout itemContent = createItemLayout(eatName,newItem);
+            LinearLayout itemContent = createItemLayout(mealType,newItem);
             holder.expandableContent.addView(itemContent);
 
             // Guardar persistencia
-            List<FoodItem> currentList = loadFoodList("foodList_"+eatName);
+            List<FoodItem> currentList = MealsStorage.loadFoodList(context,mealType);
             currentList.add(newItem);
-            saveFoodList("foodList_"+eatName,currentList);
+            MealsStorage.saveFoodList(context,mealType,currentList);
         });
     }
 
@@ -209,7 +201,6 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealsViewHol
         tvMacros.setTextColor(ContextCompat.getColor(context, R.color.grey));
         rightColumn.addView(tvMacros);
 
-        //añadir boton de eliminar con columna eliminar
         // Columna eliminar
         LinearLayout trashColumn = new LinearLayout(context);
         trashColumn.setOrientation(LinearLayout.VERTICAL);
@@ -218,7 +209,8 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealsViewHol
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
-        trashColumn.setLayoutParams(rightParams);
+        trashParams.setMarginStart((int)(15 * context.getResources().getDisplayMetrics().density));
+        trashColumn.setLayoutParams(trashParams);
 
         ImageButton btnDelete = new ImageButton(context);
         btnDelete.setImageResource(R.drawable.ic_trash);
@@ -226,7 +218,7 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealsViewHol
 
         btnDelete.setOnClickListener(v -> {
 
-            deleteFoodItem(mealType, item);
+            MealsStorage.deleteFoodItem(context,mealType, item);
 
             ViewGroup parent = (ViewGroup) itemContent.getParent();
             if (parent != null) {
@@ -250,47 +242,5 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealsViewHol
         return items.size();
     }
 
-    //metodos de persistencia con ShharedPreferences
 
-    /**
-     * Guarda la lista de alimentos en SharedPreferences como JSON.
-     * Esto permite que los datos persistan aunque cierres la app.
-     */
-    private void saveFoodList(String key,List<FoodItem> foodList) {
-        // Obtenemos el SharedPreferences con nombre "MealsPrefs" en modo privado
-        SharedPreferences prefs = context.getSharedPreferences("MealsPrefs", Context.MODE_PRIVATE);
-        // Creamos un editor para modificar el SharedPreferences
-        SharedPreferences.Editor editor = prefs.edit();
-        //    Gson es una librería que convierte objetos Java en JSON (texto) y viceversa
-        Gson gson = new Gson();
-        String json = gson.toJson(foodList);
-        editor.putString(key, json);
-        editor.apply();
-    }
-
-    private List<FoodItem> loadFoodList(String key) {
-        SharedPreferences prefs = context.getSharedPreferences("MealsPrefs", Context.MODE_PRIVATE);
-        //    Si no existe, devolvemos un String vacío ""
-        String json = prefs.getString(key, "");
-        if (json.isEmpty()) return new ArrayList<>();
-
-        //    Aquí usamos TypeToken para indicarle que es una lista de FoodItem
-        //    Esto es necesario porque en Java, la información de "List<FoodItem>" se pierde por el tipo genérico
-        Type type = new TypeToken<List<FoodItem>>() {}.getType();
-        return new Gson().fromJson(json, type);
-    }
-
-    private void deleteFoodItem(String mealType, FoodItem itemToDelete) {
-
-        List<FoodItem> list = loadFoodList(mealType);
-
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getId().equals(itemToDelete.getId())) {
-                list.remove(i);
-                break;
-            }
-        }
-
-        saveFoodList(mealType, list);
-    }
 }
