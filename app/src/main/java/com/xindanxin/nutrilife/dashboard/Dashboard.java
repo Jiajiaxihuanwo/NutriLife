@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -59,22 +60,61 @@ public class Dashboard extends Fragment {
         TextView textView = view.findViewById(R.id.aguaDiaria);
         ProgressBar progressBar = view.findViewById(R.id.waterProgress);
 
+
+        ImageView v1 = view.findViewById(R.id.v1);
+        ImageView v2 = view.findViewById(R.id.v2);
+        ImageView v3 = view.findViewById(R.id.v3);
+        ImageView v4 = view.findViewById(R.id.v4);
+        ImageView v5 = view.findViewById(R.id.v5);
+        ImageView v6 = view.findViewById(R.id.v6);
+        ImageView v7 = view.findViewById(R.id.v7);
+        ImageView v8 = view.findViewById(R.id.v8);
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String currentText = textView.getText().toString();
                 int currentValue = Integer.parseInt(currentText);
                 int newValue = currentValue + 1;
+
                 if (newValue <= 8) {
                     textView.setText(String.valueOf(newValue));
                     int progress = (int) ((newValue / 8.0) * 100);
                     progressBar.setProgress(progress);
+
+                    switch (newValue) {
+                        case 1:
+                            v1.setImageResource(R.drawable.ic_glass1);
+                            break;
+                        case 2:
+                            v2.setImageResource(R.drawable.ic_glass1);
+                            break;
+                        case 3:
+                            v3.setImageResource(R.drawable.ic_glass1);
+                            break;
+                        case 4:
+                            v4.setImageResource(R.drawable.ic_glass1);
+                            break;
+                        case 5:
+                            v5.setImageResource(R.drawable.ic_glass1);
+                            break;
+                        case 6:
+                            v6.setImageResource(R.drawable.ic_glass1);
+                            break;
+                        case 7:
+                            v7.setImageResource(R.drawable.ic_glass1);
+                            break;
+                        case 8:
+                            v8.setImageResource(R.drawable.ic_glass1);
+                            break;
+                    }
+
                     Toast.makeText(getContext(), "+1\uD83D\uDCA7", Toast.LENGTH_SHORT).show();
                 } else {
                     textView.setText(String.valueOf(newValue));
                     textView.setTextColor(ContextCompat.getColor(getContext(), R.color.accent));
                     int progress = (int) ((newValue / 8.0) * 100);
                     progressBar.setProgress(progress);
+
                     Toast.makeText(getContext(), "+1\uD83D\uDCA6", Toast.LENGTH_SHORT).show();
                 }
             }
