@@ -3,9 +3,12 @@ package com.xindanxin.nutrilife.meals;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
@@ -20,8 +23,12 @@ import com.xindanxin.nutrilife.util.MealsStorage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class SearchDialogFragment extends DialogFragment {
+
+    private SearchFoodAdapter adapter;
+    private List<FoodItem> allFoods;
 
     public interface OnFoodSelectedListener {
         void onFoodSelected(FoodItem food);
@@ -41,16 +48,39 @@ public class SearchDialogFragment extends DialogFragment {
         View view = getLayoutInflater()
                 .inflate(R.layout.fragment_search_dialog, null);
 
+        //Logica del buscador =============================================================
+
         EditText etSearch = view.findViewById(R.id.etSearch);
+
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                // no se necesita
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // no se necesita
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // destacamos que s es el contenido del texto
+                buscarComida(s.toString().trim());
+            }
+        });
+
+
+        //Logica del recycler view ========================================================
 
         // Referencia al RecyclerView usando la vista inflada
         RecyclerView rvResults = view.findViewById(R.id.rvResults);
         rvResults.setLayoutManager(new LinearLayoutManager(getContext()));
 
         //lista provisional
-        List<FoodItem> foods = FoodRepository.getListaProvisional(requireContext());
+        allFoods = FoodRepository.getListaProvisional(requireContext());
 
-        SearchFoodAdapter adapter = new SearchFoodAdapter(foods, food -> {
+        adapter = new SearchFoodAdapter(allFoods, food -> {
             //envía el alimento al fragmento padre.
             listener.onFoodSelected(food);
 
@@ -75,5 +105,19 @@ public class SearchDialogFragment extends DialogFragment {
                     ViewGroup.LayoutParams.WRAP_CONTENT
             );
         }
+    }
+
+    private void buscarComida(String query) {
+
+        if(query.isEmpty()) {
+            adapter.updateList(allFoods);
+            return;
+        }
+
+        List<FoodItem> filteredList = allFoods
+                .stream().filter(f -> f.getMealName().toLowerCase().contains(query.toLowerCase()))
+                .collect(Collectors.toList());
+
+        adapter.updateList(filteredList);
     }
 }
