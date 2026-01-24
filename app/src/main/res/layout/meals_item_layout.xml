@@ -38,8 +38,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
                 android:text="Título de la tarjeta"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textSize="16sp" />
 
             <ImageButton
                 android:id="@+id/btnAdd"

@@ -1,6 +1,7 @@
 package com.xindanxin.nutrilife.meals;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.Icon;
 import android.view.Gravity;
@@ -19,7 +20,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.xindanxin.nutrilife.R;
 import com.xindanxin.nutrilife.util.MealsStorage;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Adapter para el RecyclerView de Meals
@@ -32,18 +35,29 @@ import java.util.List;
  */
 public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealsViewHolder> {
 
+    //interfaz callback
+    public interface OnAddFoodClickListener {
+        void onAddFoodClicked(String mealType);
+    }
+    private OnAddFoodClickListener addFoodListener;
+
+    //mapa que guarda el estado de las cartas, expandido o no expandido
+    private final Map<String, Boolean> expandedStates = new HashMap<>();
+
     private List<String> items;
     private Context context;    // Contexto para crear TextView dinámicos
 
-    public MealsAdapter(Context context, List<String> items) {
+    public MealsAdapter(Context context, List<String> items, OnAddFoodClickListener listener) {
         this.context = context;
         this.items = items;
+        this.addFoodListener = listener;
     }
 
     /**
      * ViewHolder de cada item del RecyclerView
      * Guarda las referencias a las vistas del item para optimizar el rendimiento
      */
+
     public static class MealsViewHolder extends RecyclerView.ViewHolder {
 
         LinearLayout cardHeader;
@@ -83,31 +97,40 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealsViewHol
         //asignamos los iconos correspondientes
         Icon icon;
         int color;
+        int dColor;
         switch (mealType){
             case "Breakfast":
                 icon = Icon.createWithResource(context,R.drawable.ic_breakfast);
                 color = holder.itemView.getContext().getColor(R.color.whiteMeals);
+                dColor = holder.itemView.getContext().getColor(R.color.d_whiteMeals);
                 break;
             case "Lunch":
                 icon = Icon.createWithResource(context,R.drawable.ic_lunch);
                 color = holder.itemView.getContext().getColor(R.color.yellowMeals);
+                dColor = holder.itemView.getContext().getColor(R.color.d_yellowMeals);
                 break;
             case "Dinner":
                 icon = Icon.createWithResource(context,R.drawable.ic_dinner);
                 color = holder.itemView.getContext().getColor(R.color.purpleMeals);
+                dColor = holder.itemView.getContext().getColor(R.color.d_purpleMeals);
                 break;
             case "Snacks":
                 icon = Icon.createWithResource(context,R.drawable.ic_snacks);
                 color = holder.itemView.getContext().getColor(R.color.blueMeals);
+                dColor = holder.itemView.getContext().getColor(R.color.d_blueMeals);
                 break;
             default:
                 icon = Icon.createWithResource(context,R.drawable.ic_meals);
                 color = holder.itemView.getContext().getColor(R.color.defaultMeals);
+                dColor = holder.itemView.getContext().getColor(R.color.black);
         }
         holder.icon.setImageIcon(icon);
         holder.cardHeader.setBackgroundColor(color);
+        holder.btnAdd.setImageTintList(ColorStateList.valueOf(dColor));
 
-        //Inyectamos la comida guardada
+        //Inyectamos la comida guardada limpiandolo anteriormente para que no se repita los alimentos
+        holder.expandableContent.removeAllViews();
+
         List<FoodItem> savedItems = MealsStorage.loadFoodList(context,mealType);
         for (FoodItem f : savedItems) {
             LinearLayout itemContent = createItemLayout(mealType,f);
@@ -119,29 +142,38 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealsViewHol
 
         // Toggle expandir / comprimir
         holder.btnToggle.setOnClickListener(v -> {
-            if (holder.expandableContent.getVisibility() == View.GONE) {
-                holder.expandableContent.setVisibility(View.VISIBLE);
-                holder.btnToggle.setImageIcon(Icon.createWithResource(context,R.drawable.ic_toggle_on));
-            } else {
-                holder.expandableContent.setVisibility(View.GONE);
-                holder.btnToggle.setImageIcon(Icon.createWithResource(context,R.drawable.ic_toggle_off));
-            }
+            boolean currentlyExpanded = holder.expandableContent.getVisibility() == View.VISIBLE;
+            boolean newState = !currentlyExpanded;
+
+            holder.expandableContent.setVisibility(newState ? View.VISIBLE : View.GONE);
+            holder.btnToggle.setImageIcon(
+                    Icon.createWithResource(context, newState ? R.drawable.ic_toggle_on : R.drawable.ic_toggle_off)
+            );
+
+            expandedStates.put(mealType, newState); // guardar el estado
         });
 
         // Añadir elemento dinámicamente
         holder.btnAdd.setOnClickListener(v -> {
-            // Crear nuevo item
-            FoodItem newItem = new FoodItem(MealsStorage.getNextFoodId(context),"Grilled Chicken Salad", "12:30 PM", "420 cal", "P:35g C:25g F:18g");
+            if(addFoodListener != null){
+                // Aquí llamamos al métod0 del callback que implementa la clase que creó el Adapter
+                // Pasamos "mealType" para que el receptor sepa a qué seccion se le ha pulsado el botón
+                // En este caso, el FragmentMeals implementa el comportamiento: abrir el pop-up buscador
+                addFoodListener.onAddFoodClicked(mealType);
+            }
 
-            // Añadir visualmente
-            LinearLayout itemContent = createItemLayout(mealType,newItem);
-            holder.expandableContent.addView(itemContent);
-
-            // Guardar persistencia
-            List<FoodItem> currentList = MealsStorage.loadFoodList(context,mealType);
-            currentList.add(newItem);
-            MealsStorage.saveFoodList(context,mealType,currentList);
+            //tambien expandimos por defecto el card
+            holder.expandableContent.setVisibility(View.VISIBLE);
+            //lo seteamos como true en visivility
+            expandedStates.put(mealType,true);
         });
+
+        //boleano que establece si el toggle esta espandido o no
+        boolean isExpanded = expandedStates.getOrDefault(mealType, false);
+        holder.expandableContent.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+        holder.btnToggle.setImageIcon(
+                Icon.createWithResource(context, isExpanded ? R.drawable.ic_toggle_on : R.drawable.ic_toggle_off)
+        );
     }
 
     //metodo para crear el layout que contiene la informacion del food
