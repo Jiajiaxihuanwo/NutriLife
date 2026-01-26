@@ -2,6 +2,8 @@ package com.xindanxin.nutrilife.meals;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -9,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
@@ -90,6 +93,10 @@ public class SearchDialogFragment extends DialogFragment {
 
         rvResults.setAdapter(adapter);
 
+        //Logica del boton cancel==========================================================
+        Button btnCancel = view.findViewById(R.id.btnCancel);
+        btnCancel.setOnClickListener(v -> dismiss());
+
         //devuelve un objeto Dialog que Android mostrará cuando llames a dialog.show().
         return new AlertDialog.Builder(requireContext())
                 .setView(view)
@@ -105,6 +112,7 @@ public class SearchDialogFragment extends DialogFragment {
                     ViewGroup.LayoutParams.WRAP_CONTENT
             );
         }
+        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
 
     private void buscarComida(String query) {

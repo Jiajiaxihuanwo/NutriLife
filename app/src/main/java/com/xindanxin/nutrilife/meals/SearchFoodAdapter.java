@@ -17,12 +17,16 @@ public class SearchFoodAdapter extends RecyclerView.Adapter<SearchFoodAdapter.Fo
     public static class FoodViewHolder extends RecyclerView.ViewHolder {
         TextView mealName;
         TextView calories;
-        TextView macros;
+        TextView protein;
+        TextView carb;
+        TextView fat;
         FoodViewHolder(View itemView) {
             super(itemView);
-            mealName = itemView.findViewById(R.id.tvMealName);
+            mealName = itemView.findViewById(R.id.tvFoodName);
             calories = itemView.findViewById(R.id.tvCalories);
-            macros = itemView.findViewById(R.id.tvMacros);
+            protein = itemView.findViewById(R.id.tvProtein);
+            carb = itemView.findViewById(R.id.tvCarbs);
+            fat = itemView.findViewById(R.id.tvFats);
         }
     }
 
@@ -51,7 +55,7 @@ public class SearchFoodAdapter extends RecyclerView.Adapter<SearchFoodAdapter.Fo
     @Override
     public FoodViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.food_item_layout, parent, false);
+                .inflate(R.layout.search_dialog_item, parent, false);
         return new FoodViewHolder(view);
     }
 
@@ -60,7 +64,9 @@ public class SearchFoodAdapter extends RecyclerView.Adapter<SearchFoodAdapter.Fo
         FoodItem food = foods.get(position);
         holder.mealName.setText(food.getMealName()); // Muestra el nombre de la comida
         holder.calories.setText(food.getCalories());
-        holder.macros.setText(food.getMacros());
+        holder.protein.setText(food.valorProteinas());
+        holder.carb.setText(food.valorCarbohidratos());
+        holder.fat.setText(food.valorGrasas());
 
         //itemView corresponde a toda la linea, por lo tanto doy una accion al presionar una linea
         holder.itemView.setOnClickListener(v -> listener.onFoodClick(food));

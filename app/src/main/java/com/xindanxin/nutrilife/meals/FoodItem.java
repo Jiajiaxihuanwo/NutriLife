@@ -54,4 +54,14 @@ public class FoodItem {
     public void setMacros(String macros) {
         this.macros = macros;
     }
+
+    public String valorProteinas(){
+        return macros.split(" ")[0];
+    }
+    public String valorCarbohidratos(){
+        return macros.split(" ")[1];
+    }
+    public String valorGrasas(){
+        return macros.split(" ")[2];
+    }
 }
