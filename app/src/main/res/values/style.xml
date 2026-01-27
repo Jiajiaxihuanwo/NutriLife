@@ -35,4 +35,22 @@
         <item name="boxCornerRadiusTopEnd">12dp</item>
         <item name="boxCornerRadiusTopStart">12dp</item>
     </style>
+
+    <style name="buttonLine" parent="Widget.MaterialComponents.Button">
+        <item name="cornerRadius">8dp</item>
+        <item name="android:textSize">24sp</item>
+        <item name="backgroundTint">@color/greenApp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+
+    <style name="buttonOutline" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:layout_width">20dp</item>
+        <item name="android:layout_height">80dp</item>
+        <item name="android:textColor">@color/greenApp</item>
+        <item name="cornerRadius">8dp</item>
+        <item name="android:textSize">24sp</item>
+        <item name="strokeColor">@color/greenApp</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
 </resources>
