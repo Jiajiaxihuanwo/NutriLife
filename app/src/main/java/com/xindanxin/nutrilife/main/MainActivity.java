@@ -13,6 +13,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.xindanxin.nutrilife.R;
 import com.xindanxin.nutrilife.dashboard.Dashboard;
 import com.xindanxin.nutrilife.meals.Meals;
+import com.xindanxin.nutrilife.profile.Profile;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
             } else if (item.getItemId() == R.id.nav_goals) {
 //                fragment = new Goals();
             } else if (item.getItemId() == R.id.nav_profile) {
-//                fragment = new Profile();
+                 fragment = new Profile();
             }
 
             getSupportFragmentManager()
