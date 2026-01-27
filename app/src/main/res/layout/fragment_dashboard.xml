@@ -516,7 +516,8 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:paddingHorizontal="12dp">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -528,7 +529,6 @@
                                 <ImageView
                                     android:layout_width="35dp"
                                     android:layout_height="35dp"
-                                    android:layout_marginStart="8dp"
                                     android:padding="5dp"
                                     android:background="@drawable/cicle_water_bg"
                                     android:src="@drawable/ic_water" />
@@ -581,8 +581,7 @@
                                 style="?android:attr/progressBarStyleHorizontal"
                                 android:layout_width="match_parent"
                                 android:layout_height="10dp"
-                                android:layout_margin="16dp"
-                                android:layout_marginHorizontal="32dp"
+                                android:layout_marginVertical="16dp"
                                 android:max="100"
                                 android:progress="0"
                                 android:progressDrawable="@drawable/progress_water" />

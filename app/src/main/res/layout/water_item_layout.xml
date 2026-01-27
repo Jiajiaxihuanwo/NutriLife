@@ -7,11 +7,12 @@
     <ImageView
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/icono"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:src="@drawable/ic_water"
         android:background="@drawable/cicle_water_bg"
-        android:layout_marginHorizontal="15dp"/>
+        android:layout_marginHorizontal="8dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -71,6 +71,8 @@ public class Dashboard extends Fragment {
         RecyclerView rvAgua = view.findViewById(R.id.rvAgua);
         rvAgua.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
         int vasosDani =20;
+        TextView cantidadAgua = view.findViewById(R.id.totalAgua);
+        cantidadAgua.setText(String.valueOf(vasosDani));
         List<Boolean> aguasTomadas = new ArrayList<>(); //aqui traemos la capacidad del agua
         for (int i = 0; i < vasosDani; i++) {
             aguasTomadas.add(false);
@@ -87,7 +89,7 @@ public class Dashboard extends Fragment {
 
                 if (newValue <= vasosDani) {
                     textView.setText(String.valueOf(newValue));
-                    int progress = (int) ((newValue / vasosDani) * 100);
+                    int progress = (int) ((newValue * 100f) / vasosDani);
                     progressBar.setProgress(progress);
 
                     Snackbar.make(view, "+1\uD83D\uDCA7", Snackbar.LENGTH_SHORT).show();
@@ -156,6 +158,10 @@ public class Dashboard extends Fragment {
         } else {
             todayIndex = 0;
         }
+        heights.clear();
+        for (int i = 0; i < 7; i++) {
+            heights.add(null);
+        }
 
         add.setOnClickListener(v -> {
             String text = valorPeso.getText().toString().trim();
@@ -172,10 +178,6 @@ public class Dashboard extends Fragment {
             fondo.setVisibility(View.GONE);
         });
 
-        heights.clear();
-        for (int i = 0; i < 7; i++) {
-            heights.add(null);
-        }
 
     }
 
