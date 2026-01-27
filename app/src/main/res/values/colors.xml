@@ -28,9 +28,13 @@
     <!-- Deshboard -->
     <color name="greenGoalDeshboard">#eefdf5</color>
     <color name="blueProteinDeshboard">#dbeafe</color>
+    <color name="blueProteinDeshboard_ic">#3877CA</color>
     <color name="yellowCarbsDeshboard">#fef3c6</color>
+    <color name="yellowCarbsDeshboard_ic">#D08F30</color>
     <color name="redFatsDeshboard">#ffedd4</color>
+    <color name="redFatsDeshboard_ic">#D95B4D</color>
     <color name="blueWaterDeshboard">#cefafe</color>
+    <color name="blueWaterDeshboard_ic">#0E7A85</color>
     <color name="verdeProgress1Deshboard">#b9f8cf</color>
     <color name="verdeProgress2Deshboard">#7bf1a8</color>
 

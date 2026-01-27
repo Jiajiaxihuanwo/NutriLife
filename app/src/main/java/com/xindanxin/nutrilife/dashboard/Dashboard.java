@@ -1,12 +1,12 @@
 package com.xindanxin.nutrilife.dashboard;
 
-import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.view.ViewTreeObserver;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -19,15 +19,21 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.xindanxin.nutrilife.R;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Dashboard extends Fragment {
 
     private LinearLayout barChartContainer;
+    List<Integer> heights = new ArrayList<>();
 
     public Dashboard() {
         // Required empty public constructor
@@ -61,14 +67,17 @@ public class Dashboard extends Fragment {
         ProgressBar progressBar = view.findViewById(R.id.waterProgress);
 
 
-        ImageView v1 = view.findViewById(R.id.v1);
-        ImageView v2 = view.findViewById(R.id.v2);
-        ImageView v3 = view.findViewById(R.id.v3);
-        ImageView v4 = view.findViewById(R.id.v4);
-        ImageView v5 = view.findViewById(R.id.v5);
-        ImageView v6 = view.findViewById(R.id.v6);
-        ImageView v7 = view.findViewById(R.id.v7);
-        ImageView v8 = view.findViewById(R.id.v8);
+        //rv del agua
+        RecyclerView rvAgua = view.findViewById(R.id.rvAgua);
+        rvAgua.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
+        int vasosDani =20;
+        List<Boolean> aguasTomadas = new ArrayList<>(); //aqui traemos la capacidad del agua
+        for (int i = 0; i < vasosDani; i++) {
+            aguasTomadas.add(false);
+        }
+
+        WaterAdapter adapter = new WaterAdapter(aguasTomadas);
+
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,49 +85,38 @@ public class Dashboard extends Fragment {
                 int currentValue = Integer.parseInt(currentText);
                 int newValue = currentValue + 1;
 
-                if (newValue <= 8) {
+                if (newValue <= vasosDani) {
                     textView.setText(String.valueOf(newValue));
-                    int progress = (int) ((newValue / 8.0) * 100);
+                    int progress = (int) ((newValue / vasosDani) * 100);
                     progressBar.setProgress(progress);
 
-                    switch (newValue) {
-                        case 1:
-                            v1.setImageResource(R.drawable.ic_glass1);
-                            break;
-                        case 2:
-                            v2.setImageResource(R.drawable.ic_glass1);
-                            break;
-                        case 3:
-                            v3.setImageResource(R.drawable.ic_glass1);
-                            break;
-                        case 4:
-                            v4.setImageResource(R.drawable.ic_glass1);
-                            break;
-                        case 5:
-                            v5.setImageResource(R.drawable.ic_glass1);
-                            break;
-                        case 6:
-                            v6.setImageResource(R.drawable.ic_glass1);
-                            break;
-                        case 7:
-                            v7.setImageResource(R.drawable.ic_glass1);
-                            break;
-                        case 8:
-                            v8.setImageResource(R.drawable.ic_glass1);
-                            break;
-                    }
+                    Snackbar.make(view, "+1\uD83D\uDCA7", Snackbar.LENGTH_SHORT).show();
 
-                    Toast.makeText(getContext(), "+1\uD83D\uDCA7", Toast.LENGTH_SHORT).show();
+
+                    //logica para que vaya aumentando las tomas de agua
+                    for (int i = 0; i < vasosDani; i++) {
+                        if(!aguasTomadas.get(i)){
+                            aguasTomadas.set(i,true);
+                            break;
+                        }
+                    }
                 } else {
                     textView.setText(String.valueOf(newValue));
                     textView.setTextColor(ContextCompat.getColor(getContext(), R.color.accent));
-                    int progress = (int) ((newValue / 8.0) * 100);
+                    int progress = (int) ((newValue / vasosDani) * 100);
                     progressBar.setProgress(progress);
 
-                    Toast.makeText(getContext(), "+1\uD83D\uDCA6", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(view, "+1\uD83D\uDCA6", Snackbar.LENGTH_SHORT).show();
+
                 }
+                adapter.notifyDataSetChanged();
             }
+
         });
+        //cargamos el recyclerview
+        rvAgua.setAdapter(adapter);
+
+
 
         TextView fecha = view.findViewById(R.id.fecha);
 
@@ -148,58 +146,58 @@ public class Dashboard extends Fragment {
         AppCompatButton add = view.findViewById(R.id.add);
         AppCompatButton cancel = view.findViewById(R.id.cancel);
 
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                peso.setVisibility(View.GONE);
-                fondo.setVisibility(View.GONE);
-            }
-        });
-
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                peso.setVisibility(View.GONE);
-                fondo.setVisibility(View.GONE);
-            }
-        });
-
         barChartContainer = view.findViewById(R.id.barChartContainer);
+        EditText valorPeso = view.findViewById(R.id.valorpeso);
 
-        // 柱子数据，百分比
-        int[] heights = {65, 80, 70, 90, 75, 85, 95};
+        int todayIndex;
 
-        // 先清空容器
-        barChartContainer.removeAllViews();
-
-        // 动态生成柱子
-        for (int h : heights) {
-            View bar = new View(getContext());
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                    0, 0, 1f // weight=1, 宽度等分
-            );
-            lp.height = (int) (barChartContainer.getHeight() * h / 100f);
-            lp.setMargins(4, 0, 4, 0); // 柱子间距
-            bar.setLayoutParams(lp);
-
-            // 设置颜色
-            bar.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.greenApp));
-
-            barChartContainer.addView(bar);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            todayIndex = LocalDate.now().getDayOfWeek().getValue() - 1;
+        } else {
+            todayIndex = 0;
         }
 
-        // 延迟布局完成后设置高度（保证 container.getHeight() 有值）
+        add.setOnClickListener(v -> {
+            String text = valorPeso.getText().toString().trim();
+            if (text.isEmpty()) return;
+            int value = Integer.parseInt(text);
+            heights.set(todayIndex, value);
+            peso.setVisibility(View.GONE);
+            fondo.setVisibility(View.GONE);
+            refreshChart();
+        });
+
+        cancel.setOnClickListener(v -> {
+            peso.setVisibility(View.GONE);
+            fondo.setVisibility(View.GONE);
+        });
+
+        heights.clear();
+        for (int i = 0; i < 7; i++) {
+            heights.add(null);
+        }
+
+    }
+
+    private void refreshChart() {
+        barChartContainer.removeAllViews();
         barChartContainer.post(() -> {
-            barChartContainer.removeAllViews();
-            for (int h : heights) {
+            int containerHeight = barChartContainer.getHeight();
+            for (Integer v : heights) {
                 View bar = new View(getContext());
-                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                        0, (int) (barChartContainer.getHeight() * h / 100f),
-                        1f
-                );
+                int barHeight = 0;
+                if (v != null) {
+                    barHeight = (int) (containerHeight * v / 100f);
+                }
+
+                LinearLayout.LayoutParams lp =
+                        new LinearLayout.LayoutParams(0, barHeight, 1f);
                 lp.setMargins(4, 0, 4, 0);
+
                 bar.setLayoutParams(lp);
-                bar.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.greenApp));
+                bar.setBackgroundColor(
+                        ContextCompat.getColor(getContext(), R.color.greenApp)
+                );
                 barChartContainer.addView(bar);
             }
         });
