@@ -8,4 +8,37 @@
     <string name="create_account">Create account</string>
     <string name="cancel">Cancel</string>
     <string name="new_user">New user</string>
+    <string name="app_phrase" translatable="false">Your health companion</string>
+    <string name="dailygoal">Daily Goal</string>
+    <string name="remainning">Remainning</string>
+    <string name="_1800" translatable="false">1800</string>
+    <string name="cal" translatable="false">Cal</string>
+    <string name="_790" translatable="false">790</string>
+    <string name="_1010" translatable="false">1010</string>
+    <string name="calories_consumed">calories consumed</string>
+    <string name="protein">Protein</string>
+    <string name="_64" translatable="false">64</string>
+    <string name="g" translatable="false">g</string>
+    <string name="of" translatable="false">of</string>
+    <string name="_150" translatable="false">150</string>
+    <string name="carb" translatable="false">Carb</string>
+    <string name="_96" translatable="false">96</string>
+    <string name="fat">Fat</string>
+    <string name="_42" translatable="false">42</string>
+    <string name="water_intake">Water Intake</string>
+    <string name="_6" translatable="false">0</string>
+    <string name="barra" translatable="false">/</string>
+    <string name="_8" translatable="false">8</string>
+    <string name="glasses">glasses</string>
+    <string name="weekly_progress">Weekly Progress</string>
+    <string name="_1_2" translatable="false">-1.2</string>
+    <string name="kg" translatable="false">kg</string>
+    <string name="mon">Mon</string>
+    <string name="tue">Tue</string>
+    <string name="wed">Wed</string>
+    <string name="thu">Thu</string>
+    <string name="fri">Fri</string>
+    <string name="sat">Sat</string>
+    <string name="sun">Sun</string>
+
 </resources>

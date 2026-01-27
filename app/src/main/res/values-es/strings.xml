@@ -9,4 +9,19 @@
     <string name="create_account">Crear cuenta</string>
     <string name="cancel">Cancelar</string>
     <string name="new_user">Nuevo usuario</string>
+    <string name="dailygoal">Meta Diaria</string>
+    <string name="remainning">Restante</string>
+    <string name="calories_consumed">calorias consumidas</string>
+    <string name="protein">Proteina</string>
+    <string name="fat">Grasa</string>
+    <string name="water_intake">Ingesta de Agua</string>
+    <string name="glasses">vasos</string>
+    <string name="weekly_progress">Progreso Semanal</string>
+    <string name="mon">lun</string>
+    <string name="tue">mar</string>
+    <string name="wed">mié</string>
+    <string name="thu">jue</string>
+    <string name="fri">vie</string>
+    <string name="sat">sáb</string>
+    <string name="sun">dom</string>
 </resources>
