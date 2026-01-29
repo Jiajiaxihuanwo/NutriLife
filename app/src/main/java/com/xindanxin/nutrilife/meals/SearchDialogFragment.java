@@ -20,6 +20,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
 import com.xindanxin.nutrilife.R;
 import com.xindanxin.nutrilife.util.FoodRepository;
 import com.xindanxin.nutrilife.util.MealsStorage;
@@ -97,10 +98,25 @@ public class SearchDialogFragment extends DialogFragment {
         Button btnCancel = view.findViewById(R.id.btnCancel);
         btnCancel.setOnClickListener(v -> dismiss());
 
+        //Logica del boton añadir nueva comida ============================================
+        Button btnAddNewFood = view.findViewById(R.id.btnAddNewFood);
+        btnAddNewFood.setOnClickListener((v)->new CreateNewFoodDialogFragment(json -> {
+            FoodItem nuevoFood = new Gson().fromJson(json,FoodItem.class);
+
+            List<FoodItem> mutableFoods = new ArrayList<>(allFoods);
+            mutableFoods.add(0,nuevoFood);
+            allFoods = mutableFoods;
+
+            //aqui hay que implementar un guardado en la base de datos
+
+            adapter.updateList(allFoods);
+        }).show(getParentFragmentManager(), null));
+
         //devuelve un objeto Dialog que Android mostrará cuando llames a dialog.show().
         return new AlertDialog.Builder(requireContext())
                 .setView(view)
                 .create();
+
     }
 
     @Override
