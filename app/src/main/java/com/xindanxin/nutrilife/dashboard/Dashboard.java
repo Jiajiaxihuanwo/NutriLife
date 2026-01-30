@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -61,6 +63,64 @@ public class Dashboard extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
+        //animacion
+        TextView totalCaloria = view.findViewById(R.id.totalCaloria);
+        TextView consumed = view.findViewById(R.id.consumed_text);
+        CardView card1 = view.findViewById(R.id.card1);
+        CardView card2 = view.findViewById(R.id.card2);
+        CardView card3 = view.findViewById(R.id.card3);
+        CardView card4 = view.findViewById(R.id.card4);
+        CardView cardAgua = view.findViewById(R.id.cardAgua);
+
+        Animation cardaAnimacion = AnimationUtils.loadAnimation(view.getContext(),R.anim.dashboard_anim_card);
+        Animation animacion = AnimationUtils.loadAnimation(view.getContext(), R.anim.dashboard_anim_letra);
+        totalCaloria.startAnimation(animacion);
+        consumed.startAnimation(animacion);
+        card1.startAnimation(cardaAnimacion);
+        card2.startAnimation(cardaAnimacion);
+        card3.startAnimation(cardaAnimacion);
+        card4.startAnimation(cardaAnimacion);
+
+        totalCaloria.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.startAnimation(animacion);
+            }
+        });
+        consumed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.startAnimation(animacion);
+            }
+        });
+        card1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.startAnimation(cardaAnimacion);
+            }
+        });
+        card2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.startAnimation(cardaAnimacion);
+            }
+        });
+        card3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.startAnimation(cardaAnimacion);
+            }
+        });
+        card4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.startAnimation(cardaAnimacion);
+            }
+        });
+
+
+        heights.addAll(List.of(10, 20, 30, 40, 70, 80, 300));
         super.onViewCreated(view, savedInstanceState);
         CardView cardView = view.findViewById(R.id.cardAgua);
         TextView textView = view.findViewById(R.id.aguaDiaria);
@@ -69,8 +129,8 @@ public class Dashboard extends Fragment {
 
         //rv del agua
         RecyclerView rvAgua = view.findViewById(R.id.rvAgua);
-        rvAgua.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
-        int vasosDani =20;
+        rvAgua.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        int vasosDani = 20;
         TextView cantidadAgua = view.findViewById(R.id.totalAgua);
         cantidadAgua.setText(String.valueOf(vasosDani));
         List<Boolean> aguasTomadas = new ArrayList<>(); //aqui traemos la capacidad del agua
@@ -97,8 +157,8 @@ public class Dashboard extends Fragment {
 
                     //logica para que vaya aumentando las tomas de agua
                     for (int i = 0; i < vasosDani; i++) {
-                        if(!aguasTomadas.get(i)){
-                            aguasTomadas.set(i,true);
+                        if (!aguasTomadas.get(i)) {
+                            aguasTomadas.set(i, true);
                             break;
                         }
                     }
@@ -119,7 +179,6 @@ public class Dashboard extends Fragment {
         rvAgua.setAdapter(adapter);
 
 
-
         TextView fecha = view.findViewById(R.id.fecha);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -131,18 +190,18 @@ public class Dashboard extends Fragment {
         }
 
 
-        View fondo = view.findViewById(R.id.fondo);
+//        View fondo = view.findViewById(R.id.fondo);
         CardView progress = view.findViewById(R.id.progress);
         CardView peso = view.findViewById(R.id.peso);
 
         peso.setVisibility(View.GONE);
-        fondo.setVisibility(View.GONE);
+//        fondo.setVisibility(View.GONE);
 
         progress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 peso.setVisibility(View.VISIBLE);
-                fondo.setVisibility(View.VISIBLE);
+//                fondo.setVisibility(View.VISIBLE);
             }
         });
         AppCompatButton add = view.findViewById(R.id.add);
@@ -158,38 +217,45 @@ public class Dashboard extends Fragment {
         } else {
             todayIndex = 0;
         }
-        heights.clear();
-        for (int i = 0; i < 7; i++) {
-            heights.add(null);
+        if (heights.isEmpty()) {
+            for (int i = 0; i < 7; i++) {
+                heights.add(null);
+            }
         }
 
+
+        //button de opcion
         add.setOnClickListener(v -> {
             String text = valorPeso.getText().toString().trim();
             if (text.isEmpty()) return;
             int value = Integer.parseInt(text);
             heights.set(todayIndex, value);
             peso.setVisibility(View.GONE);
-            fondo.setVisibility(View.GONE);
+//            fondo.setVisibility(View.GONE);
             refreshChart();
         });
 
         cancel.setOnClickListener(v -> {
             peso.setVisibility(View.GONE);
-            fondo.setVisibility(View.GONE);
+//            fondo.setVisibility(View.GONE);
         });
 
 
     }
 
+    //cargar la tabla
     private void refreshChart() {
         barChartContainer.removeAllViews();
         barChartContainer.post(() -> {
             int containerHeight = barChartContainer.getHeight();
+
+            int max = heights.stream().max((a, b) -> a - b).orElseThrow();
+
             for (Integer v : heights) {
                 View bar = new View(getContext());
                 int barHeight = 0;
                 if (v != null) {
-                    barHeight = (int) (containerHeight * v / 100f);
+                    barHeight = containerHeight * v / max;
                 }
 
                 LinearLayout.LayoutParams lp =
