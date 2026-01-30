@@ -101,6 +101,7 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealsViewHol
      */
     @Override
     public void onBindViewHolder(@NonNull MealsViewHolder holder, int position) {
+
         String mealType = items.get(position);
         holder.title.setText(mealType);
 
@@ -166,8 +167,7 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealsViewHol
         // Calcular las calorias totales de todos los alimentos
         int totalCalories = calculateTotalCalories(mealType);
         holder.tvTotalCalories.setText(totalCalories + " kcal");
-
-        this.viewModel.setCalories(mealType, totalCalories); //actualizamos los datos al padre
+        updateMacros(mealType);
 
         // Añadir elemento dinámicamente
         holder.btnAdd.setOnClickListener(v -> {
@@ -272,6 +272,9 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealsViewHol
             if (parent != null) {
                 parent.removeView(itemContent);
             }
+
+            notifyItemChanged(items.indexOf(mealType));
+            
         });
 
         trashColumn.addView(btnDelete);
@@ -293,6 +296,29 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealsViewHol
             total += Integer.parseInt(item.getCalories().split(" ")[0]);
         }
         return total;
+    }
+
+    //metodo para actualizar las calorias totales
+    private void updateMacros(String mealType) {
+        int totalCalories = 0;
+        int totalProtein = 0;
+        int totalCarbs = 0;
+        int totalFat = 0;
+
+        List<FoodItem> foods = MealsStorage.loadFoodList(context, mealType);
+        for (FoodItem item : foods) {
+            totalCalories += Integer.parseInt(item.getCalories().split(" ")[0]);
+            totalProtein += Integer.parseInt(item.valorProteinas().substring(2,item.valorProteinas().length()-1));
+            totalCarbs += Integer.parseInt(item.valorCarbohidratos().substring(2,item.valorCarbohidratos().length()-1));
+            totalFat += Integer.parseInt(item.valorGrasas().substring(2,item.valorGrasas().length()-1));
+        }
+
+        viewModel.setMacros(mealType, totalCalories, totalProtein, totalCarbs, totalFat);
+        Log.d("MealsAdapter", mealType + " macros updated: " +
+                totalCalories + " kcal, " +
+                totalProtein + "p, " +
+                totalCarbs + "c, " +
+                totalFat + "f");
     }
 
 
