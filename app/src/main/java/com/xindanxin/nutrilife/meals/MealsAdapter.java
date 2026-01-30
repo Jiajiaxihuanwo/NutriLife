@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.Icon;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +16,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.xindanxin.nutrilife.R;
+import com.xindanxin.nutrilife.util.CaloriesViewModel;
 import com.xindanxin.nutrilife.util.MealsStorage;
 
 import java.util.HashMap;
@@ -33,6 +36,7 @@ import java.util.Map;
  * - botón de añadir elemento
  * - contenido expandible (lista de elementos)
  */
+
 public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealsViewHolder> {
 
     //interfaz callback
@@ -47,9 +51,12 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealsViewHol
     private List<String> items;
     private Context context;    // Contexto para crear TextView dinámicos
 
-    public MealsAdapter(Context context, List<String> items, OnAddFoodClickListener listener) {
+    private CaloriesViewModel viewModel;
+
+    public MealsAdapter(Context context, List<String> items, CaloriesViewModel viewModel, OnAddFoodClickListener listener) {
         this.context = context;
         this.items = items;
+        this.viewModel = viewModel;
         this.addFoodListener = listener;
     }
 
@@ -66,6 +73,8 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealsViewHol
         ImageButton btnToggle, btnAdd;
         LinearLayout expandableContent;
 
+        TextView tvTotalCalories;
+
         public MealsViewHolder(@NonNull View itemView) {
             super(itemView);
             cardHeader = itemView.findViewById(R.id.cardHeader);
@@ -74,6 +83,7 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealsViewHol
             btnToggle = itemView.findViewById(R.id.btnToggle);
             btnAdd = itemView.findViewById(R.id.btnAdd);
             expandableContent = itemView.findViewById(R.id.expandableContent);
+            tvTotalCalories = itemView.findViewById(R.id.tvTotalCalories);
         }
     }
 
@@ -152,6 +162,12 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealsViewHol
 
             expandedStates.put(mealType, newState); // guardar el estado
         });
+
+        // Calcular las calorias totales de todos los alimentos
+        int totalCalories = calculateTotalCalories(mealType);
+        holder.tvTotalCalories.setText(totalCalories + " kcal");
+
+        this.viewModel.setCalories(mealType, totalCalories); //actualizamos los datos al padre
 
         // Añadir elemento dinámicamente
         holder.btnAdd.setOnClickListener(v -> {
@@ -266,6 +282,17 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealsViewHol
         itemContent.addView(trashColumn);
 
         return itemContent;
+    }
+
+    //metodo para calcular las calorias totales de una tarjeta
+    private int calculateTotalCalories(String mealType) {
+        List<FoodItem> foods = MealsStorage.loadFoodList(context, mealType);
+        int total = 0;
+
+        for (FoodItem item : foods) {
+            total += Integer.parseInt(item.getCalories().split(" ")[0]);
+        }
+        return total;
     }
 
 
