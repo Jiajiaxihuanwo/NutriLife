@@ -3,6 +3,7 @@ package com.xindanxin.nutrilife.meals;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,11 +12,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.xindanxin.nutrilife.R;
+import com.xindanxin.nutrilife.util.CaloriesViewModel;
 import com.xindanxin.nutrilife.util.MealsStorage;
 
 import java.util.ArrayList;
 import java.util.List;
 public class Meals extends Fragment {
+
+    private CaloriesViewModel caloriesViewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,11 +39,15 @@ public class Meals extends Fragment {
         itemList.add("Snacks");
         itemList.add("Default");
 
+        caloriesViewModel = new ViewModelProvider(requireActivity())
+                .get(CaloriesViewModel.class);
+
 
         // Crear adaptador y asignarlo
         MealsAdapter adapter = new MealsAdapter(
                 requireContext(),
                 itemList,
+                caloriesViewModel,
                 mealType -> {
 
                     // AQUÍ abrimos el pop-up buscador
