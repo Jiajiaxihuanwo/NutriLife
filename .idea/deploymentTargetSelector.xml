@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="Splash (1)">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2026-01-29T11:51:39.366592500Z">
+        <DropdownSelection timestamp="2026-01-31T13:57:32.269824800Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\xinle\.android\avd\myphone_2.avd" />
+              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\xinle\.android\avd\chen.avd" />
             </handle>
           </Target>
         </DropdownSelection>

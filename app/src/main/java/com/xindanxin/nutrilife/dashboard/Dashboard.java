@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.snackbar.Snackbar;
 import com.xindanxin.nutrilife.R;
 import com.xindanxin.nutrilife.util.CaloriesViewModel;
+import com.xindanxin.nutrilife.util.WeightStorage;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -88,15 +89,15 @@ public class Dashboard extends Fragment {
         cardAgua.startAnimation(cardaAnimacion);
         cardWeigth.startAnimation(cardaAnimacion);
 
-        totalCaloria.setText(String.valueOf(caloriesViewModel.getTotalCalories()));
+        totalCaloria.setText(String.valueOf(caloriesViewModel.getTotalMacros().calories));
 
         //progressBar de caloria diaria
         TextView caloriaDiaria = view.findViewById(R.id.caloriaDiaria);
         TextView restanteDiaria = view.findViewById(R.id.restanteDiaria);
         ProgressBar circleProgress = view.findViewById(R.id.circleProgress);
         String objetivoCaloria = caloriaDiaria.getText().toString();
-        int caloriaConsumida = (int)((caloriesViewModel.getTotalCalories()/Double.parseDouble(objetivoCaloria))*100);
-        restanteDiaria.setText(Integer.parseInt(objetivoCaloria)-caloriesViewModel.getTotalCalories() < 0? "0" : String.valueOf(Integer.parseInt(objetivoCaloria)-caloriesViewModel.getTotalCalories()));
+        int caloriaConsumida = (int)((caloriesViewModel.getTotalMacros().calories/Double.parseDouble(objetivoCaloria))*100);
+        restanteDiaria.setText(Integer.parseInt(objetivoCaloria)-caloriesViewModel.getTotalMacros().calories < 0? "0" : String.valueOf(Integer.parseInt(objetivoCaloria)-caloriesViewModel.getTotalMacros().calories));
         animateProgress(caloriaConsumida,circleProgress);
 
         //protein,carb y fat
@@ -106,12 +107,12 @@ public class Dashboard extends Fragment {
         TextView totalProtein = view.findViewById(R.id.totalProteina);
         TextView totalCarbohidrato = view.findViewById(R.id.totalCarbohidrato);
         TextView totalGrasa = view.findViewById(R.id.totalGrasa);
-//        protein.setText();
-//        carbohidrato.setText();
-//        grasa.setText();
+        protein.setText(String.valueOf(caloriesViewModel.getTotalMacros().protein));
+        carbohidrato.setText(String.valueOf(caloriesViewModel.getTotalMacros().carbs));
+        grasa.setText(String.valueOf(caloriesViewModel.getTotalMacros().fat));
 
 
-        heights.addAll(List.of(10, 20, 30, 40, 70, 80, 300));
+        heights = WeightStorage.getWeights(requireContext());
         super.onViewCreated(view, savedInstanceState);
         //rv del agua
         TextView textView = view.findViewById(R.id.aguaDiaria);
@@ -218,6 +219,7 @@ public class Dashboard extends Fragment {
             if (text.isEmpty()) return;
             int value = Integer.parseInt(text);
             heights.set(todayIndex, value);
+            WeightStorage.save(requireContext(),heights);
             peso.setVisibility(View.GONE);
 //            fondo.setVisibility(View.GONE);
             refreshChart();
@@ -227,7 +229,7 @@ public class Dashboard extends Fragment {
             peso.setVisibility(View.GONE);
 //            fondo.setVisibility(View.GONE);
         });
-
+        refreshChart();
 
     }
     private void animateProgress(int targetProgress,ProgressBar progressAnimacion) {
