@@ -1,17 +1,18 @@
 package com.xindanxin.nutrilife.dashboard;
 
+import android.animation.ObjectAnimator;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,11 +20,14 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.xindanxin.nutrilife.R;
+import com.xindanxin.nutrilife.util.CaloriesViewModel;
+import com.xindanxin.nutrilife.util.WeightStorage;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -34,6 +38,8 @@ public class Dashboard extends Fragment {
 
     private LinearLayout barChartContainer;
     List<Integer> heights = new ArrayList<>();
+
+    CaloriesViewModel caloriesViewModel;
 
     public Dashboard() {
         // Required empty public constructor
@@ -61,16 +67,61 @@ public class Dashboard extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        //animacion
+        TextView totalCaloria = view.findViewById(R.id.totalCaloria);
+        TextView consumed = view.findViewById(R.id.consumed_text);
+        CardView card1 = view.findViewById(R.id.card1);
+        CardView card2 = view.findViewById(R.id.card2);
+        CardView card3 = view.findViewById(R.id.card3);
+        CardView card4 = view.findViewById(R.id.card4);
+        CardView cardAgua = view.findViewById(R.id.cardAgua);
+        CardView cardWeigth = view.findViewById(R.id.progress);
+        caloriesViewModel = new ViewModelProvider(getActivity()).get(CaloriesViewModel.class);
+
+        Animation cardaAnimacion = AnimationUtils.loadAnimation(view.getContext(),R.anim.dashboard_anim_card);
+        Animation animacion = AnimationUtils.loadAnimation(view.getContext(), R.anim.dashboard_anim_letra);
+        totalCaloria.startAnimation(animacion);
+        consumed.startAnimation(animacion);
+        card1.startAnimation(cardaAnimacion);
+        card2.startAnimation(cardaAnimacion);
+        card3.startAnimation(cardaAnimacion);
+        card4.startAnimation(cardaAnimacion);
+        cardAgua.startAnimation(cardaAnimacion);
+        cardWeigth.startAnimation(cardaAnimacion);
+
+        totalCaloria.setText(String.valueOf(caloriesViewModel.getTotalMacros().calories));
+
+        //progressBar de caloria diaria
+        TextView caloriaDiaria = view.findViewById(R.id.caloriaDiaria);
+        TextView restanteDiaria = view.findViewById(R.id.restanteDiaria);
+        ProgressBar circleProgress = view.findViewById(R.id.circleProgress);
+        String objetivoCaloria = caloriaDiaria.getText().toString();
+        int caloriaConsumida = (int)((caloriesViewModel.getTotalMacros().calories/Double.parseDouble(objetivoCaloria))*100);
+        restanteDiaria.setText(Integer.parseInt(objetivoCaloria)-caloriesViewModel.getTotalMacros().calories < 0? "0" : String.valueOf(Integer.parseInt(objetivoCaloria)-caloriesViewModel.getTotalMacros().calories));
+        animateProgress(caloriaConsumida,circleProgress);
+
+        //protein,carb y fat
+        TextView protein = view.findViewById(R.id.proteina);
+        TextView carbohidrato = view.findViewById(R.id.carbohidrato);
+        TextView grasa = view.findViewById(R.id.grasa);
+        TextView totalProtein = view.findViewById(R.id.totalProteina);
+        TextView totalCarbohidrato = view.findViewById(R.id.totalCarbohidrato);
+        TextView totalGrasa = view.findViewById(R.id.totalGrasa);
+        protein.setText(String.valueOf(caloriesViewModel.getTotalMacros().protein));
+        carbohidrato.setText(String.valueOf(caloriesViewModel.getTotalMacros().carbs));
+        grasa.setText(String.valueOf(caloriesViewModel.getTotalMacros().fat));
+
+
+        heights = WeightStorage.getWeights(requireContext());
         super.onViewCreated(view, savedInstanceState);
-        CardView cardView = view.findViewById(R.id.cardAgua);
+        //rv del agua
         TextView textView = view.findViewById(R.id.aguaDiaria);
         ProgressBar progressBar = view.findViewById(R.id.waterProgress);
-
-
-        //rv del agua
         RecyclerView rvAgua = view.findViewById(R.id.rvAgua);
-        rvAgua.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
-        int vasosDani =20;
+        rvAgua.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        int vasosDani = 20;
+        TextView cantidadAgua = view.findViewById(R.id.totalAgua);
+        cantidadAgua.setText(String.valueOf(vasosDani));
         List<Boolean> aguasTomadas = new ArrayList<>(); //aqui traemos la capacidad del agua
         for (int i = 0; i < vasosDani; i++) {
             aguasTomadas.add(false);
@@ -78,7 +129,7 @@ public class Dashboard extends Fragment {
 
         WaterAdapter adapter = new WaterAdapter(aguasTomadas);
 
-        cardView.setOnClickListener(new View.OnClickListener() {
+        cardAgua.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String currentText = textView.getText().toString();
@@ -87,7 +138,7 @@ public class Dashboard extends Fragment {
 
                 if (newValue <= vasosDani) {
                     textView.setText(String.valueOf(newValue));
-                    int progress = (int) ((newValue / vasosDani) * 100);
+                    int progress = (int) ((newValue * 100f) / vasosDani);
                     progressBar.setProgress(progress);
 
                     Snackbar.make(view, "+1\uD83D\uDCA7", Snackbar.LENGTH_SHORT).show();
@@ -95,8 +146,8 @@ public class Dashboard extends Fragment {
 
                     //logica para que vaya aumentando las tomas de agua
                     for (int i = 0; i < vasosDani; i++) {
-                        if(!aguasTomadas.get(i)){
-                            aguasTomadas.set(i,true);
+                        if (!aguasTomadas.get(i)) {
+                            aguasTomadas.set(i, true);
                             break;
                         }
                     }
@@ -117,7 +168,6 @@ public class Dashboard extends Fragment {
         rvAgua.setAdapter(adapter);
 
 
-
         TextView fecha = view.findViewById(R.id.fecha);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -129,18 +179,18 @@ public class Dashboard extends Fragment {
         }
 
 
-        View fondo = view.findViewById(R.id.fondo);
+//        View fondo = view.findViewById(R.id.fondo);
         CardView progress = view.findViewById(R.id.progress);
         CardView peso = view.findViewById(R.id.peso);
 
         peso.setVisibility(View.GONE);
-        fondo.setVisibility(View.GONE);
+//        fondo.setVisibility(View.GONE);
 
         progress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 peso.setVisibility(View.VISIBLE);
-                fondo.setVisibility(View.VISIBLE);
+//                fondo.setVisibility(View.VISIBLE);
             }
         });
         AppCompatButton add = view.findViewById(R.id.add);
@@ -156,38 +206,61 @@ public class Dashboard extends Fragment {
         } else {
             todayIndex = 0;
         }
+        if (heights.isEmpty()) {
+            for (int i = 0; i < 7; i++) {
+                heights.add(null);
+            }
+        }
 
+
+        //button de opcion
         add.setOnClickListener(v -> {
             String text = valorPeso.getText().toString().trim();
             if (text.isEmpty()) return;
             int value = Integer.parseInt(text);
             heights.set(todayIndex, value);
+            WeightStorage.save(requireContext(),heights);
             peso.setVisibility(View.GONE);
-            fondo.setVisibility(View.GONE);
+//            fondo.setVisibility(View.GONE);
             refreshChart();
         });
 
         cancel.setOnClickListener(v -> {
             peso.setVisibility(View.GONE);
-            fondo.setVisibility(View.GONE);
+//            fondo.setVisibility(View.GONE);
         });
-
-        heights.clear();
-        for (int i = 0; i < 7; i++) {
-            heights.add(null);
-        }
+        refreshChart();
 
     }
+    private void animateProgress(int targetProgress,ProgressBar progressAnimacion) {
+        ObjectAnimator animator = ObjectAnimator.ofInt(
+                progressAnimacion,
+                "progress",
+                0, // 从0开始
+                targetProgress // 到目标值
+        );
+        animator.setDuration(1500); // 1.5秒
+        animator.setInterpolator(new DecelerateInterpolator()); // 减速效果
+        animator.start();
+    }
 
+    // 使用
+
+
+
+    //cargar la tabla
     private void refreshChart() {
         barChartContainer.removeAllViews();
         barChartContainer.post(() -> {
             int containerHeight = barChartContainer.getHeight();
+
+            int max = heights.stream().max((a, b) -> a - b).orElseThrow();
+
             for (Integer v : heights) {
                 View bar = new View(getContext());
                 int barHeight = 0;
                 if (v != null) {
-                    barHeight = (int) (containerHeight * v / 100f);
+                    barHeight = containerHeight * v / max;
                 }
 
                 LinearLayout.LayoutParams lp =

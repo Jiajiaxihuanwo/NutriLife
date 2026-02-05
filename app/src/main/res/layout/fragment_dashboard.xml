@@ -74,112 +74,133 @@
                         app:cardCornerRadius="12dp"
                         app:cardElevation="4dp"
                         app:strokeColor="@color/light_grey"
+                        app:strokeWidth="1dp"/>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/card1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="20dp"
+                        android:padding="24dp"
+                        app:cardBackgroundColor="@color/greenGoalDeshboard"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="4dp"
+                        app:strokeColor="@color/light_grey"
                         app:strokeWidth="1dp">
 
-                        <LinearLayout
+                        <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical">
+                            android:layout_height="wrap_content">
+
+                            <ProgressBar
+                                android:id="@+id/circleProgress"
+                                style="?android:attr/progressBarStyleHorizontal"
+                                android:layout_width="180dp"
+                                android:layout_height="180dp"
+                                android:indeterminate="false"
+                                android:max="100"
+                                android:progress="56"
+                                android:progressDrawable="@drawable/progress_circle"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/totalCaloria"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/_1010"
+                                android:textStyle="bold"
+                                android:textSize="35sp"
+                                android:layout_marginBottom="20dp"
+                                app:layout_constraintBottom_toBottomOf="@id/circleProgress"
+                                app:layout_constraintEnd_toEndOf="@id/circleProgress"
+                                app:layout_constraintStart_toStartOf="@id/circleProgress"
+                                app:layout_constraintTop_toTopOf="@id/circleProgress" />
+
+                            <TextView
+                                android:id="@+id/consumed_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:alpha="0.7"
+                                android:text="consumed"
+                                android:textSize="16sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/totalCaloria" />
 
                             <LinearLayout
-                                android:layout_width="match_parent"
+                                android:id="@+id/goal_layout"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:alpha="0.8"
                                 android:orientation="horizontal"
-                                android:paddingTop="24dp">
+                                app:layout_constraintBottom_toTopOf="@id/remaining_layout"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/circleProgress">
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:paddingStart="24dp"
-                                    android:text="@string/dailygoal" />
-
-                                <View
-                                    android:layout_width="0dp"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:paddingEnd="24dp"
-                                    android:text="" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
+                                    android:text="@string/dailygoal"
+                                    android:textSize="16sp" />
 
                                 <TextView
                                     android:id="@+id/caloriaDiaria"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="24dp"
+                                    android:layout_marginStart="8dp"
                                     android:text="@string/_1800"
-                                    android:textSize="32sp"
-                                    android:textStyle="bold" />
+                                    android:textSize="16sp" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="8dp"
+                                    android:layout_marginStart="4dp"
                                     android:text="@string/cal"
-                                    android:textSize="32sp"
-                                    android:textStyle="bold" />
+                                    android:textSize="16sp" />
+                            </LinearLayout>
 
-                                <View
-                                    android:layout_width="0dp"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1" />
+                            <!-- 剩余卡路里 -->
+                            <LinearLayout
+                                android:id="@+id/remaining_layout"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:alpha="0.8"
+                                android:orientation="horizontal"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/goal_layout">
 
                                 <TextView
                                     android:id="@+id/restanteDiaria"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="end"
-                                    android:layout_marginEnd="24dp"
+                                    android:layout_margin="2dp"
                                     android:text="@string/_790"
                                     android:textColor="@color/greenApp"
-                                    android:textSize="32sp" />
-                            </LinearLayout>
-
-                            <ProgressBar
-                                android:id="@+id/calorieProgress"
-                                style="?android:attr/progressBarStyleHorizontal"
-                                android:layout_width="match_parent"
-                                android:layout_height="10dp"
-                                android:layout_margin="16dp"
-                                android:layout_marginHorizontal="32dp"
-                                android:max="100"
-                                android:progress="40"
-                                android:progressDrawable="@drawable/progress_calorie" />
-                            <!--Para progressbar ir a drawable-->
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="32dp"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/totalCaloria"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="24dp"
-                                    android:layout_marginTop="10dp"
-                                    android:alpha="0.5"
-                                    android:text="@string/_1010"
-                                    android:textSize="16sp" />
+                                    android:textSize="24sp" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="8dp"
-                                    android:layout_marginTop="10dp"
-                                    android:alpha="0.5"
-                                    android:text="@string/calories_consumed"
-                                    android:textSize="16sp" />
+                                    android:layout_marginStart="4dp"
+                                    android:text="@string/cal"
+                                    android:layout_margin="2dp"
+                                    android:textColor="@color/greenApp"
+                                    android:textSize="24sp" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="remaining"
+                                    android:textColor="@color/greenApp"
+                                    android:layout_margin="2dp"
+                                    android:paddingBottom="16dp"
+                                    android:textSize="24sp" />
                             </LinearLayout>
-                        </LinearLayout>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
                     </com.google.android.material.card.MaterialCardView>
 
                     <LinearLayout
@@ -188,54 +209,38 @@
                         android:orientation="horizontal">
 
                         <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/card2"
                             android:layout_width="110dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
+                            android:layout_marginStart="27dp"
                             android:layout_marginTop="20dp"
-                            android:padding="20dp"
                             app:cardBackgroundColor="@color/white"
                             app:cardCornerRadius="12dp"
-                            app:cardElevation="4dp"
+                            app:cardElevation="8dp"
                             app:strokeColor="@color/light_grey"
-                            app:strokeWidth="1dp">
+                            app:strokeWidth="1dp"
+                            android:layout_marginBottom="15dp">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-
                                 android:orientation="vertical">
 
-                                <LinearLayout
-                                    android:layout_width="match_parent"
+                                <ImageView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_gravity="center"
+                                    android:layout_margin="16dp"
+                                    android:background="@drawable/cicle_protein_bg"
+                                    android:padding="6dp"
+                                    android:src="@drawable/ic_meat" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:gravity="center_horizontal"
-                                    android:orientation="horizontal"
-                                    android:paddingTop="16dp"
-                                    android:paddingBottom="8dp">
-
-                                    <ImageView
-                                        android:layout_width="40dp"
-                                        android:layout_height="40dp"
-                                        android:padding="6dp"
-                                        android:background="@drawable/cicle_protein_bg"
-                                        android:src="@drawable/ic_meat" />
-
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center_horizontal"
-                                    android:orientation="horizontal">
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="@string/protein"
-                                        android:textSize="24sp" />
-
-                                </LinearLayout>
+                                    android:layout_gravity="center"
+                                    android:text="@string/protein"
+                                    android:textSize="24sp" />
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -293,10 +298,10 @@
 
                         <com.google.android.material.card.MaterialCardView
                             android:layout_width="110dp"
+                            android:id="@+id/card3"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
                             android:layout_marginTop="20dp"
-                            android:padding="20dp"
                             app:cardBackgroundColor="@color/white"
                             app:cardCornerRadius="12dp"
                             app:cardElevation="4dp"
@@ -309,37 +314,21 @@
 
                                 android:orientation="vertical">
 
-                                <LinearLayout
-                                    android:layout_width="match_parent"
+                                <ImageView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_gravity="center"
+                                    android:layout_margin="16dp"
+                                    android:background="@drawable/cicle_carb_bg"
+                                    android:padding="10dp"
+                                    android:src="@drawable/ic_wheat" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:gravity="center_horizontal"
-                                    android:orientation="horizontal"
-                                    android:paddingTop="16dp"
-                                    android:paddingBottom="8dp">
-
-                                    <ImageView
-                                        android:layout_width="40dp"
-                                        android:layout_height="40dp"
-                                        android:padding="10dp"
-                                        android:background="@drawable/cicle_carb_bg"
-                                        android:src="@drawable/ic_wheat" />
-
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center_horizontal"
-                                    android:orientation="horizontal">
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="@string/carb"
-                                        android:textSize="24sp" />
-
-                                </LinearLayout>
+                                    android:layout_gravity="center"
+                                    android:text="@string/carb"
+                                    android:textSize="24sp" />
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -397,6 +386,7 @@
 
                         <com.google.android.material.card.MaterialCardView
                             android:layout_width="110dp"
+                            android:id="@+id/card4"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
                             android:layout_marginTop="20dp"
@@ -414,37 +404,21 @@
 
                                 android:orientation="vertical">
 
-                                <LinearLayout
-                                    android:layout_width="match_parent"
+                                <ImageView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_gravity="center"
+                                    android:layout_margin="16dp"
+                                    android:background="@drawable/cicle_fat_bg"
+                                    android:padding="10dp"
+                                    android:src="@drawable/ic_drop" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:gravity="center_horizontal"
-                                    android:orientation="horizontal"
-                                    android:paddingTop="16dp"
-                                    android:paddingBottom="8dp">
-
-                                    <ImageView
-                                        android:layout_width="40dp"
-                                        android:layout_height="40dp"
-                                        android:padding="10dp"
-                                        android:background="@drawable/cicle_fat_bg"
-                                        android:src="@drawable/ic_drop" />
-
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center_horizontal"
-                                    android:orientation="horizontal">
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="@string/fat"
-                                        android:textSize="24sp" />
-
-                                </LinearLayout>
+                                    android:layout_gravity="center"
+                                    android:text="@string/fat"
+                                    android:textSize="24sp" />
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -516,21 +490,21 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:paddingHorizontal="12dp">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:paddingHorizontal="16dp"
                                 android:orientation="horizontal"
+                                android:paddingHorizontal="16dp"
                                 android:paddingTop="24dp">
 
                                 <ImageView
                                     android:layout_width="35dp"
                                     android:layout_height="35dp"
-                                    android:layout_marginStart="8dp"
-                                    android:padding="5dp"
                                     android:background="@drawable/cicle_water_bg"
+                                    android:padding="5dp"
                                     android:src="@drawable/ic_water" />
 
                                 <TextView
@@ -581,8 +555,7 @@
                                 style="?android:attr/progressBarStyleHorizontal"
                                 android:layout_width="match_parent"
                                 android:layout_height="10dp"
-                                android:layout_margin="16dp"
-                                android:layout_marginHorizontal="32dp"
+                                android:layout_marginVertical="16dp"
                                 android:max="100"
                                 android:progress="0"
                                 android:progressDrawable="@drawable/progress_water" />
@@ -753,15 +726,6 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
-        <View
-            android:id="@+id/fondo"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:alpha="0.3"
-            android:background="@color/black"
-            android:visibility="gone" />
-
-
         <androidx.cardview.widget.CardView
             android:id="@+id/peso"
             android:layout_width="match_parent"
@@ -913,5 +877,6 @@
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
