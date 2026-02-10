@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="18dp"
+    app:cardBackgroundColor="@color/white"
+    app:strokeWidth="3dp"
+    android:layout_marginHorizontal="20dp"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Crear nuevo alimento"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"/>
+
+        <!-- Nombre -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nombre del alimento"
+            android:textSize="16sp"
+            android:textColor="@android:color/black" />
+
+        <EditText
+            android:id="@+id/etNombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ej. Pechuga de pollo"
+            android:inputType="text"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/bg_edittext_border"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Calorías (kcal)"
+            android:layout_marginTop="12dp"
+            android:textSize="16dp"
+            android:textColor="@android:color/black" />
+
+        <EditText
+            android:id="@+id/etKcal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:hint="Ej. 250"
+            android:inputType="number"
+            android:background="@drawable/bg_edittext_border"
+            android:layout_marginBottom="10dp"/>
+
+        <!-- Macros -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:weightSum="3">
+
+            <!-- Protein -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginEnd="6dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Protein (g)"
+                    android:textSize="14sp"
+                    android:textColor="@android:color/black"
+                    android:background="@drawable/macro_background"
+                    android:backgroundTint="@color/blueProteinDeshboard"
+                    android:paddingHorizontal="6dp"
+                    android:paddingVertical="2dp"
+                    />
+
+                <EditText
+                    android:id="@+id/etProtein"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:hint="0"
+                    android:inputType="numberDecimal"
+                    android:background="@drawable/bg_edittext_border" />
+            </LinearLayout>
+
+            <!-- Carbs -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginEnd="6dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Carbs (g)"
+                    android:textSize="14sp"
+                    android:textColor="@android:color/black"
+                    android:background="@drawable/macro_background"
+                    android:backgroundTint="@color/yellowCarbsDeshboard"
+                    android:paddingHorizontal="6dp"
+                    android:paddingVertical="2dp"/>
+
+                <EditText
+                    android:id="@+id/etCarbs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:hint="0"
+                    android:inputType="numberDecimal"
+                    android:background="@drawable/bg_edittext_border" />
+            </LinearLayout>
+
+            <!-- Fat -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fat (g)"
+                    android:textSize="14sp"
+                    android:textColor="@android:color/black"
+                    android:background="@drawable/macro_background"
+                    android:backgroundTint="@color/redFatsDeshboard"
+                    android:paddingHorizontal="6dp"
+                    android:paddingVertical="2dp"/>
+
+                <EditText
+                    android:id="@+id/etFat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:hint="0"
+                    android:inputType="numberDecimal"
+                    android:background="@drawable/bg_edittext_border" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end"
+            android:layout_marginTop="24dp">
+
+            <Button
+                android:id="@+id/btnCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cancel"
+                android:backgroundTint="@android:color/darker_gray"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/btnAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add"
+                android:layout_marginStart="12dp"
+                android:backgroundTint="@color/greenApp"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

@@ -31,14 +31,28 @@
                 android:src="@drawable/ic_meals"
                 android:background="@drawable/circle_icon_bg"/>
 
-            <TextView
-                android:id="@+id/title"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:orientation="vertical"
                 android:layout_weight="1"
-                android:text="Título de la tarjeta"
-                android:textSize="16sp" />
+                android:layout_marginStart="8dp">
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="Título de la tarjeta"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tvTotalCalories"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0 kcal" />
+
+            </LinearLayout>
 
             <ImageButton
                 android:id="@+id/btnAdd"

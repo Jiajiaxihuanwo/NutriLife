@@ -1,0 +1,30 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 未完成部分（背景圆环） -->
+    <item android:id="@android:id/background">
+        <shape
+            android:shape="ring"
+            android:thickness="10dp"
+            android:useLevel="false">
+            <solid android:color="#EBE9E9" />
+        </shape>
+    </item>
+
+    <!-- 已完成进度 -->
+    <item android:id="@android:id/progress">
+        <rotate
+            android:fromDegrees="-90"
+            android:toDegrees="-90"
+            android:pivotX="50%"
+            android:pivotY="50%">
+
+            <shape
+                android:shape="ring"
+                android:thickness="10dp"
+                android:useLevel="true">
+                <solid android:color="@color/greenApp" />
+            </shape>
+        </rotate>
+    </item>
+
+</layer-list>

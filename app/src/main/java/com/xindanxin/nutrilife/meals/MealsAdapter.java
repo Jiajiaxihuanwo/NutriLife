@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.Icon;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +16,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.xindanxin.nutrilife.R;
+import com.xindanxin.nutrilife.util.CaloriesViewModel;
 import com.xindanxin.nutrilife.util.MealsStorage;
 
 import java.util.HashMap;
@@ -33,6 +36,7 @@ import java.util.Map;
  * - botón de añadir elemento
  * - contenido expandible (lista de elementos)
  */
+
 public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealsViewHolder> {
 
     //interfaz callback
@@ -47,9 +51,12 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealsViewHol
     private List<String> items;
     private Context context;    // Contexto para crear TextView dinámicos
 
-    public MealsAdapter(Context context, List<String> items, OnAddFoodClickListener listener) {
+    private CaloriesViewModel viewModel;
+
+    public MealsAdapter(Context context, List<String> items, CaloriesViewModel viewModel, OnAddFoodClickListener listener) {
         this.context = context;
         this.items = items;
+        this.viewModel = viewModel;
         this.addFoodListener = listener;
     }
 
@@ -66,6 +73,8 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealsViewHol
         ImageButton btnToggle, btnAdd;
         LinearLayout expandableContent;
 
+        TextView tvTotalCalories;
+
         public MealsViewHolder(@NonNull View itemView) {
             super(itemView);
             cardHeader = itemView.findViewById(R.id.cardHeader);
@@ -74,6 +83,7 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealsViewHol
             btnToggle = itemView.findViewById(R.id.btnToggle);
             btnAdd = itemView.findViewById(R.id.btnAdd);
             expandableContent = itemView.findViewById(R.id.expandableContent);
+            tvTotalCalories = itemView.findViewById(R.id.tvTotalCalories);
         }
     }
 
@@ -91,6 +101,7 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealsViewHol
      */
     @Override
     public void onBindViewHolder(@NonNull MealsViewHolder holder, int position) {
+
         String mealType = items.get(position);
         holder.title.setText(mealType);
 
@@ -152,6 +163,11 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealsViewHol
 
             expandedStates.put(mealType, newState); // guardar el estado
         });
+
+        // Calcular las calorias totales de todos los alimentos
+        int totalCalories = calculateTotalCalories(mealType);
+        holder.tvTotalCalories.setText(totalCalories + " kcal");
+        updateMacros(mealType);
 
         // Añadir elemento dinámicamente
         holder.btnAdd.setOnClickListener(v -> {
@@ -256,6 +272,9 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealsViewHol
             if (parent != null) {
                 parent.removeView(itemContent);
             }
+
+            notifyItemChanged(items.indexOf(mealType));
+            
         });
 
         trashColumn.addView(btnDelete);
@@ -266,6 +285,40 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealsViewHol
         itemContent.addView(trashColumn);
 
         return itemContent;
+    }
+
+    //metodo para calcular las calorias totales de una tarjeta
+    private int calculateTotalCalories(String mealType) {
+        List<FoodItem> foods = MealsStorage.loadFoodList(context, mealType);
+        int total = 0;
+
+        for (FoodItem item : foods) {
+            total += Integer.parseInt(item.getCalories().split(" ")[0]);
+        }
+        return total;
+    }
+
+    //metodo para actualizar las calorias totales
+    private void updateMacros(String mealType) {
+        int totalCalories = 0;
+        int totalProtein = 0;
+        int totalCarbs = 0;
+        int totalFat = 0;
+
+        List<FoodItem> foods = MealsStorage.loadFoodList(context, mealType);
+        for (FoodItem item : foods) {
+            totalCalories += Integer.parseInt(item.getCalories().split(" ")[0]);
+            totalProtein += Integer.parseInt(item.valorProteinas().substring(2,item.valorProteinas().length()-1));
+            totalCarbs += Integer.parseInt(item.valorCarbohidratos().substring(2,item.valorCarbohidratos().length()-1));
+            totalFat += Integer.parseInt(item.valorGrasas().substring(2,item.valorGrasas().length()-1));
+        }
+
+        viewModel.setMacros(mealType, totalCalories, totalProtein, totalCarbs, totalFat);
+        Log.d("MealsAdapter", mealType + " macros updated: " +
+                totalCalories + " kcal, " +
+                totalProtein + "p, " +
+                totalCarbs + "c, " +
+                totalFat + "f");
     }
 
 
