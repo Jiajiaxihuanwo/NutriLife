@@ -43,6 +43,9 @@
     <color name="verdeProgress1Deshboard">#b9f8cf</color>
     <color name="verdeProgress2Deshboard">#7bf1a8</color>
 
+    <!-- Profile -->
+
+
     <!-- Planner -->
     <color name="greenBreackfastPlanner">#dbfce7</color>
     <color name="tipsPlanner">#eefdf4</color>

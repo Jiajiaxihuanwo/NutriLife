@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/bgApp"
     tools:context=".profile.Profile">
 <ScrollView
     android:layout_width="match_parent"
@@ -70,6 +71,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="100dp"
+            app:cardBackgroundColor="@color/greenBreackfastPlanner"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="@id/gl1"
             app:layout_constraintEnd_toEndOf="@id/gl2"
@@ -91,42 +93,42 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"/>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til1"
+                <TextView
+                    android:id="@+id/userName"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
+                    android:text="MiniChen"
+                    android:gravity="center"
+                    android:textSize="20dp"
                     app:layout_constraintTop_toBottomOf="@id/iconGhost"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Username"
-                        android:gravity="center_horizontal"/>
 
-                </com.google.android.material.textfield.TextInputLayout>
+                </TextView>
 
                 <TextView
                     android:id="@+id/extraContainer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="Datos de creación de la cuenta"
-                    app:layout_constraintTop_toBottomOf="@id/til1"
+                    android:text="Mienbro desde 2026"
+                    app:layout_constraintTop_toBottomOf="@id/userName"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"/>
 
-                <Button
-                    android:id="@+id/EditProfile"
-                    android:layout_width="0dp"
-                    android:layout_height="56dp"
-                    android:layout_marginTop="24dp"
-                    android:text="Edit Profile"
-                    app:layout_constraintTop_toBottomOf="@id/extraContainer"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnEditProfile"
+                    android:layout_width="200dp"
+                    android:layout_height="30dp"
+                    android:layout_marginVertical="5dp"
+                    android:background="@drawable/cancel_btn_selector"
+                    android:text="Edita Perfil"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/extraContainer"
+                    app:layout_constraintVertical_bias="1.0"
+                    tools:layout_editor_absoluteX="45dp" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -147,56 +149,308 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="20dp">
+                android:padding="20dp"
+                android:background="@color/white"
+                >
 
                 <TextView
                     android:id="@+id/Stats"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:text="My stats"/>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til1"
+                    android:text="Mis estadisticas"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/Grande"
+                app:layout_constraintTop_toBottomOf="@+id/Stats"
+                >
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
-                    app:layout_constraintTop_toBottomOf="@id/iconGhost"
+                    android:id="@+id/Medio"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/MedioDerecha"
+                    >
+                    <ImageView
+                        android:id="@+id/img_weight"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:padding="10dp"
+                        android:background="@drawable/cicle_protein_bg"
+                        android:src="@drawable/profile_icon_weight"
+                        app:layout_constraintStart_toStartOf="@id/Medio"
+                        app:layout_constraintTop_toTopOf="@id/Medio"
+                        app:layout_constraintBottom_toBottomOf="@id/Medio"
+                        />
+                    <TextView
+                        android:id="@+id/Texto1"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:hint="Username"
-                        android:gravity="center_horizontal"/>
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <TextView
-                    android:id="@+id/extraContainer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="Datos de creación de la cuenta"
-                    app:layout_constraintTop_toBottomOf="@id/til1"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
-
-                <Button
-                    android:id="@+id/EditProfile"
+                        android:layout_marginTop="4dp"
+                        android:text=" Peso actual:"
+                        app:layout_constraintStart_toEndOf="@+id/img_weight"
+                        android:textSize="12dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        />
+                    <TextView
+                        android:id="@+id/PrimerB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toEndOf="@+id/img_weight"
+                        android:text=" 68lb"
+                        android:layout_marginBottom="4dp"
+                        android:textSize="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="0dp"
-                    android:layout_height="56dp"
-                    android:layout_marginTop="24dp"
-                    android:text="Edit Profile"
-                    app:layout_constraintTop_toBottomOf="@id/extraContainer"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/Medio2"
+                    app:layout_constraintTop_toBottomOf="@id/Medio"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
+                    app:layout_constraintEnd_toStartOf="@id/MedioDerecha2"
+                    >
+                    <ImageView
+                        android:id="@+id/img_calendary"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:padding="10dp"
+                        android:background="@drawable/circle_yellow"
+                        android:src="@drawable/profile_icon_calendar"
+                        app:layout_constraintStart_toStartOf="@id/Medio2"
+                        app:layout_constraintTop_toTopOf="@id/Medio2"
+                        app:layout_constraintBottom_toBottomOf="@id/Medio2"
+                        />
+                    <TextView
+                        android:id="@+id/Texto2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text=" Edad:"
+                        app:layout_constraintStart_toEndOf="@+id/img_calendary"
+                        android:textSize="12dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        />
+                    <TextView
+                        android:id="@+id/Texto2_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toEndOf="@+id/img_calendary"
+                        android:text=" 25 años"
+                        android:layout_marginBottom="4dp"
+                        android:textSize="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/MedioDerecha"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/Medio"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+                    <ImageView
+                        android:id="@+id/img_height"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:padding="10dp"
+                        android:background="@drawable/circle_purple"
+                        android:src="@drawable/profile_icon_height"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        />
+                    <TextView
+                        android:id="@+id/Texto3_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text=" Altura:"
+                        app:layout_constraintStart_toEndOf="@+id/img_height"
+                        android:textSize="12dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        />
+                    <TextView
+                        android:id="@+id/Texto3_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toEndOf="@+id/img_height"
+                        android:text=" 1.75"
+                        android:layout_marginBottom="4dp"
+                        android:textSize="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/MedioDerecha2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/Medio2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/MedioDerecha">
+                    <ImageView
+                        android:id="@+id/img_nivel_actividad"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:padding="10dp"
+                        android:background="@drawable/circle_green"
+                        android:src="@drawable/profile_icon_activity"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        />
+                    <TextView
+                        android:id="@+id/Texto4_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text=" Nivel de Actividad:"
+                        app:layout_constraintStart_toEndOf="@+id/img_nivel_actividad"
+                        android:textSize="12dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        />
+                    <TextView
+                        android:id="@+id/Texto4_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toEndOf="@+id/img_nivel_actividad"
+                        android:text=" Moderado"
+                        android:layout_marginBottom="4dp"
+                        android:textSize="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+                    <!-- contenido -->
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>
 
+        <!-- -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardDailyGoals"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:layout_constraintTop_toBottomOf="@id/cardStats"
+            app:layout_constraintStart_toStartOf="@id/gl1"
+            app:layout_constraintEnd_toEndOf="@id/gl2"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="6dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:background="@color/white">
+
+                <!-- Título -->
+                <TextView
+                    android:id="@+id/dailyGoalsTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Daily Goals"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <!-- Contenedor de inputs -->
+                <LinearLayout
+                    android:id="@+id/dailyGoalsContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintTop_toBottomOf="@id/dailyGoalsTitle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Daily Calorie Goal"
+                        android:textSize="12sp"/>
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:hint="1800"
+                        android:inputType="number"
+                        android:background="@drawable/bg_input_rounded"
+                        android:paddingHorizontal="12dp"
+                        android:layout_marginBottom="12dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Protein Goal (g)"
+                        android:textSize="12sp"/>
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:hint="150"
+                        android:inputType="number"
+                        android:background="@drawable/bg_input_rounded"
+                        android:paddingHorizontal="12dp"
+                        android:layout_marginBottom="12dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Carbs Goal (g)"
+                        android:textSize="12sp"/>
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:hint="200"
+                        android:inputType="number"
+                        android:background="@drawable/bg_input_rounded"
+                        android:paddingHorizontal="12dp"
+                        android:layout_marginBottom="12dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Fats Goal (g)"
+                        android:textSize="12sp"/>
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:hint="65"
+                        android:inputType="number"
+                        android:background="@drawable/bg_input_rounded"
+                        android:paddingHorizontal="12dp"
+                        android:layout_marginBottom="12dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Water Goal (glasses)"
+                        android:textSize="12sp"/>
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:hint="8"
+                        android:inputType="number"
+                        android:background="@drawable/bg_input_rounded"
+                        android:paddingHorizontal="12dp"/>
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
