@@ -256,6 +256,11 @@ public class Dashboard extends Fragment {
 
             int max = heights.stream().max((a, b) -> a - b).orElseThrow();
 
+            // Si todos los valores son 0, no dibujamos nada
+            if (max <= 0) {
+                max = 1; // Evita división por cero
+            }
+
             for (Integer v : heights) {
                 View bar = new View(getContext());
                 int barHeight = 0;
