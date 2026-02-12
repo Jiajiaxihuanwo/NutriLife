@@ -26,8 +26,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
 import com.xindanxin.nutrilife.R;
 import com.xindanxin.nutrilife.firestore.MealsStorageFirestore;
+import com.xindanxin.nutrilife.firestore.WeightStorageFirestore;
 import com.xindanxin.nutrilife.meals.FoodItem;
 import com.xindanxin.nutrilife.util.CaloriesViewModel;
 import com.xindanxin.nutrilife.util.WeightStorage;
@@ -36,11 +38,14 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Dashboard extends Fragment {
 
     private LinearLayout barChartContainer;
-    List<Integer> heights = new ArrayList<>();
+    List<Integer> weights = new ArrayList<>();
+
+    private WeightStorageFirestore weightStorageFirestore;
 
     private CaloriesViewModel caloriesViewModel;
 
@@ -61,6 +66,9 @@ public class Dashboard extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
+        weightStorageFirestore = new WeightStorageFirestore(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
         //animacion
         TextView totalCaloria = view.findViewById(R.id.totalCaloria);
         TextView consumed = view.findViewById(R.id.consumed_text);
@@ -117,7 +125,10 @@ public class Dashboard extends Fragment {
         TextView totalCarbohidrato = view.findViewById(R.id.totalCarbohidrato);
         TextView totalGrasa = view.findViewById(R.id.totalGrasa);
 
-        heights = WeightStorage.getWeights(requireContext());
+        weightStorageFirestore.getWeights(weights -> {
+            this.weights = weights;
+            refreshChart();
+        });
         super.onViewCreated(view, savedInstanceState);
         //rv del agua
         TextView textView = view.findViewById(R.id.aguaDiaria);
@@ -211,9 +222,9 @@ public class Dashboard extends Fragment {
         } else {
             todayIndex = 0;
         }
-        if (heights.isEmpty()) {
+        if (weights.isEmpty()) {
             for (int i = 0; i < 7; i++) {
-                heights.add(null);
+                weights.add(null);
             }
         }
 
@@ -223,8 +234,8 @@ public class Dashboard extends Fragment {
             String text = valorPeso.getText().toString().trim();
             if (text.isEmpty()) return;
             int value = Integer.parseInt(text);
-            heights.set(todayIndex, value);
-            WeightStorage.save(requireContext(),heights);
+            weights.set(todayIndex, value);
+            weightStorageFirestore.saveWeights(weights);
             peso.setVisibility(View.GONE);
 //            fondo.setVisibility(View.GONE);
             refreshChart();
@@ -259,14 +270,17 @@ public class Dashboard extends Fragment {
         barChartContainer.post(() -> {
             int containerHeight = barChartContainer.getHeight();
 
-            int max = heights.stream().max((a, b) -> a - b).orElseThrow();
+            int max = weights.stream()
+                    .filter(Objects::nonNull)
+                    .max(Integer::compareTo)
+                    .orElse(0);
 
             // Si todos los valores son 0, no dibujamos nada
             if (max <= 0) {
                 max = 1; // Evita división por cero
             }
 
-            for (Integer v : heights) {
+            for (Integer v : weights) {
                 View bar = new View(getContext());
                 int barHeight = 0;
                 if (v != null) {
