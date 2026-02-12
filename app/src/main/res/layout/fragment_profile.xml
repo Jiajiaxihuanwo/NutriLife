@@ -342,7 +342,6 @@
             android:id="@+id/cardDailyGoals"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
             app:layout_constraintTop_toBottomOf="@id/cardStats"
             app:layout_constraintStart_toStartOf="@id/gl1"
             app:layout_constraintEnd_toEndOf="@id/gl2"
@@ -467,22 +466,24 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnSave"
             android:layout_width="0dp"
-            android:layout_height="30dp"
+            android:layout_height="40dp"
             android:layout_marginHorizontal="70dp"
-            android:layout_marginVertical="5dp"
+            app:layout_goneMarginTop="10dp"
             android:background="@drawable/save_btn_selector"
             android:text="@string/save_changes"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@id/btnSingOut"
             app:layout_constraintTop_toBottomOf="@+id/cardDailyGoals"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="25dp"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnSingOut"
             android:layout_width="0dp"
-            android:layout_height="30dp"
+            android:layout_height="40dp"
             android:layout_marginHorizontal="70dp"
-            android:layout_marginVertical="5dp"
+            android:layout_marginVertical="20dp"
             android:background="@drawable/cancel_btn_selector"
             android:text="Sing out"
             app:layout_constraintBottom_toBottomOf="parent"

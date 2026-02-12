@@ -1,26 +1,34 @@
 package com.xindanxin.nutrilife.meals;
 
 public class FoodItem {
-    private Long id;
+
+    private String docId;      // ID del documento en Firestore
     private String mealName;
-    private String mealTime;
-    private String calories;
-    private String macros;
+    private int calories;
+    private int protein;
+    private int carbs;
+    private int fats;
 
-    public FoodItem(Long id,String mealName, String mealTime, String calories, String macros) {
-        this.id = id;
+    // Constructor vacío necesario para Firestore
+    public FoodItem() {}
+
+    public FoodItem(String mealName, int calories, int protein, int carbs, int fats) {
         this.mealName = mealName;
-        this.mealTime = mealTime;
         this.calories = calories;
-        this.macros = macros;
+        this.protein = protein;
+        this.carbs = carbs;
+        this.fats = fats;
     }
 
-    public Long getId() {
-        return id;
+
+    // ------------------ Getters y Setters ------------------
+
+    public String getDocId() {
+        return docId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setDocId(String docId) {
+        this.docId = docId;
     }
 
     public String getMealName() {
@@ -31,37 +39,57 @@ public class FoodItem {
         this.mealName = mealName;
     }
 
-    public String getMealTime() {
-        return mealTime;
-    }
-
-    public void setMealTime(String mealTime) {
-        this.mealTime = mealTime;
-    }
-
-    public String getCalories() {
+    public int getCalories() {
         return calories;
     }
 
-    public void setCalories(String calories) {
+    public void setCalories(int calories) {
         this.calories = calories;
     }
 
+    public int getProtein() {
+        return protein;
+    }
+
+    public void setProtein(int protein) {
+        this.protein = protein;
+    }
+
+    public int getCarbs() {
+        return carbs;
+    }
+
+    public void setCarbs(int carbs) {
+        this.carbs = carbs;
+    }
+
+    public int getFats() {
+        return fats;
+    }
+
+    public void setFats(int fats) {
+        this.fats = fats;
+    }
+
+    // ------------------ Métodos Formateados ------------------
+
     public String getMacros() {
-        return macros;
+        return String.format("P:%dg C:%dg F:%dg", protein, carbs, fats);
     }
 
-    public void setMacros(String macros) {
-        this.macros = macros;
+    public String valueOfCalories() {
+        return calories + " kcal";
     }
 
-    public String valorProteinas(){
-        return macros.split(" ")[0];
+    public String valueOfProtein() {
+        return "P: " + protein + "g";
     }
-    public String valorCarbohidratos(){
-        return macros.split(" ")[1];
+
+    public String valueOfCarbs() {
+        return "C: " + carbs + "g";
     }
-    public String valorGrasas(){
-        return macros.split(" ")[2];
+
+    public String valueOfFats() {
+        return "F: " + fats + "g";
     }
 }

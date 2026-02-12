@@ -20,10 +20,8 @@ import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.Gson;
 import com.xindanxin.nutrilife.R;
 import com.xindanxin.nutrilife.util.FoodRepository;
-import com.xindanxin.nutrilife.util.MealsStorage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,17 +98,20 @@ public class SearchDialogFragment extends DialogFragment {
 
         //Logica del boton añadir nueva comida ============================================
         Button btnAddNewFood = view.findViewById(R.id.btnAddNewFood);
-        btnAddNewFood.setOnClickListener((v)->new CreateNewFoodDialogFragment(json -> {
-            FoodItem nuevoFood = new Gson().fromJson(json,FoodItem.class);
+        btnAddNewFood.setOnClickListener((v) ->
+                new CreateNewFoodDialogFragment(nuevoFood -> {
 
-            List<FoodItem> mutableFoods = new ArrayList<>(allFoods);
-            mutableFoods.add(0,nuevoFood);
-            allFoods = mutableFoods;
+                    // añadimos el nuevo alimento a la lista local
+                    List<FoodItem> mutableFoods = new ArrayList<>(allFoods);
+                    mutableFoods.add(0, nuevoFood);
+                    allFoods = mutableFoods;
 
-            //aqui hay que implementar un guardado en la base de datos
+                    // aqui hay que implementar un guardado en la base de datos (si quieres guardarlo en Firestore)
 
-            adapter.updateList(allFoods);
-        }).show(getParentFragmentManager(), null));
+                    adapter.updateList(allFoods);
+
+                }).show(getParentFragmentManager(), null)
+        );
 
         //devuelve un objeto Dialog que Android mostrará cuando llames a dialog.show().
         return new AlertDialog.Builder(requireContext())

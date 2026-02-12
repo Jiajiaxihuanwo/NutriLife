@@ -20,8 +20,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.xindanxin.nutrilife.R;
+import com.xindanxin.nutrilife.firestore.MealsStorageFirestore;
 import com.xindanxin.nutrilife.util.CaloriesViewModel;
-import com.xindanxin.nutrilife.util.MealsStorage;
 
 import java.util.HashMap;
 import java.util.List;
@@ -38,6 +38,8 @@ import java.util.Map;
  */
 
 public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealsViewHolder> {
+
+    private MealsStorageFirestore firestoreStorage;
 
     //interfaz callback
     public interface OnAddFoodClickListener {
@@ -58,6 +60,9 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealsViewHol
         this.items = items;
         this.viewModel = viewModel;
         this.addFoodListener = listener;
+
+        // Inicializamos Firestore
+        firestoreStorage = new MealsStorageFirestore();
     }
 
     /**
@@ -141,12 +146,28 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealsViewHol
 
         //Inyectamos la comida guardada limpiandolo anteriormente para que no se repita los alimentos
         holder.expandableContent.removeAllViews();
+        firestoreStorage.getFoodItems(mealType, savedItems -> {
+            for (FoodItem f : savedItems) {
+                LinearLayout itemContent = createItemLayout(mealType, f);
+                holder.expandableContent.addView(itemContent);
+            }
 
-        List<FoodItem> savedItems = MealsStorage.loadFoodList(context,mealType);
-        for (FoodItem f : savedItems) {
-            LinearLayout itemContent = createItemLayout(mealType,f);
-            holder.expandableContent.addView(itemContent);
-        }
+            // Actualizamos calorías y macros
+            int totalCalories = 0;
+            int totalProtein = 0;
+            int totalCarbs = 0;
+            int totalFat = 0;
+
+            for (FoodItem f : savedItems) {
+                totalCalories += f.getCalories();
+                totalProtein += f.getProtein();
+                totalCarbs += f.getCarbs();
+                totalFat += f.getFats();
+            }
+
+            holder.tvTotalCalories.setText(totalCalories + " kcal");
+            viewModel.setMacros(mealType, totalCalories, totalProtein, totalCarbs, totalFat);
+        });
 
         // Inicializamos el contenido como oculto
         holder.expandableContent.setVisibility(View.GONE);
@@ -164,13 +185,6 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealsViewHol
             expandedStates.put(mealType, newState); // guardar el estado
         });
 
-        // Calcular las calorias totales de todos los alimentos
-        int totalCalories = calculateTotalCalories(mealType);
-        holder.tvTotalCalories.setText(totalCalories + " kcal");
-        updateMacros(mealType);
-
-        //guardamos todos los cambios para que tenga persistencia
-        MealsStorage.saveTotalMacros(context,viewModel.getTotalMacros());
 
         // Añadir elemento dinámicamente
         holder.btnAdd.setOnClickListener(v -> {
@@ -244,7 +258,7 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealsViewHol
         rightColumn.setLayoutParams(rightParams);
 
         TextView tvCalories = new TextView(context);
-        tvCalories.setText(item.getCalories());
+        tvCalories.setText(item.valueOfCalories());
         tvCalories.setTextSize(14);
         tvCalories.setTextColor(ContextCompat.getColor(context, R.color.black));
         tvCalories.setGravity(Gravity.END);
@@ -272,16 +286,11 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealsViewHol
         btnDelete.setBackgroundColor(Color.TRANSPARENT);
 
         btnDelete.setOnClickListener(v -> {
+            firestoreStorage.deleteFoodItem(mealType, item.getDocId()); // necesitas docId en FoodItem
 
-            MealsStorage.deleteFoodItem(context,mealType, item);
-
-            ViewGroup parent = (ViewGroup) itemContent.getParent();
-            if (parent != null) {
-                parent.removeView(itemContent);
-            }
-
+            //recalcular macros
             notifyItemChanged(items.indexOf(mealType));
-            
+
         });
 
         trashColumn.addView(btnDelete);
@@ -293,42 +302,6 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealsViewHol
 
         return itemContent;
     }
-
-    //metodo para calcular las calorias totales de una tarjeta
-    private int calculateTotalCalories(String mealType) {
-        List<FoodItem> foods = MealsStorage.loadFoodList(context, mealType);
-        int total = 0;
-
-        for (FoodItem item : foods) {
-            total += Integer.parseInt(item.getCalories().split(" ")[0]);
-        }
-        return total;
-    }
-
-    //metodo para actualizar las calorias totales
-    private void updateMacros(String mealType) {
-        int totalCalories = 0;
-        int totalProtein = 0;
-        int totalCarbs = 0;
-        int totalFat = 0;
-
-        List<FoodItem> foods = MealsStorage.loadFoodList(context, mealType);
-        for (FoodItem item : foods) {
-            totalCalories += Integer.parseInt(item.getCalories().split(" ")[0]);
-            totalProtein += Integer.parseInt(item.valorProteinas().substring(2,item.valorProteinas().length()-1));
-            totalCarbs += Integer.parseInt(item.valorCarbohidratos().substring(2,item.valorCarbohidratos().length()-1));
-            totalFat += Integer.parseInt(item.valorGrasas().substring(2,item.valorGrasas().length()-1));
-        }
-
-        viewModel.setMacros(mealType, totalCalories, totalProtein, totalCarbs, totalFat);
-        Log.d("MealsAdapter", mealType + " macros updated: " +
-                totalCalories + " kcal, " +
-                totalProtein + "p, " +
-                totalCarbs + "c, " +
-                totalFat + "f");
-
-    }
-
 
     @Override
     public int getItemCount() {
