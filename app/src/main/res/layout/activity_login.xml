@@ -45,11 +45,12 @@
         app:layout_constraintTop_toBottomOf="@id/ic_icon">
 
         <EditText
-            android:id="@+id/userName"
+            android:id="@+id/userEmail"
             android:layout_width="match_parent"
             android:background="@drawable/corner"
             android:layout_height="wrap_content"
             android:drawablePadding="10dp"
+            android:singleLine="true"
             android:hint="@string/user"/>
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -68,6 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/psw"
+            android:singleLine="true"
             android:drawablePadding="10dp"/>
 
     </com.google.android.material.textfield.TextInputLayout>

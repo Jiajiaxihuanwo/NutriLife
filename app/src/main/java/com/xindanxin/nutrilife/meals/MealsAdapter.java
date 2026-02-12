@@ -169,6 +169,9 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealsViewHol
         holder.tvTotalCalories.setText(totalCalories + " kcal");
         updateMacros(mealType);
 
+        //guardamos todos los cambios para que tenga persistencia
+        MealsStorage.saveTotalMacros(context,viewModel.getTotalMacros());
+
         // Añadir elemento dinámicamente
         holder.btnAdd.setOnClickListener(v -> {
             if(addFoodListener != null){
@@ -178,10 +181,12 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealsViewHol
                 addFoodListener.onAddFoodClicked(mealType);
             }
 
+
             //tambien expandimos por defecto el card
             holder.expandableContent.setVisibility(View.VISIBLE);
             //lo seteamos como true en visivility
             expandedStates.put(mealType,true);
+
         });
 
         //boleano que establece si el toggle esta espandido o no
@@ -190,6 +195,8 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealsViewHol
         holder.btnToggle.setImageIcon(
                 Icon.createWithResource(context, isExpanded ? R.drawable.ic_toggle_on : R.drawable.ic_toggle_off)
         );
+
+
     }
 
     //metodo para crear el layout que contiene la informacion del food
@@ -319,6 +326,7 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealsViewHol
                 totalProtein + "p, " +
                 totalCarbs + "c, " +
                 totalFat + "f");
+
     }
 
 
