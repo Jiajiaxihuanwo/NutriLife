@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "175333113701",
+    "project_id": "nutrilife-75807",
+    "storage_bucket": "nutrilife-75807.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:175333113701:android:147874c67488199f132b8c",
+        "android_client_info": {
+          "package_name": "com.xindanxin.nutrilife"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCm-okwTkb0Hcc4Y63CdXeGYRqk_wJLgns"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

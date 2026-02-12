@@ -1,53 +1,94 @@
 package com.xindanxin.nutrilife.auth;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.xindanxin.nutrilife.R;
 import com.xindanxin.nutrilife.main.MainActivity;
-import com.xindanxin.nutrilife.profile.Profile;
+
+import android.content.Intent;
 
 public class Login extends AppCompatActivity {
+
+    private EditText email, password;
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
+
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         ImageView foton = findViewById(R.id.background);
         Glide.with(this)
                 .load(R.drawable.b4)
                 .centerCrop()
                 .into(foton);
+
+        email = findViewById(R.id.userEmail); // cambia si tu EditText tiene otro ID
+        password = findViewById(R.id.password);
     }
 
-    public void openProfile(View v){
-        EditText nombre = findViewById(R.id.userName);
+    // Botón login
+    public void openProfile(android.view.View v){
+        String emailStr = email.getText().toString().trim();
+        String passStr = password.getText().toString().trim();
 
-        Intent intent = new Intent(Login.this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        if(emailStr.isEmpty() || passStr.isEmpty()){
+            Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
+        // Login con Firebase Auth
+        mAuth.signInWithEmailAndPassword(emailStr, passStr)
+                .addOnCompleteListener(this, task -> {
+                    if(task.isSuccessful()){
+                        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+                        if(firebaseUser != null){
+                            String uid = firebaseUser.getUid();
 
-        intent.putExtra("user_name",nombre.getText().toString());
+                            // Traer datos del usuario de Firestore
+                            db.collection("users").document(uid).get()
+                                    .addOnSuccessListener(documentSnapshot -> {
+                                        if(documentSnapshot.exists()){
+                                            String emailDB = documentSnapshot.getString("email");
+                                            String username = documentSnapshot.getString("username"); // opcional
 
-        startActivity(intent);
+                                            // Pasar datos a MainActivity
+                                            Intent intent = new Intent(Login.this, MainActivity.class);
+                                            intent.putExtra("uid", uid);
+                                            intent.putExtra("email", emailDB);
+                                            startActivity(intent);
+                                            finish();
+                                        } else {
+                                            Toast.makeText(Login.this, "Usuario no encontrado en Firestore", Toast.LENGTH_SHORT).show();
+                                        }
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        Toast.makeText(Login.this, "Error al obtener datos: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    });
+                        }
+                    } else {
+                        Toast.makeText(Login.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
-    public void openRegister(View v){
-        EditText nombre = findViewById(R.id.userName);
-
-        Intent intent = new Intent(Login.this, SignUp.class);
-        intent.putExtra("user_name",nombre.getText().toString());
-
-        startActivity(intent);
+    // Botón ir a registro
+    public void openRegister(android.view.View v){
+        startActivity(new Intent(Login.this, SignUp.class));
     }
+
 }
