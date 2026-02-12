@@ -12,7 +12,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl1"
@@ -98,7 +98,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
-                    android:text="MiniChen"
+                    android:text="@string/user_name"
                     android:gravity="center"
                     android:textSize="20dp"
                     app:layout_constraintTop_toBottomOf="@id/iconGhost"
@@ -109,11 +109,11 @@
                 </TextView>
 
                 <TextView
-                    android:id="@+id/extraContainer"
+                    android:id="@+id/createAcount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="Mienbro desde 2026"
+                    android:text="@string/member_since"
                     app:layout_constraintTop_toBottomOf="@id/userName"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"/>
@@ -124,9 +124,9 @@
                     android:layout_height="30dp"
                     android:layout_marginVertical="5dp"
                     android:background="@drawable/cancel_btn_selector"
-                    android:text="Edita Perfil"
+                    android:text="@string/edit_profile"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/extraContainer"
+                    app:layout_constraintTop_toBottomOf="@+id/createAcount"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -157,7 +157,7 @@
                     android:id="@+id/Stats"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Mis estadisticas"
+                    android:text="@string/my_stats"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     />
@@ -171,6 +171,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/Medio"
+                    android:layout_marginTop="10dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/MedioDerecha"
@@ -187,17 +188,17 @@
                         app:layout_constraintBottom_toBottomOf="@id/Medio"
                         />
                     <TextView
-                        android:id="@+id/Texto1"
+                        android:id="@+id/TextoPeso"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text=" Peso actual:"
+                        android:text="@string/current_weight"
                         app:layout_constraintStart_toEndOf="@+id/img_weight"
                         android:textSize="12dp"
                         app:layout_constraintTop_toTopOf="parent"
                         />
                     <TextView
-                        android:id="@+id/PrimerB"
+                        android:id="@+id/DatoPeso"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toEndOf="@+id/img_weight"
@@ -211,6 +212,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/Medio2"
+                    android:layout_marginTop="10dp"
+
                     app:layout_constraintTop_toBottomOf="@id/Medio"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/MedioDerecha2"
@@ -227,21 +230,21 @@
                         app:layout_constraintBottom_toBottomOf="@id/Medio2"
                         />
                     <TextView
-                        android:id="@+id/Texto2"
+                        android:id="@+id/TextoEdad"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text=" Edad:"
+                        android:text=" Age:"
                         app:layout_constraintStart_toEndOf="@+id/img_calendary"
                         android:textSize="12dp"
                         app:layout_constraintTop_toTopOf="parent"
                         />
                     <TextView
-                        android:id="@+id/Texto2_2"
+                        android:id="@+id/DatoEdad"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toEndOf="@+id/img_calendary"
-                        android:text=" 25 años"
+                        android:text=" 25 years"
                         android:layout_marginBottom="4dp"
                         android:textSize="10dp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -251,6 +254,7 @@
                     android:id="@+id/MedioDerecha"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     app:layout_constraintStart_toEndOf="@id/Medio"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -265,17 +269,17 @@
                         app:layout_constraintTop_toTopOf="parent"
                         />
                     <TextView
-                        android:id="@+id/Texto3_1"
+                        android:id="@+id/TextoAltura"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text=" Altura:"
+                        android:text=" Height:"
                         app:layout_constraintStart_toEndOf="@+id/img_height"
                         android:textSize="12dp"
                         app:layout_constraintTop_toTopOf="parent"
                         />
                     <TextView
-                        android:id="@+id/Texto3_2"
+                        android:id="@+id/DatoAltura"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toEndOf="@+id/img_height"
@@ -290,6 +294,7 @@
                     android:id="@+id/MedioDerecha2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     app:layout_constraintStart_toEndOf="@id/Medio2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/MedioDerecha">
@@ -304,21 +309,21 @@
                         app:layout_constraintTop_toTopOf="parent"
                         />
                     <TextView
-                        android:id="@+id/Texto4_1"
+                        android:id="@+id/TextoActividad"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text=" Nivel de Actividad:"
+                        android:text=" Activity Level:"
                         app:layout_constraintStart_toEndOf="@+id/img_nivel_actividad"
                         android:textSize="12dp"
                         app:layout_constraintTop_toTopOf="parent"
                         />
                     <TextView
-                        android:id="@+id/Texto4_2"
+                        android:id="@+id/DatoActividad"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toEndOf="@+id/img_nivel_actividad"
-                        android:text=" Moderado"
+                        android:text=" Moderate"
                         android:layout_marginBottom="4dp"
                         android:textSize="10dp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -342,6 +347,7 @@
             app:layout_constraintStart_toStartOf="@id/gl1"
             app:layout_constraintEnd_toEndOf="@id/gl2"
             app:cardCornerRadius="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/btnSave"
             app:cardElevation="6dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -379,6 +385,7 @@
                         android:textSize="12sp"/>
 
                     <EditText
+                        android:id="@+id/etDailyCal"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:hint="1800"
@@ -394,6 +401,8 @@
                         android:textSize="12sp"/>
 
                     <EditText
+                        android:id="@+id/etProteinGoal"
+
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:hint="150"
@@ -409,6 +418,7 @@
                         android:textSize="12sp"/>
 
                     <EditText
+                        android:id="@+id/etCarbsGoal"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:hint="200"
@@ -424,6 +434,7 @@
                         android:textSize="12sp"/>
 
                     <EditText
+                        android:id="@+id/etFatGoals"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:hint="65"
@@ -439,6 +450,7 @@
                         android:textSize="12sp"/>
 
                     <EditText
+                        android:id="@+id/etWaterGoals"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:hint="8"
@@ -451,6 +463,32 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSave"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_marginHorizontal="70dp"
+            android:layout_marginVertical="5dp"
+            android:background="@drawable/save_btn_selector"
+            android:text="@string/save_changes"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardDailyGoals"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSingOut"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_marginHorizontal="70dp"
+            android:layout_marginVertical="5dp"
+            android:background="@drawable/cancel_btn_selector"
+            android:text="Sing out"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnSave"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
