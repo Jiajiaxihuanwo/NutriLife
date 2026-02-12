@@ -23,6 +23,7 @@ public class CaloriesViewModel extends ViewModel {
 
         current.put(mealType, new MacroInfo(calories, protein, carbs, fat));
         macrosMap.setValue(current);
+
     }
 
     // Obtener totales de toda la lista
