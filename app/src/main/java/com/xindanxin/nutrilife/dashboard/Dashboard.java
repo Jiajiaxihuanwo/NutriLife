@@ -27,6 +27,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.snackbar.Snackbar;
 import com.xindanxin.nutrilife.R;
 import com.xindanxin.nutrilife.util.CaloriesViewModel;
+import com.xindanxin.nutrilife.util.MacroInfo;
+import com.xindanxin.nutrilife.util.MealsStorage;
 import com.xindanxin.nutrilife.util.WeightStorage;
 
 import java.time.LocalDate;
@@ -89,15 +91,15 @@ public class Dashboard extends Fragment {
         cardAgua.startAnimation(cardaAnimacion);
         cardWeigth.startAnimation(cardaAnimacion);
 
-        totalCaloria.setText(String.valueOf(caloriesViewModel.getTotalMacros().calories));
+        totalCaloria.setText(String.valueOf(MealsStorage.getTotalMacros(requireContext()).calories));
 
         //progressBar de caloria diaria
         TextView caloriaDiaria = view.findViewById(R.id.caloriaDiaria);
         TextView restanteDiaria = view.findViewById(R.id.restanteDiaria);
         ProgressBar circleProgress = view.findViewById(R.id.circleProgress);
         String objetivoCaloria = caloriaDiaria.getText().toString();
-        int caloriaConsumida = (int)((caloriesViewModel.getTotalMacros().calories/Double.parseDouble(objetivoCaloria))*100);
-        restanteDiaria.setText(Integer.parseInt(objetivoCaloria)-caloriesViewModel.getTotalMacros().calories < 0? "0" : String.valueOf(Integer.parseInt(objetivoCaloria)-caloriesViewModel.getTotalMacros().calories));
+        int caloriaConsumida = (int)((MealsStorage.getTotalMacros(requireContext()).calories/Double.parseDouble(objetivoCaloria))*100);
+        restanteDiaria.setText(Integer.parseInt(objetivoCaloria)-MealsStorage.getTotalMacros(requireContext()).calories < 0? "0" : String.valueOf(Integer.parseInt(objetivoCaloria)-MealsStorage.getTotalMacros(requireContext()).calories));
         animateProgress(caloriaConsumida,circleProgress);
 
         //protein,carb y fat
@@ -107,10 +109,9 @@ public class Dashboard extends Fragment {
         TextView totalProtein = view.findViewById(R.id.totalProteina);
         TextView totalCarbohidrato = view.findViewById(R.id.totalCarbohidrato);
         TextView totalGrasa = view.findViewById(R.id.totalGrasa);
-        protein.setText(String.valueOf(caloriesViewModel.getTotalMacros().protein));
-        carbohidrato.setText(String.valueOf(caloriesViewModel.getTotalMacros().carbs));
-        grasa.setText(String.valueOf(caloriesViewModel.getTotalMacros().fat));
-
+        protein.setText(String.valueOf(MealsStorage.getTotalMacros(requireContext()).protein));
+        carbohidrato.setText(String.valueOf(MealsStorage.getTotalMacros(requireContext()).carbs));
+        grasa.setText(String.valueOf(MealsStorage.getTotalMacros(requireContext()).fat));
 
         heights = WeightStorage.getWeights(requireContext());
         super.onViewCreated(view, savedInstanceState);

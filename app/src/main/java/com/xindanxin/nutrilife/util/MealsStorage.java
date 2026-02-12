@@ -79,4 +79,31 @@ public class MealsStorage {
 
         saveFoodList(context,mealType, list);
     }
+
+    public static void saveTotalMacros(Context context, MacroInfo macroInfo) {
+
+        SharedPreferences prefs =
+                context.getSharedPreferences(PREFS_MEALS, Context.MODE_PRIVATE);
+
+        String json = new Gson().toJson(macroInfo);
+
+        prefs.edit()
+                .putString("TOTAL_MACROS", json)
+                .apply();
+    }
+
+    public static MacroInfo getTotalMacros(Context context) {
+
+        SharedPreferences prefs =
+                context.getSharedPreferences(PREFS_MEALS, Context.MODE_PRIVATE);
+
+        String json = prefs.getString("TOTAL_MACROS", null);
+
+        if (json != null) {
+            return new Gson().fromJson(json, MacroInfo.class);
+        }
+
+        // Si no hay datos guardados devolvemos valores en 0
+        return new MacroInfo(0, 0, 0, 0);
+    }
 }
