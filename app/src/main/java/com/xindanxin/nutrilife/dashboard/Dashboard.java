@@ -30,7 +30,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.xindanxin.nutrilife.R;
+import com.xindanxin.nutrilife.firestore.DailyGoalsFirestore;
 import com.xindanxin.nutrilife.firestore.MealsStorageFirestore;
+import com.xindanxin.nutrilife.firestore.UserProfileFirestore;
 import com.xindanxin.nutrilife.firestore.WeightStorageFirestore;
 import com.xindanxin.nutrilife.meals.FoodItem;
 import com.xindanxin.nutrilife.util.CaloriesViewModel;
@@ -49,6 +51,10 @@ public class Dashboard extends Fragment {
     private WeightStorageFirestore weightStorageFirestore;
 
     private CaloriesViewModel caloriesViewModel;
+
+    //objetivos que viene dle profile
+    TextView objetivoCaloria,totalProtein,totalCarbohidrato,totalGrasa;
+    int vasosDani;
 
     public Dashboard() {
         // Required empty public constructor
@@ -69,6 +75,11 @@ public class Dashboard extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         weightStorageFirestore = new WeightStorageFirestore(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+        objetivoCaloria = view.findViewById(R.id.restanteDiaria);
+        totalProtein = view.findViewById(R.id.totalProteina);
+        totalCarbohidrato = view.findViewById(R.id.totalCarbohidrato);
+        totalGrasa = view.findViewById(R.id.totalGrasa);
 
         //animacion
         TextView totalCaloria = view.findViewById(R.id.totalCaloria);
@@ -120,11 +131,9 @@ public class Dashboard extends Fragment {
         cardWeigth.startAnimation(cardaAnimacion);
 
 
-        //objetivos que viene dle profile
-        String objetivoCaloria = caloriaDiaria.getText().toString();
-        TextView totalProtein = view.findViewById(R.id.totalProteina);
-        TextView totalCarbohidrato = view.findViewById(R.id.totalCarbohidrato);
-        TextView totalGrasa = view.findViewById(R.id.totalGrasa);
+
+
+
 
         weightStorageFirestore.getWeights(weights -> {
             this.weights = weights;
@@ -136,7 +145,6 @@ public class Dashboard extends Fragment {
         ProgressBar progressBar = view.findViewById(R.id.waterProgress);
         RecyclerView rvAgua = view.findViewById(R.id.rvAgua);
         rvAgua.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        int vasosDani = 20;
         TextView cantidadAgua = view.findViewById(R.id.totalAgua);
         cantidadAgua.setText(String.valueOf(vasosDani));
         List<Boolean> aguasTomadas = new ArrayList<>();
@@ -327,6 +335,26 @@ public class Dashboard extends Fragment {
                 caloriesViewModel.setMacros(mealType, calories, protein, carbs, fats);
             });
         }
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        loadDailyGoalsFromFirestore();
+    }
+
+    private void loadDailyGoalsFromFirestore() {
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DailyGoalsFirestore firestore = new DailyGoalsFirestore(uid);
+
+        firestore.getGoals(goal ->{
+            objetivoCaloria.setText(String.valueOf(goal.get("Cal")));
+            totalCarbohidrato.setText(String.valueOf(goal.get("Carbs")));
+            totalProtein.setText(String.valueOf(goal.get("Protein")));
+            totalGrasa.setText(String.valueOf(goal.get("Fats")));
+            vasosDani = (goal.get("Water")!=null)? goal.get("Water") :0;
+
+        });
     }
 
 }
