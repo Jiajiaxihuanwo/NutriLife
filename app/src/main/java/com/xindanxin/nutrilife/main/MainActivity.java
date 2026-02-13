@@ -1,5 +1,6 @@
 package com.xindanxin.nutrilife.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -10,7 +11,10 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.xindanxin.nutrilife.R;
+import com.xindanxin.nutrilife.auth.Login;
 import com.xindanxin.nutrilife.dashboard.Dashboard;
 import com.xindanxin.nutrilife.meals.Meals;
 import com.xindanxin.nutrilife.profile.Profile;
@@ -49,5 +53,18 @@ public class MainActivity extends AppCompatActivity {
         });
 
         bottomNav.setSelectedItemId(R.id.nav_dashboard);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user == null) {
+            // No hay sesión → mandar a Login
+            startActivity(new Intent(this, Login.class));
+            finish();
+        }
     }
 }

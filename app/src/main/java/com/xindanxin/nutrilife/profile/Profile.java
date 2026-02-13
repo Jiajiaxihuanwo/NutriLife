@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.xindanxin.nutrilife.R;
 import com.xindanxin.nutrilife.auth.Login;
 
@@ -40,6 +41,7 @@ public class Profile extends Fragment {
         // Botón Sign Out
         AppCompatButton btnSignOut = view.findViewById(R.id.btnSingOut);
         btnSignOut.setOnClickListener(v -> {
+            FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(requireContext(), Login.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);

@@ -20,6 +20,7 @@ public class SearchFoodAdapter extends RecyclerView.Adapter<SearchFoodAdapter.Fo
         TextView protein;
         TextView carb;
         TextView fat;
+
         FoodViewHolder(View itemView) {
             super(itemView);
             mealName = itemView.findViewById(R.id.tvFoodName);
@@ -45,7 +46,7 @@ public class SearchFoodAdapter extends RecyclerView.Adapter<SearchFoodAdapter.Fo
     }
 
     // metodo para actualizar la lista
-    public void updateList(List<FoodItem> newFoods){
+    public void updateList(List<FoodItem> newFoods) {
         this.foods.clear();
         this.foods.addAll(newFoods);
         notifyDataSetChanged();
@@ -63,10 +64,10 @@ public class SearchFoodAdapter extends RecyclerView.Adapter<SearchFoodAdapter.Fo
     public void onBindViewHolder(@NonNull FoodViewHolder holder, int position) {
         FoodItem food = foods.get(position);
         holder.mealName.setText(food.getMealName()); // Muestra el nombre de la comida
-        holder.calories.setText(food.getCalories());
-        holder.protein.setText(food.valorProteinas());
-        holder.carb.setText(food.valorCarbohidratos());
-        holder.fat.setText(food.valorGrasas());
+        holder.calories.setText(food.valueOfCalories());
+        holder.protein.setText(food.valueOfProtein());
+        holder.carb.setText(food.valueOfCarbs());
+        holder.fat.setText(food.valueOfFats());
 
         //itemView corresponde a toda la linea, por lo tanto doy una accion al presionar una linea
         holder.itemView.setOnClickListener(v -> listener.onFoodClick(food));

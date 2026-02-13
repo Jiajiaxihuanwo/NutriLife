@@ -8,41 +8,42 @@ import java.util.Map;
 
 public class CaloriesViewModel extends ViewModel {
 
+    // Mapa de macros por mealType
     private final MutableLiveData<Map<String, MacroInfo>> macrosMap =
             new MutableLiveData<>(new HashMap<>());
 
-    // Devuelve todos los macros
+    // LiveData de totales (calorías, proteínas, carbs, fats)
+    private final MutableLiveData<MacroInfo> totalMacrosLiveData =
+            new MutableLiveData<>(new MacroInfo(0,0,0,0));
+
+    // Devuelve todos los macros por mealType
     public LiveData<Map<String, MacroInfo>> getMacros() {
         return macrosMap;
     }
 
-    // Setea los macros de un mealType
+    // Devuelve los totales de toda la lista
+    public LiveData<MacroInfo> getTotalMacros() {
+        return totalMacrosLiveData;
+    }
+
+    // Setea los macros de un mealType y actualiza totales
     public void setMacros(String mealType, int calories, int protein, int carbs, int fat) {
         Map<String, MacroInfo> current = macrosMap.getValue();
         if (current == null) current = new HashMap<>();
 
+        // Actualiza o agrega el mealType
         current.put(mealType, new MacroInfo(calories, protein, carbs, fat));
         macrosMap.setValue(current);
 
-    }
-
-    // Obtener totales de toda la lista
-    public MacroInfo getTotalMacros() {
-        int totalCalories = 0;
-        int totalProtein = 0;
-        int totalCarbs = 0;
-        int totalFat = 0;
-
-        Map<String, MacroInfo> current = macrosMap.getValue();
-        if (current != null) {
-            for (MacroInfo m : current.values()) {
-                totalCalories += m.calories;
-                totalProtein += m.protein;
-                totalCarbs += m.carbs;
-                totalFat += m.fat;
-            }
+        // Recalcula totales
+        int totalCalories = 0, totalProtein = 0, totalCarbs = 0, totalFat = 0;
+        for (MacroInfo m : current.values()) {
+            totalCalories += m.getCalories();
+            totalProtein += m.getProtein();
+            totalCarbs += m.getCarbs();
+            totalFat += m.getFats();
         }
 
-        return new MacroInfo(totalCalories, totalProtein, totalCarbs, totalFat);
+        totalMacrosLiveData.setValue(new MacroInfo(totalCalories, totalProtein, totalCarbs, totalFat));
     }
 }

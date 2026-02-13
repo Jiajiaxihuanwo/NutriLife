@@ -3,6 +3,7 @@ package com.xindanxin.nutrilife.dashboard;
 import android.animation.ObjectAnimator;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,35 +26,31 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
 import com.xindanxin.nutrilife.R;
+import com.xindanxin.nutrilife.firestore.MealsStorageFirestore;
+import com.xindanxin.nutrilife.firestore.WeightStorageFirestore;
+import com.xindanxin.nutrilife.meals.FoodItem;
 import com.xindanxin.nutrilife.util.CaloriesViewModel;
-import com.xindanxin.nutrilife.util.MacroInfo;
-import com.xindanxin.nutrilife.util.MealsStorage;
 import com.xindanxin.nutrilife.util.WeightStorage;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Dashboard extends Fragment {
 
     private LinearLayout barChartContainer;
-    List<Integer> heights = new ArrayList<>();
+    List<Integer> weights = new ArrayList<>();
 
-    CaloriesViewModel caloriesViewModel;
+    private WeightStorageFirestore weightStorageFirestore;
+
+    private CaloriesViewModel caloriesViewModel;
 
     public Dashboard() {
         // Required empty public constructor
-    }
-
-    public static Dashboard newInstance(String param1, String param2) {
-        Dashboard fragment = new Dashboard();
-        Bundle args = new Bundle();
-        args.putString("param1", param1);
-        args.putString("param2", param2);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -69,6 +66,9 @@ public class Dashboard extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
+        weightStorageFirestore = new WeightStorageFirestore(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
         //animacion
         TextView totalCaloria = view.findViewById(R.id.totalCaloria);
         TextView consumed = view.findViewById(R.id.consumed_text);
@@ -78,7 +78,34 @@ public class Dashboard extends Fragment {
         CardView card4 = view.findViewById(R.id.card4);
         CardView cardAgua = view.findViewById(R.id.cardAgua);
         CardView cardWeigth = view.findViewById(R.id.progress);
+
+        TextView caloriaDiaria = view.findViewById(R.id.caloriaDiaria);
+        TextView restanteDiaria = view.findViewById(R.id.restanteDiaria);
+        ProgressBar circleProgress = view.findViewById(R.id.circleProgress);
+        TextView protein = view.findViewById(R.id.proteina);
+        TextView carbohidrato = view.findViewById(R.id.carbohidrato);
+        TextView grasa = view.findViewById(R.id.grasa);
+
         caloriesViewModel = new ViewModelProvider(getActivity()).get(CaloriesViewModel.class);
+
+        // Cargar los macros iniciales desde Firestore
+        loadInitialMacros();
+
+        caloriesViewModel.getTotalMacros().observe(getViewLifecycleOwner(), macroInfo -> {
+            if (macroInfo == null) return;
+
+            totalCaloria.setText(String.valueOf(macroInfo.getCalories()));
+            protein.setText(String.valueOf(macroInfo.getProtein()));
+            carbohidrato.setText(String.valueOf(macroInfo.getCarbs()));
+            grasa.setText(String.valueOf(macroInfo.getFats()));
+
+            // progresos
+            int objetivo = Integer.parseInt(caloriaDiaria.getText().toString());
+            int porcentaje = (int)((macroInfo.getCalories() / (float) objetivo) * 100);
+            animateProgress(porcentaje, circleProgress);
+            int restante = objetivo - macroInfo.getCalories();
+            restanteDiaria.setText(restante < 0 ? "0" : String.valueOf(restante));
+        });
 
         Animation cardaAnimacion = AnimationUtils.loadAnimation(view.getContext(),R.anim.dashboard_anim_card);
         Animation animacion = AnimationUtils.loadAnimation(view.getContext(), R.anim.dashboard_anim_letra);
@@ -91,29 +118,17 @@ public class Dashboard extends Fragment {
         cardAgua.startAnimation(cardaAnimacion);
         cardWeigth.startAnimation(cardaAnimacion);
 
-        totalCaloria.setText(String.valueOf(MealsStorage.getTotalMacros(requireContext()).calories));
 
-        //progressBar de caloria diaria
-        TextView caloriaDiaria = view.findViewById(R.id.caloriaDiaria);
-        TextView restanteDiaria = view.findViewById(R.id.restanteDiaria);
-        ProgressBar circleProgress = view.findViewById(R.id.circleProgress);
+        //objetivos que viene dle profile
         String objetivoCaloria = caloriaDiaria.getText().toString();
-        int caloriaConsumida = (int)((MealsStorage.getTotalMacros(requireContext()).calories/Double.parseDouble(objetivoCaloria))*100);
-        restanteDiaria.setText(Integer.parseInt(objetivoCaloria)-MealsStorage.getTotalMacros(requireContext()).calories < 0? "0" : String.valueOf(Integer.parseInt(objetivoCaloria)-MealsStorage.getTotalMacros(requireContext()).calories));
-        animateProgress(caloriaConsumida,circleProgress);
-
-        //protein,carb y fat
-        TextView protein = view.findViewById(R.id.proteina);
-        TextView carbohidrato = view.findViewById(R.id.carbohidrato);
-        TextView grasa = view.findViewById(R.id.grasa);
         TextView totalProtein = view.findViewById(R.id.totalProteina);
         TextView totalCarbohidrato = view.findViewById(R.id.totalCarbohidrato);
         TextView totalGrasa = view.findViewById(R.id.totalGrasa);
-        protein.setText(String.valueOf(MealsStorage.getTotalMacros(requireContext()).protein));
-        carbohidrato.setText(String.valueOf(MealsStorage.getTotalMacros(requireContext()).carbs));
-        grasa.setText(String.valueOf(MealsStorage.getTotalMacros(requireContext()).fat));
 
-        heights = WeightStorage.getWeights(requireContext());
+        weightStorageFirestore.getWeights(weights -> {
+            this.weights = weights;
+            refreshChart();
+        });
         super.onViewCreated(view, savedInstanceState);
         //rv del agua
         TextView textView = view.findViewById(R.id.aguaDiaria);
@@ -207,9 +222,9 @@ public class Dashboard extends Fragment {
         } else {
             todayIndex = 0;
         }
-        if (heights.isEmpty()) {
+        if (weights.isEmpty()) {
             for (int i = 0; i < 7; i++) {
-                heights.add(null);
+                weights.add(null);
             }
         }
 
@@ -219,8 +234,8 @@ public class Dashboard extends Fragment {
             String text = valorPeso.getText().toString().trim();
             if (text.isEmpty()) return;
             int value = Integer.parseInt(text);
-            heights.set(todayIndex, value);
-            WeightStorage.save(requireContext(),heights);
+            weights.set(todayIndex, value);
+            weightStorageFirestore.saveWeights(weights);
             peso.setVisibility(View.GONE);
 //            fondo.setVisibility(View.GONE);
             refreshChart();
@@ -255,14 +270,17 @@ public class Dashboard extends Fragment {
         barChartContainer.post(() -> {
             int containerHeight = barChartContainer.getHeight();
 
-            int max = heights.stream().max((a, b) -> a - b).orElseThrow();
+            int max = weights.stream()
+                    .filter(Objects::nonNull)
+                    .max(Integer::compareTo)
+                    .orElse(0);
 
             // Si todos los valores son 0, no dibujamos nada
             if (max <= 0) {
                 max = 1; // Evita división por cero
             }
 
-            for (Integer v : heights) {
+            for (Integer v : weights) {
                 View bar = new View(getContext());
                 int barHeight = 0;
                 if (v != null) {
@@ -281,4 +299,27 @@ public class Dashboard extends Fragment {
             }
         });
     }
+
+    private void loadInitialMacros() {
+        MealsStorageFirestore firestore = new MealsStorageFirestore();
+        String[] mealTypes = {"Breakfast", "Lunch", "Dinner","Snacks","Default"};
+
+        for (String mealType : mealTypes) {
+            firestore.getFoodItems(mealType, foodItems -> {
+                int calories = 0, protein = 0, carbs = 0, fats = 0;
+
+                for (FoodItem f : foodItems) {
+                    calories += f.getCalories();
+                    protein += f.getProtein();
+                    carbs += f.getCarbs();
+                    fats += f.getFats();
+                    Log.e("Dashboard",Integer.toString(caloriesViewModel.getTotalMacros().getValue().calories));
+                }
+
+                caloriesViewModel.setMacros(mealType, calories, protein, carbs, fats);
+            });
+        }
+
+    }
+
 }

@@ -4,12 +4,44 @@ public class MacroInfo {
     public int calories;
     public int protein;
     public int carbs;
-    public int fat;
+    public int fats;
 
-    public MacroInfo(int calories, int protein, int carbs, int fat) {
+    public MacroInfo(int calories, int protein, int carbs, int fats) {
         this.calories = calories;
         this.protein = protein;
         this.carbs = carbs;
-        this.fat = fat;
+        this.fats = fats;
+    }
+
+    public int getCalories() {
+        return calories;
+    }
+
+    public void setCalories(int calories) {
+        this.calories = calories;
+    }
+
+    public int getProtein() {
+        return protein;
+    }
+
+    public void setProtein(int protein) {
+        this.protein = protein;
+    }
+
+    public int getCarbs() {
+        return carbs;
+    }
+
+    public void setCarbs(int carbs) {
+        this.carbs = carbs;
+    }
+
+    public int getFats() {
+        return fats;
+    }
+
+    public void setFats(int fat) {
+        this.fats = fat;
     }
 }
