@@ -32,7 +32,6 @@ import com.xindanxin.nutrilife.firestore.MealsStorageFirestore;
 import com.xindanxin.nutrilife.firestore.WeightStorageFirestore;
 import com.xindanxin.nutrilife.meals.FoodItem;
 import com.xindanxin.nutrilife.util.CaloriesViewModel;
-import com.xindanxin.nutrilife.util.WeightStorage;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
