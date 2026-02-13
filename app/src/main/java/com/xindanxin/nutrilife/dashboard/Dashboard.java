@@ -1,6 +1,8 @@
 package com.xindanxin.nutrilife.dashboard;
 
 import android.animation.ObjectAnimator;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -137,12 +139,23 @@ public class Dashboard extends Fragment {
         int vasosDani = 20;
         TextView cantidadAgua = view.findViewById(R.id.totalAgua);
         cantidadAgua.setText(String.valueOf(vasosDani));
-        List<Boolean> aguasTomadas = new ArrayList<>(); //aqui traemos la capacidad del agua
+        List<Boolean> aguasTomadas = new ArrayList<>();
         for (int i = 0; i < vasosDani; i++) {
             aguasTomadas.add(false);
         }
 
         WaterAdapter adapter = new WaterAdapter(aguasTomadas);
+        rvAgua.setAdapter(adapter);
+        SharedPreferences prefs = getContext().getSharedPreferences("AguaPrefs", Context.MODE_PRIVATE);
+        int progresoGuardado = prefs.getInt("progreso", 0);
+        textView.setText(String.valueOf(progresoGuardado));
+        progressBar.setProgress((int) ((progresoGuardado * 100f) / vasosDani));
+
+        for (int i = 0; i < vasosDani; i++) {
+            boolean tomada = prefs.getBoolean("toma_" + i, false);
+            aguasTomadas.set(i, tomada);
+        }
+        adapter.notifyDataSetChanged();
 
         cardAgua.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,7 +171,6 @@ public class Dashboard extends Fragment {
 
                     Snackbar.make(view, "+1\uD83D\uDCA7", Snackbar.LENGTH_SHORT).show();
 
-
                     //logica para que vaya aumentando las tomas de agua
                     for (int i = 0; i < vasosDani; i++) {
                         if (!aguasTomadas.get(i)) {
@@ -173,15 +185,19 @@ public class Dashboard extends Fragment {
                     progressBar.setProgress(progress);
 
                     Snackbar.make(view, "+1\uD83D\uDCA6", Snackbar.LENGTH_SHORT).show();
-
                 }
                 adapter.notifyDataSetChanged();
+
+                // ===== GUARDAR DATOS ===== <<<=== AGREGADO
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putInt("progreso", newValue);
+                for (int i = 0; i < aguasTomadas.size(); i++) {
+                    editor.putBoolean("toma_" + i, aguasTomadas.get(i));
+                }
+                editor.apply();
+                // ===== FIN GUARDAR DATOS ===== <<<=== AGREGADO
             }
-
         });
-        //cargamos el recyclerview
-        rvAgua.setAdapter(adapter);
-
 
         TextView fecha = view.findViewById(R.id.fecha);
 
@@ -192,7 +208,6 @@ public class Dashboard extends Fragment {
 
             fecha.setText(today.format(formatter));
         }
-
 
 //        View fondo = view.findViewById(R.id.fondo);
         CardView progress = view.findViewById(R.id.progress);
@@ -227,7 +242,6 @@ public class Dashboard extends Fragment {
             }
         }
 
-
         //button de opcion
         add.setOnClickListener(v -> {
             String text = valorPeso.getText().toString().trim();
@@ -251,19 +265,14 @@ public class Dashboard extends Fragment {
         ObjectAnimator animator = ObjectAnimator.ofInt(
                 progressAnimacion,
                 "progress",
-                0, // 从0开始
-                targetProgress // 到目标值
+                0,
+                targetProgress
         );
-        animator.setDuration(1500); // 1.5秒
-        animator.setInterpolator(new DecelerateInterpolator()); // 减速效果
+        animator.setDuration(1500);
+        animator.setInterpolator(new DecelerateInterpolator());
         animator.start();
     }
 
-    // 使用
-
-
-
-    //cargar la tabla
     private void refreshChart() {
         barChartContainer.removeAllViews();
         barChartContainer.post(() -> {
@@ -318,7 +327,6 @@ public class Dashboard extends Fragment {
                 caloriesViewModel.setMacros(mealType, calories, protein, carbs, fats);
             });
         }
-
     }
 
 }
