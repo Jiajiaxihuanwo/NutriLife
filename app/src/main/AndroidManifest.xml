@@ -12,9 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NutriLife">
         <activity
-            android:name=".goal.goal"
-            android:exported="false" />
-        <activity
             android:name=".main.MainActivity"
             android:exported="true">
             <intent-filter>
@@ -32,10 +29,10 @@
         <activity
             android:name=".auth.Splash"
             android:exported="true"
-            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
 
         <meta-data
-            android:name="preloaded_fonts"
+            android:name="prelo aded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
 

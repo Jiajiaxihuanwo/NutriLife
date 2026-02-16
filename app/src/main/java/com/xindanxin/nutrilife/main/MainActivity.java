@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.xindanxin.nutrilife.R;
 import com.xindanxin.nutrilife.auth.Login;
 import com.xindanxin.nutrilife.dashboard.Dashboard;
+import com.xindanxin.nutrilife.goal.goal;
 import com.xindanxin.nutrilife.meals.Meals;
 import com.xindanxin.nutrilife.profile.Profile;
 
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
             } else if (item.getItemId() == R.id.nav_calendar) {
 //                fragment = new Planner();
             } else if (item.getItemId() == R.id.nav_goals) {
-//                fragment = new Goals();
+                fragment = new goal();
             } else if (item.getItemId() == R.id.nav_profile) {
                  fragment = new Profile();
             }
