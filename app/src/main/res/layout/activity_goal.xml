@@ -49,8 +49,7 @@
             android:animateLayoutChanges="true"
             android:orientation="vertical">
 
-
-
+            <!-- Water Master 模块 -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/water_card"
                 android:layout_width="match_parent"
@@ -74,7 +73,6 @@
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
-                        <!-- 彩虹图标背景 -->
                         <LinearLayout
                             android:layout_width="56dp"
                             android:layout_height="56dp"
@@ -92,7 +90,6 @@
                                 app:tint="#00A4BA" />
                         </LinearLayout>
 
-                        <!-- 标题和进度 -->
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -119,10 +116,9 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="sans-serif-medium"
-                                    android:text="3"
                                     android:layout_margin="1dp"
                                     android:textColor="#10B981"
-                                    android:textSize="12sp" />
+                                    android:textSize="15sp" />
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -136,7 +132,6 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="sans-serif-medium"
-                                    android:text="5"
                                     android:layout_margin="1dp"
                                     android:textColor="#10B981"
                                     android:textSize="15sp" />
@@ -164,6 +159,7 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
+            <!-- 新增：Carb Champion (碳水冠军) 模块 -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -197,13 +193,12 @@
                                 android:layout_height="40dp"
                                 android:layout_gravity="center"
                                 android:layout_margin="16dp"
-                                android:background="@drawable/food_background"
+                                android:background="@drawable/carb_background"
                                 android:padding="6dp"
-                                android:src="@drawable/goal_eat"
-                                app:tint="#8C5000" />
+                                android:src="@drawable/goal_carb_foreground"
+                                app:tint="#419D46" />
                         </LinearLayout>
 
-                        <!-- 标题和进度 -->
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -220,20 +215,19 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Plan Complete"
+                                    android:text="Carb Champion"
                                     android:textColor="#1F2937"
                                     android:textSize="16sp"
                                     android:textStyle="bold" />
 
                                 <TextView
-                                    android:id="@+id/verdura_tomado"
+                                    android:id="@+id/carb_tomado"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="sans-serif-medium"
-                                    android:text="0"
                                     android:layout_margin="1dp"
                                     android:textColor="#10B981"
-                                    android:textSize="12sp" />
+                                    android:textSize="15sp" />
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -243,11 +237,10 @@
                                     android:textColor="#10B981"
                                     android:textSize="15sp" />
                                 <TextView
-                                    android:id="@+id/verdura_total"
+                                    android:id="@+id/carb_total"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="sans-serif-medium"
-                                    android:text="1"
                                     android:layout_margin="1dp"
                                     android:textColor="#10B981"
                                     android:textSize="15sp" />
@@ -257,7 +250,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
-                                android:text="Finish eating within 20 minutes"
+                                android:text="Hit your daily carb target"
                                 android:textColor="#6B7280"
                                 android:textSize="12sp" />
 
@@ -265,7 +258,7 @@
                     </LinearLayout>
 
                     <ProgressBar
-                        android:id="@+id/food_progress"
+                        android:id="@+id/carb_progress"
                         style="?android:attr/progressBarStyleHorizontal"
                         android:layout_width="match_parent"
                         android:layout_height="10dp"
@@ -275,6 +268,7 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
+            <!-- Protein Hunter 模块 (保留) -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -297,7 +291,6 @@
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
-                        <!-- 彩虹图标背景 -->
                         <LinearLayout
                             android:layout_width="56dp"
                             android:layout_height="56dp"
@@ -315,7 +308,6 @@
                                 app:tint="#C7980C" />
                         </LinearLayout>
 
-                        <!-- 标题和进度 -->
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -342,10 +334,9 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="sans-serif-medium"
-                                    android:text="3"
                                     android:layout_margin="1dp"
                                     android:textColor="#10B981"
-                                    android:textSize="12sp" />
+                                    android:textSize="15sp" />
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -359,7 +350,6 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="sans-serif-medium"
-                                    android:text="5"
                                     android:layout_margin="1dp"
                                     android:textColor="#10B981"
                                     android:textSize="15sp" />
@@ -387,6 +377,116 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
+            <!-- 新增：Fat Strategist (脂肪策略师) 模块 -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:layout_marginEnd="16dp"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_gravity="center"
+                                android:layout_margin="16dp"
+                                android:background="@drawable/fat_background"
+                                android:padding="8dp"
+                                android:src="@drawable/goal_fat_foreground"
+                                app:tint="#FCFEFF" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Fat Strategist"
+                                    android:textColor="#1F2937"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/fat_tomado"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:layout_margin="1dp"
+                                    android:textColor="#10B981"
+                                    android:textSize="15sp" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="/"
+                                    android:layout_margin="1dp"
+                                    android:textColor="#10B981"
+                                    android:textSize="15sp" />
+                                <TextView
+                                    android:id="@+id/fat_total"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:layout_margin="1dp"
+                                    android:textColor="#10B981"
+                                    android:textSize="15sp" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="Optimize your healthy fat intake"
+                                android:textColor="#6B7280"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <ProgressBar
+                        android:id="@+id/fat_progress"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:layout_marginVertical="16dp"
+                        android:max="100"
+                        android:progress="0" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- New Food Try 模块 (保留) -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/new_food_card"
                 android:layout_width="match_parent"
@@ -411,7 +511,6 @@
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
-                        <!-- 彩虹图标背景 -->
                         <LinearLayout
                             android:layout_width="56dp"
                             android:layout_height="56dp"
@@ -429,7 +528,6 @@
                                 app:tint="#673AB7" />
                         </LinearLayout>
 
-                        <!-- 标题和进度 -->
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -456,10 +554,9 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="sans-serif-medium"
-                                    android:text="0"
                                     android:layout_margin="1dp"
                                     android:textColor="#10B981"
-                                    android:textSize="12sp" />
+                                    android:textSize="15sp" />
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -519,12 +616,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnCount="2"
-                android:rowCount="2"
+                android:rowCount="3"
                 android:alignmentMode="alignMargins"
                 android:columnOrderPreserved="false"
                 android:padding="4dp"
                 android:layout_marginBottom="24dp">
 
+                <!-- Water Master (保留) -->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/goal1"
                     android:layout_width="0dp"
@@ -534,7 +632,8 @@
                     app:cardCornerRadius="12dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="8dp"
-                    app:cardBackgroundColor="#C5C5C5">
+                    app:cardBackgroundColor="#C5C5C5"
+                    android:foreground="?android:attr/selectableItemBackground">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -566,7 +665,6 @@
                             android:textSize="14sp"
                             android:layout_marginBottom="4dp" />
 
-
                         <TextView
                             android:id="@+id/water_status"
                             android:layout_width="wrap_content"
@@ -579,6 +677,7 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
+                <!-- 新增：Carb Champion 网格项 -->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/goal2"
                     android:layout_width="0dp"
@@ -608,10 +707,10 @@
                             android:layout_marginBottom="8dp">
 
                             <ImageView
-                                android:id="@+id/plan_icon"
+                                android:id="@+id/carb_icon"
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
-                                android:src="@drawable/goal_eat"
+                                android:src="@drawable/goal_carb_foreground"
                                 android:padding="8dp"
                                 android:background="@drawable/not_completed"
                                 app:tint="#DEDEDE" />
@@ -620,13 +719,13 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Plan Complete"
+                            android:text="Carb Champion"
                             android:textSize="14sp"
                             android:textColor="#1F2937"
                             android:layout_marginBottom="4dp" />
 
                         <TextView
-                            android:id="@+id/plan_status"
+                            android:id="@+id/carb_status"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Not completed"
@@ -637,6 +736,7 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
+                <!-- Protein Hunter (保留) -->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/goal3"
                     android:layout_width="0dp"
@@ -697,6 +797,7 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
+                <!-- 新增：Fat Strategist 网格项 -->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/goal4"
                     android:layout_width="0dp"
@@ -708,6 +809,62 @@
                     android:layout_marginRight="16dp"
                     android:layout_marginTop="16dp"
                     app:cardBackgroundColor="#C5C5C5">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp"
+                        android:gravity="center">
+
+                        <LinearLayout
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:gravity="center"
+                            android:layout_marginBottom="8dp">
+
+                            <ImageView
+                                android:id="@+id/fat_icon"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:padding="8dp"
+                                android:src="@drawable/goal_fat_foreground"
+                                android:background="@drawable/not_completed"
+                                app:tint="#DEDEDE" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Fat Strategist"
+                            android:textSize="14sp"
+                            android:layout_marginBottom="4dp" />
+
+                        <TextView
+                            android:id="@+id/fat_status"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Not completed"
+                            android:textSize="11sp"
+                            android:textColor="#9CA3AF"
+                            android:layout_marginTop="8dp"
+                            android:drawablePadding="4dp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- New Food Try (保留) -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/goal5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    app:cardElevation="2dp"
+                    app:cardCornerRadius="12dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="16dp"
+                    app:cardBackgroundColor="#C5C5C5"
+                    android:layout_columnSpan="2">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -738,7 +895,6 @@
                             android:text="New Food Try"
                             android:textSize="14sp"
                             android:layout_marginBottom="4dp" />
-
 
                         <TextView
                             android:id="@+id/new_food_status"

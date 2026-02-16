@@ -11,6 +11,7 @@ public class DailyGoalsFirestore {
 
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private final String uid;
+    private static final String WATER_INTAKE_FIELD = "WaterIntake";
     private static final String DOC_NAME = "dailyGoals";
 
     public DailyGoalsFirestore(String uid) {
@@ -58,5 +59,42 @@ public class DailyGoalsFirestore {
                 .collection("goals")
                 .document(DOC_NAME)
                 .set(data);
+    }
+
+    public void saveWaterIntake(int waterIntake) {
+        Map<String, Object> data = new HashMap<>();
+        data.put(WATER_INTAKE_FIELD, waterIntake);
+
+        // 使用update而不是set，避免覆盖其他字段
+        db.collection("users")
+                .document(uid)
+                .collection("goals")
+                .document(DOC_NAME)
+                .update(data)
+                // 如果文档不存在，先创建再更新
+                .addOnFailureListener(e -> {
+                    saveGoals(0, 0, 0, 0, 0); // 先初始化空文档
+                    db.collection("users")
+                            .document(uid)
+                            .collection("goals")
+                            .document(DOC_NAME)
+                            .update(data);
+                });
+    }
+
+    // 新增方法2：获取已饮用的水量（get agua tomada）
+    public void getWaterIntake(@NonNull OnSuccessListener<Integer> listener) {
+        db.collection("users")
+                .document(uid)
+                .collection("goals")
+                .document(DOC_NAME)
+                .get()
+                .addOnSuccessListener(document -> {
+                    int waterIntake = 0;
+                    if (document.exists() && document.getLong(WATER_INTAKE_FIELD) != null) {
+                        waterIntake = document.getLong(WATER_INTAKE_FIELD).intValue();
+                    }
+                    listener.onSuccess(waterIntake);
+                });
     }
 }

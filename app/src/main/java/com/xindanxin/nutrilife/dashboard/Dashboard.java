@@ -55,13 +55,13 @@ public class Dashboard extends Fragment {
     // objetivos que viene del profile
     TextView objetivoCaloria, totalProtein, totalCarbohidrato, totalGrasa;
     int vasosDani;
-
-    // 喝水相关UI组件（提取为成员变量，方便刷新）
     private RecyclerView rvAgua;
     private ProgressBar waterProgress;
-    private TextView cantidadAgua;
+    private TextView cantidadAgua,peso;
     private List<Boolean> aguasTomadas = new ArrayList<>();
     private WaterAdapter waterAdapter;
+
+    TextView caloriaDiaria;
 
     public Dashboard() {
         // Required empty public constructor
@@ -83,34 +83,18 @@ public class Dashboard extends Fragment {
 
         super.onViewCreated(view, savedInstanceState);
 
-        // 初始化Firestore
         weightStorageFirestore = new WeightStorageFirestore(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
-        // 初始化基础UI组件
+        caloriaDiaria = view.findViewById(R.id.caloriaDiaria);
         initBasicViews(view);
-
-        // 初始化动画
         initAnimations(view);
-
-        // 初始化喝水UI（先初始化，等数据加载后刷新）
         initWaterViews(view);
-
-        // 初始化卡路里/宏量营养素ViewModel
         initCaloriesViewModel(view);
-
-        // 加载每日目标（包括水目标），加载完成后刷新喝水UI
         loadDailyGoalsFromFirestore();
-
-        // 加载初始宏量营养素数据
         loadInitialMacros();
-
-        // 加载体重数据
         loadWeightsData();
     }
 
-    /**
-     * 初始化基础UI组件
-     */
     private void initBasicViews(View view) {
         objetivoCaloria = view.findViewById(R.id.restanteDiaria);
         totalProtein = view.findViewById(R.id.totalProteina);
@@ -124,7 +108,6 @@ public class Dashboard extends Fragment {
             fecha.setText(today.format(formatter));
         }
 
-        // 体重相关UI
         View fondo = view.findViewById(R.id.fondo);
         CardView progress = view.findViewById(R.id.progress);
         CardView peso = view.findViewById(R.id.peso);
@@ -151,6 +134,7 @@ public class Dashboard extends Fragment {
             weightStorageFirestore.saveWeights(weights);
             peso.setVisibility(View.GONE);
             fondo.setVisibility(View.GONE);
+
             refreshChart();
         });
 
@@ -159,10 +143,6 @@ public class Dashboard extends Fragment {
             fondo.setVisibility(View.GONE);
         });
     }
-
-    /**
-     * 初始化动画
-     */
     private void initAnimations(View view) {
         TextView totalCaloria = view.findViewById(R.id.totalCaloria);
         TextView consumed = view.findViewById(R.id.consumed_text);
@@ -183,29 +163,13 @@ public class Dashboard extends Fragment {
         card4.startAnimation(cardaAnimacion);
         cardAgua.startAnimation(cardaAnimacion);
         cardWeigth.startAnimation(cardaAnimacion);
-
-        // 喝水卡片点击事件（提取到这里，避免重复代码）
         cardAgua.setOnClickListener(v -> onWaterCardClick());
     }
-
-    /**
-     * 初始化喝水相关UI组件
-     */
     private void initWaterViews(View view) {
         textView = view.findViewById(R.id.aguaDiaria);
         waterProgress = view.findViewById(R.id.waterProgress);
-        rvAgua = view.findViewById(R.id.rvAgua);
         cantidadAgua = view.findViewById(R.id.totalAgua);
-
-        // 初始化RecyclerView
-        rvAgua.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        waterAdapter = new WaterAdapter(aguasTomadas);
-        rvAgua.setAdapter(waterAdapter);
     }
-
-    /**
-     * 初始化卡路里ViewModel
-     */
     private void initCaloriesViewModel(View view) {
         TextView totalCaloria = view.findViewById(R.id.totalCaloria);
         TextView caloriaDiaria = view.findViewById(R.id.caloriaDiaria);
@@ -214,6 +178,7 @@ public class Dashboard extends Fragment {
         TextView protein = view.findViewById(R.id.proteina);
         TextView carbohidrato = view.findViewById(R.id.carbohidrato);
         TextView grasa = view.findViewById(R.id.grasa);
+
 
         caloriesViewModel = new ViewModelProvider(getActivity()).get(CaloriesViewModel.class);
         caloriesViewModel.getTotalMacros().observe(getViewLifecycleOwner(), macroInfo -> {
@@ -224,7 +189,6 @@ public class Dashboard extends Fragment {
             carbohidrato.setText(String.valueOf(macroInfo.getCarbs()));
             grasa.setText(String.valueOf(macroInfo.getFats()));
 
-            // 进度计算（增加非空判断，避免崩溃）
             try {
                 int objetivo = Integer.parseInt(caloriaDiaria.getText().toString());
                 int porcentaje = (int) ((macroInfo.getCalories() / (float) objetivo) * 100);
@@ -237,9 +201,7 @@ public class Dashboard extends Fragment {
         });
     }
 
-    /**
-     * 加载体重数据
-     */
+
     private void loadWeightsData() {
         weightStorageFirestore.getWeights(weights -> {
             this.weights = weights;
@@ -251,78 +213,59 @@ public class Dashboard extends Fragment {
             refreshChart();
         });
     }
-
-    /**
-     * 加载每日目标（关键修复：加载完成后刷新喝水UI）
-     */
     private void loadDailyGoalsFromFirestore() {
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DailyGoalsFirestore firestore = new DailyGoalsFirestore(uid);
 
         firestore.getGoals(goal -> {
-            // 更新目标值
             objetivoCaloria.setText(String.valueOf(goal.get("Cal")));
             totalCarbohidrato.setText(String.valueOf(goal.get("Carbs")));
+            caloriaDiaria.setText(String.valueOf(goal.get("Cal")));
             totalProtein.setText(String.valueOf(goal.get("Protein")));
             totalGrasa.setText(String.valueOf(goal.get("Fats")));
             vasosDani = (goal.get("Water") != null) ? goal.get("Water") : 0;
 
-            // 关键：水目标加载完成后，刷新喝水UI
             refreshWaterUI();
         });
     }
 
-    /**
-     * 刷新喝水相关UI（核心修复方法）
-     */
+    private DailyGoalsFirestore dailyGoalsFirestore;
     private void refreshWaterUI() {
         if (getContext() == null) return;
 
-        // 1. 更新水目标显示
+        if (dailyGoalsFirestore == null) {
+            String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            dailyGoalsFirestore = new DailyGoalsFirestore(uid);
+        }
+
         cantidadAgua.setText(String.valueOf(vasosDani));
+        dailyGoalsFirestore.getWaterIntake(waterIntake -> {
+            if (getActivity() == null) return;
 
-        // 2. 初始化/重置喝水记录列表（避免空列表）
-        aguasTomadas.clear();
-        for (int i = 0; i < vasosDani; i++) {
-            aguasTomadas.add(false);
-        }
+            getActivity().runOnUiThread(() -> {
+                int progresoGuardado = waterIntake;
 
-        // 3. 读取SharedPreferences中的保存数据
-        SharedPreferences prefs = getContext().getSharedPreferences("AguaPrefs", Context.MODE_PRIVATE);
-        int progresoGuardado = prefs.getInt("progreso", 0);
+                if (progresoGuardado > vasosDani) {
+                    progresoGuardado = vasosDani;
+                    dailyGoalsFirestore.saveWaterIntake(progresoGuardado);
+                }
 
-        // 4. 修复：如果保存的进度超过目标值，重置为目标值
-        if (progresoGuardado > vasosDani) {
-            progresoGuardado = vasosDani;
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putInt("progreso", progresoGuardado);
-            editor.apply();
-        }
+                textView.setText(String.valueOf(progresoGuardado));
 
-        // 5. 更新当前饮水量显示
-        textView.setText(String.valueOf(progresoGuardado));
-
-        // 6. 更新进度条（增加除以0判断）
-        int progress = vasosDani == 0 ? 0 : (int) ((progresoGuardado * 100f) / vasosDani);
-        waterProgress.setProgress(progress);
-
-        // 7. 加载保存的喝水记录
-        for (int i = 0; i < Math.min(aguasTomadas.size(), vasosDani); i++) {
-            boolean tomada = prefs.getBoolean("toma_" + i, false);
-            aguasTomadas.set(i, tomada);
-        }
-
-        // 8. 刷新RecyclerView
-        waterAdapter.notifyDataSetChanged();
+                int progress = vasosDani == 0 ? 0 : (int) ((progresoGuardado * 100f) / vasosDani);
+                waterProgress.setProgress(progress);
+            });
+        });
     }
 
-    /**
-     * 喝水卡片点击事件（独立封装，逻辑优化）
-     */
     private void onWaterCardClick() {
         if (vasosDani == 0) {
             Snackbar.make(getView(), "Please set water goal first!", Snackbar.LENGTH_SHORT).show();
             return;
+        }
+        if (dailyGoalsFirestore == null) {
+            String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            dailyGoalsFirestore = new DailyGoalsFirestore(uid);
         }
 
         String currentText = textView.getText().toString();
@@ -334,41 +277,19 @@ public class Dashboard extends Fragment {
         }
 
         int newValue = currentValue + 1;
-        SharedPreferences prefs = getContext().getSharedPreferences("AguaPrefs", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-
-        // 1. 未达到目标值
         if (newValue <= vasosDani) {
             textView.setText(String.valueOf(newValue));
             int progress = (int) ((newValue * 100f) / vasosDani);
             waterProgress.setProgress(progress);
             Snackbar.make(getView(), "+1\uD83D\uDCA7", Snackbar.LENGTH_SHORT).show();
-
-            // 标记对应的喝水记录为已喝
-            for (int i = 0; i < aguasTomadas.size(); i++) {
-                if (!aguasTomadas.get(i)) {
-                    aguasTomadas.set(i, true);
-                    break;
-                }
-            }
         } else {
-            // 2. 超过目标值（重置为目标值，避免数值异常）
             newValue = vasosDani;
             textView.setText(String.valueOf(newValue));
             textView.setTextColor(ContextCompat.getColor(getContext(), R.color.accent));
             waterProgress.setProgress(100);
             Snackbar.make(getView(), "Goal completed! \uD83D\uDCA6", Snackbar.LENGTH_SHORT).show();
         }
-
-        // 3. 刷新列表
-        waterAdapter.notifyDataSetChanged();
-
-        // 4. 保存数据到SharedPreferences
-        editor.putInt("progreso", newValue);
-        for (int i = 0; i < aguasTomadas.size(); i++) {
-            editor.putBoolean("toma_" + i, aguasTomadas.get(i));
-        }
-        editor.apply();
+        dailyGoalsFirestore.saveWaterIntake(newValue);
     }
 
     private void animateProgress(int targetProgress, ProgressBar progressAnimacion) {
@@ -444,7 +365,43 @@ public class Dashboard extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        // 重新加载目标并刷新喝水UI
         loadDailyGoalsFromFirestore();
+    }
+
+    private class WaterAdapter extends RecyclerView.Adapter<WaterAdapter.WaterViewHolder> {
+        private List<Boolean> waterIntakeList;
+
+        public WaterAdapter(List<Boolean> waterIntakeList) {
+            this.waterIntakeList = waterIntakeList;
+        }
+
+        @NonNull
+        @Override
+        public WaterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.water_item_layout, parent, false);
+            return new WaterViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull WaterViewHolder holder, int position) {
+            boolean isDrank = waterIntakeList.get(position);
+            holder.waterItemView.setBackgroundColor(isDrank ?
+                    ContextCompat.getColor(getContext(), R.color.blueWaterDeshboard) :
+                    ContextCompat.getColor(getContext(), R.color.light_grey));
+        }
+
+        @Override
+        public int getItemCount() {
+            return waterIntakeList.size();
+        }
+
+        public class WaterViewHolder extends RecyclerView.ViewHolder {
+            View waterItemView;
+
+            public WaterViewHolder(@NonNull View itemView) {
+                super(itemView);
+                waterItemView = itemView;
+            }
+        }
     }
 }

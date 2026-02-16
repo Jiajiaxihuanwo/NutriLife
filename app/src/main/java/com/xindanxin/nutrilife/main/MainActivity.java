@@ -44,8 +44,6 @@ public class MainActivity extends AppCompatActivity {
                 fragment = new Dashboard();
             } else if (item.getItemId() == R.id.nav_meals) {
                 fragment = new Meals();
-            } else if (item.getItemId() == R.id.nav_calendar) {
-//                fragment = new Planner();
             } else if (item.getItemId() == R.id.nav_goals) {
                 fragment = new goal();
             } else if (item.getItemId() == R.id.nav_profile) {

@@ -1,6 +1,5 @@
 package com.xindanxin.nutrilife.goal;
 
-import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,31 +15,38 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.xindanxin.nutrilife.R;
 import com.xindanxin.nutrilife.firestore.DailyGoalsFirestore;
 import com.xindanxin.nutrilife.util.CaloriesViewModel;
 
 import java.util.Map;
+import java.util.Objects;
 
 public class goal extends Fragment {
-
     private TextView aguaTomado, aguaTotal;
     private ProgressBar waterProgress;
     private CardView waterCard;
     private ImageView waterGridIcon;
     private TextView waterGridStatus;
 
-    private TextView verduraTomado, verduraTotal;
-    private ProgressBar foodProgress;
-    private CardView achievementSugar;
-    private ImageView foodGridIcon;
-    private TextView foodGridStatus;
+    private TextView carbTomado, carbTotal;
+    private ProgressBar carbProgress;
+    private CardView carbCard;
+    private ImageView carbGridIcon;
+    private TextView carbGridStatus;
 
     private TextView azucarTomado, azucarTotal;
     private ProgressBar proteinProgress;
-    private CardView achievementMindful;
+    private CardView proteinCard;
     private ImageView proteinGridIcon;
     private TextView proteinGridStatus;
+
+    private TextView fatTomado, fatTotal;
+    private ProgressBar fatProgress;
+    private CardView fatCard;
+    private ImageView fatGridIcon;
+    private TextView fatGridStatus;
 
     private TextView nuevaPrueba, vez;
     private ProgressBar newFoodProgress;
@@ -51,13 +57,24 @@ public class goal extends Fragment {
     private CaloriesViewModel caloriesViewModel;
     private int waterGoalTotal = 0;
     private int proteinGoalTotal = 0;
+    private int carbGoalTotal = 0;
+    private int fatGoalTotal = 0;
+    private DailyGoalsFirestore dailyGoalsFirestore;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_goal, container, false);
         initializeViews(view);
+
         caloriesViewModel = new ViewModelProvider(getActivity()).get(CaloriesViewModel.class);
-        loadGoalsFromFirestore();
+
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            String uid = currentUser.getUid();
+            dailyGoalsFirestore = new DailyGoalsFirestore(uid);
+            loadAllGoalData();
+        }
+
         return view;
     }
 
@@ -69,72 +86,80 @@ public class goal extends Fragment {
         waterGridIcon = view.findViewById(R.id.water_icon);
         waterGridStatus = view.findViewById(R.id.water_status);
 
-        verduraTomado = view.findViewById(R.id.verdura_tomado);
-        verduraTotal = view.findViewById(R.id.verdura_total);
-        foodProgress = view.findViewById(R.id.food_progress);
-        achievementSugar = view.findViewById(R.id.goal2);
-        foodGridIcon = view.findViewById(R.id.plan_icon);
-        foodGridStatus = view.findViewById(R.id.plan_status);
+        carbTomado = view.findViewById(R.id.carb_tomado);
+        carbTotal = view.findViewById(R.id.carb_total);
+        carbProgress = view.findViewById(R.id.carb_progress);
+        carbCard = view.findViewById(R.id.goal2);
+        carbGridIcon = view.findViewById(R.id.carb_icon);
+        carbGridStatus = view.findViewById(R.id.carb_status);
 
         azucarTomado = view.findViewById(R.id.azugar_tomado);
         azucarTotal = view.findViewById(R.id.azucar_total);
         proteinProgress = view.findViewById(R.id.protein_progress);
-        achievementMindful = view.findViewById(R.id.goal3);
+        proteinCard = view.findViewById(R.id.goal3);
         proteinGridIcon = view.findViewById(R.id.protein_icon);
         proteinGridStatus = view.findViewById(R.id.protein_status);
+
+        fatTomado = view.findViewById(R.id.fat_tomado);
+        fatTotal = view.findViewById(R.id.fat_total);
+        fatProgress = view.findViewById(R.id.fat_progress);
+        fatCard = view.findViewById(R.id.goal4);
+        fatGridIcon = view.findViewById(R.id.fat_icon);
+        fatGridStatus = view.findViewById(R.id.fat_status);
 
         nuevaPrueba = view.findViewById(R.id.nueva_prueba);
         vez = view.findViewById(R.id.vez);
         newFoodProgress = view.findViewById(R.id.new_food_progress);
-        newFoodCard = view.findViewById(R.id.goal4);
+        newFoodCard = view.findViewById(R.id.goal5);
         newFoodGridIcon = view.findViewById(R.id.new_food_icon);
         newFoodGridStatus = view.findViewById(R.id.new_food_status);
     }
 
-    private void loadGoalsFromFirestore() {
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DailyGoalsFirestore firestore = new DailyGoalsFirestore(uid);
-
-        firestore.getGoals(goal -> {
+    private void loadAllGoalData() {
+        dailyGoalsFirestore.getGoals(goal -> {
             waterGoalTotal = (goal.get("Water") != null) ? goal.get("Water") : 0;
             proteinGoalTotal = (goal.get("Protein") != null) ? goal.get("Protein") : 0;
-            loadCurrentData();
+            carbGoalTotal = (goal.get("Carbs") != null) ? goal.get("Carbs") : 0;
+            fatGoalTotal = (goal.get("Fats") != null) ? goal.get("Fats") : 0;
+
+            dailyGoalsFirestore.getWaterIntake(waterIntake -> {
+                if (getActivity() == null) return;
+                getActivity().runOnUiThread(() -> {
+                    int waterCurrent = waterIntake;
+                    loadMacroDataAndUpdateUI(waterCurrent);
+                });
+            });
         });
     }
 
-    private void loadCurrentData() {
-        int waterCurrent = getCurrentWaterIntake();
-
+    private void loadMacroDataAndUpdateUI(int waterCurrent) {
         caloriesViewModel.getTotalMacros().observe(getViewLifecycleOwner(), macroInfo -> {
             if (macroInfo == null) return;
 
             int proteinCurrent = macroInfo.getProtein();
+            int carbCurrent = macroInfo.getCarbs();
+            int fatCurrent = macroInfo.getFats();
 
-            int foodCurrent = 1;
-            int foodTotal = 1;
             int newFoodCurrent = 1;
             int newFoodTotal = 1;
 
-            updateAllGoals(waterCurrent, waterGoalTotal, foodCurrent, foodTotal,
-                    proteinCurrent, proteinGoalTotal, newFoodCurrent, newFoodTotal);
+            updateAllGoals(waterCurrent, waterGoalTotal,
+                    carbCurrent, carbGoalTotal,
+                    proteinCurrent, proteinGoalTotal,
+                    fatCurrent, fatGoalTotal,
+                    newFoodCurrent, newFoodTotal);
         });
     }
 
-    private int getCurrentWaterIntake() {
-        if (getContext() == null) return 0;
-
-        SharedPreferences prefs = getContext().getSharedPreferences("AguaPrefs", getContext().MODE_PRIVATE);
-
-        return prefs.getInt("progreso", 0);
-    }
-
     private void updateAllGoals(int waterCurrent, int waterTotal,
-                                int foodCurrent, int foodTotal,
+                                int carbCurrent, int carbTotal,
                                 int proteinCurrent, int proteinTotal,
+                                int fatCurrent, int fatTotal,
                                 int newFoodCurrent, int newFoodTotal) {
         updateWaterGoal(waterCurrent, waterTotal);
-        updateFoodGoal(foodCurrent, foodTotal);
+        updateCarbGoal(carbCurrent, carbTotal);
         updateProteinGoal(proteinCurrent, proteinTotal);
+        updateFatGoal(fatCurrent, fatTotal);
         updateNewFoodGoal(newFoodCurrent, newFoodTotal);
     }
 
@@ -153,29 +178,19 @@ public class goal extends Fragment {
                 R.drawable.goal_cup_foreground);
     }
 
-    private void updateFoodGoal(int current, int total) {
-        verduraTomado.setText(String.valueOf(current));
-        verduraTotal.setText(String.valueOf(total));
+    private void updateCarbGoal(int current, int total) {
+        carbTomado.setText(String.valueOf(current));
+        carbTotal.setText(String.valueOf(total));
 
         int progress = (total == 0) ? 0 : (current * 100) / total;
-        foodProgress.setProgress(progress);
+        carbProgress.setProgress(progress);
 
         int progressColor = (progress >= 100) ? R.color.greenApp : R.color.blueWaterDeshboard_ic;
-        foodProgress.getProgressDrawable().setColorFilter(
+        carbProgress.getProgressDrawable().setColorFilter(
                 ContextCompat.getColor(getContext(), progressColor), PorterDuff.Mode.SRC_IN);
 
-        if (foodGridIcon != null && foodGridStatus != null) {
-            updateCardStyle(achievementSugar, foodGridIcon, foodGridStatus, current >= total,
-                    R.drawable.goal_eat);
-        } else {
-            if (current >= total) {
-                achievementSugar.setCardBackgroundColor(ContextCompat.getColor(getContext(), R.color.white));
-                achievementSugar.setBackgroundTintList(
-                        ContextCompat.getColorStateList(getContext(), R.color.achievements2Goal));
-            } else {
-                achievementSugar.setCardBackgroundColor(ContextCompat.getColor(getContext(), R.color.light_grey));
-            }
-        }
+        updateCardStyle(carbCard, carbGridIcon, carbGridStatus, current >= total,
+                R.drawable.goal_carb_foreground);
     }
 
     private void updateProteinGoal(int current, int total) {
@@ -189,18 +204,27 @@ public class goal extends Fragment {
         proteinProgress.getProgressDrawable().setColorFilter(
                 ContextCompat.getColor(getContext(), progressColor), PorterDuff.Mode.SRC_IN);
 
-        if (proteinGridIcon != null && proteinGridStatus != null) {
-            updateCardStyle(achievementMindful, proteinGridIcon, proteinGridStatus, current >= total,
-                    R.drawable.goal_muscle_foreground);
-        } else {
-            if (current >= total) {
-                achievementMindful.setCardBackgroundColor(ContextCompat.getColor(getContext(), R.color.white));
-                achievementMindful.setBackgroundTintList(
-                        ContextCompat.getColorStateList(getContext(), R.color.achievements2Goal));
-            } else {
-                achievementMindful.setCardBackgroundColor(ContextCompat.getColor(getContext(), R.color.light_grey));
-            }
-        }
+        updateCardStyle(proteinCard, proteinGridIcon, proteinGridStatus, current >= total,
+                R.drawable.goal_muscle_foreground);
+    }
+
+
+
+    private void updateFatGoal(int current, int total) {
+        if (fatTomado == null || fatTotal == null || fatProgress == null) return;
+
+        fatTomado.setText(String.valueOf(current));
+        fatTotal.setText(String.valueOf(total));
+
+        int progress = (total == 0) ? 0 : (current * 100) / total;
+        fatProgress.setProgress(progress);
+
+        int color = progress >= 100 ? R.color.greenApp : R.color.blueWaterDeshboard_ic;
+        fatProgress.getProgressDrawable().setColorFilter(
+                ContextCompat.getColor(getContext(), color), PorterDuff.Mode.SRC_IN);
+
+        updateCardStyle(fatCard, fatGridIcon, fatGridStatus, current >= total,
+                R.drawable.goal_fat_foreground);
     }
 
     private void updateNewFoodGoal(int current, int total) {
@@ -229,16 +253,18 @@ public class goal extends Fragment {
 
             if (icon != null) {
                 icon.setImageResource(iconResId);
-
                 if (icon.getId() == R.id.water_icon) {
                     icon.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.blueWaterDeshboard));
                     icon.setImageTintList(ContextCompat.getColorStateList(getContext(), R.color.goal_tint_water));
-                } else if (icon.getId() == R.id.plan_icon) {
-                    icon.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.goal_plan));
-                    icon.setImageTintList(ContextCompat.getColorStateList(getContext(), R.color.goal_tint_plan));
+                } else if (icon.getId() == R.id.carb_icon) {
+                    icon.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.goal_carb));
+                    icon.setImageTintList(ContextCompat.getColorStateList(getContext(), R.color.goal_tint_carb));
                 } else if (icon.getId() == R.id.protein_icon) {
                     icon.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.goal_protein));
                     icon.setImageTintList(ContextCompat.getColorStateList(getContext(), R.color.goal_tint_protein));
+                } else if (icon.getId() == R.id.fat_icon) {
+                    icon.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.goal_fat));
+                    icon.setImageTintList(ContextCompat.getColorStateList(getContext(), R.color.goal_tint_fat));
                 } else if (icon.getId() == R.id.new_food_icon) {
                     icon.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.goal_create));
                     icon.setImageTintList(ContextCompat.getColorStateList(getContext(), R.color.goal_tint_create));
@@ -250,16 +276,10 @@ public class goal extends Fragment {
                 statusText.setTextColor(ContextCompat.getColor(getContext(), R.color.greenApp));
             }
         } else {
-            card.setCardBackgroundColor(ContextCompat.getColor(getContext(), R.color.light_grey));
-
             if (icon != null) {
                 icon.setImageResource(iconResId);
-
-                icon.setBackgroundTintList(
-                        ContextCompat.getColorStateList(getContext(), R.color.grey));
-
-                icon.setImageTintList(
-                        ContextCompat.getColorStateList(getContext(), R.color.light_grey));
+                icon.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.grey));
+                icon.setImageTintList(ContextCompat.getColorStateList(getContext(), R.color.light_grey));
             }
 
             if (statusText != null) {
