@@ -447,43 +447,4 @@ public class Dashboard extends Fragment {
         // 重新加载目标并刷新喝水UI
         loadDailyGoalsFromFirestore();
     }
-
-    // 确保WaterAdapter是内部类或已正确导入（如果是外部类，需确认存在）
-    private class WaterAdapter extends RecyclerView.Adapter<WaterAdapter.WaterViewHolder> {
-        private List<Boolean> waterIntakeList;
-
-        public WaterAdapter(List<Boolean> waterIntakeList) {
-            this.waterIntakeList = waterIntakeList;
-        }
-
-        @NonNull
-        @Override
-        public WaterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.water_item_layout, parent, false);
-            return new WaterViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull WaterViewHolder holder, int position) {
-            boolean isDrank = waterIntakeList.get(position);
-            // 根据是否已喝设置样式（示例，需匹配你的item_water.xml）
-            holder.waterItemView.setBackgroundColor(isDrank ?
-                    ContextCompat.getColor(getContext(), R.color.blueWaterDeshboard) :
-                    ContextCompat.getColor(getContext(), R.color.light_grey));
-        }
-
-        @Override
-        public int getItemCount() {
-            return waterIntakeList.size();
-        }
-
-        public class WaterViewHolder extends RecyclerView.ViewHolder {
-            View waterItemView;
-
-            public WaterViewHolder(@NonNull View itemView) {
-                super(itemView);
-                waterItemView = itemView;
-            }
-        }
-    }
 }
