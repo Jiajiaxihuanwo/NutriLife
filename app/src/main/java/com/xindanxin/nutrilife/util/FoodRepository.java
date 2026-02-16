@@ -28,7 +28,8 @@ public class FoodRepository {
                 new FoodItem("Mashed Potatoes", 260, 5, 45, 6),
                 new FoodItem("Roasted Vegetables", 220, 6, 30, 10),
                 new FoodItem("Chicken Wrap", 480, 32, 50, 16),
-                new FoodItem("Yogurt with Honey", 200, 8, 30, 4)
+                new FoodItem("Yogurt with Honey", 200, 8, 30, 4),
+                new FoodItem("Chen Salchichon", 999, 666, 67, 69)
         );
     }
 

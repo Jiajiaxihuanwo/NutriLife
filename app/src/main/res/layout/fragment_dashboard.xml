@@ -109,7 +109,6 @@
                                 android:id="@+id/totalCaloria"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/_1010"
                                 android:textStyle="bold"
                                 android:textSize="35sp"
                                 android:layout_marginBottom="20dp"
@@ -151,7 +150,6 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="8dp"
-                                    android:text="@string/_1800"
                                     android:textSize="16sp" />
 
                                 <TextView
@@ -179,7 +177,6 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_margin="2dp"
-                                    android:text="@string/_790"
                                     android:textColor="@color/greenApp"
                                     android:textSize="24sp" />
 
@@ -254,7 +251,6 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="10dp"
-                                        android:text="@string/_64"
                                         android:textSize="16sp" />
 
                                     <TextView
@@ -284,7 +280,6 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="4dp"
-                                        android:text="@string/_150"
                                         android:textSize="16sp" />
 
                                     <TextView
@@ -342,7 +337,6 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="10dp"
-                                        android:text="@string/_96"
                                         android:textSize="16sp" />
 
                                     <TextView
@@ -372,7 +366,6 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginStart="4dp"
-                                        android:text="@string/_150"
                                         android:textSize="16sp" />
 
                                     <TextView
@@ -432,7 +425,6 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="10dp"
-                                        android:text="@string/_42"
                                         android:textSize="16sp" />
 
                                     <TextView
@@ -462,7 +454,6 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginStart="4dp"
-                                        android:text="@string/_150"
                                         android:textSize="16sp" />
 
                                     <TextView
@@ -480,7 +471,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="20dp"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="8dp"
                         app:cardBackgroundColor="@color/white"
                         app:cardCornerRadius="12dp"
                         app:cardElevation="4dp"
@@ -524,7 +515,6 @@
                                     android:id="@+id/aguaDiaria"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/_6"
                                     android:textSize="16sp" />
 
                                 <TextView
@@ -537,7 +527,6 @@
                                     android:id="@+id/totalAgua"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/_8"
                                     android:textSize="16sp" />
 
                                 <TextView
@@ -555,17 +544,12 @@
                                 style="?android:attr/progressBarStyleHorizontal"
                                 android:layout_width="match_parent"
                                 android:layout_height="10dp"
-                                android:layout_marginVertical="16dp"
+                                android:layout_marginBottom="16dp"
+                                android:layout_marginTop="12dp"
                                 android:max="100"
                                 android:progress="0"
                                 android:progressDrawable="@drawable/progress_water" />
 
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/rvAgua"
-                                android:layout_width="match_parent"
-                                android:layout_height="50dp">
-
-                            </androidx.recyclerview.widget.RecyclerView>
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
 
@@ -606,30 +590,6 @@
                                     android:paddingStart="10dp"
                                     android:text="@string/weekly_progress"
                                     android:textSize="16sp" />
-
-                                <View
-                                    android:layout_width="0dp"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1" />
-
-                                <TextView
-                                    android:id="@+id/pesoFinal"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:text="@string/_1_2"
-                                    android:textColor="@color/greenApp"
-                                    android:textSize="16sp" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_marginEnd="16dp"
-                                    android:text="@string/kg"
-                                    android:textColor="@color/greenApp"
-                                    android:textSize="16sp" />
-
 
                             </LinearLayout>
                             <!---->

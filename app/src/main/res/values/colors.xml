@@ -71,4 +71,8 @@
     <color name="goal_tint_plan">#8C5000</color>
     <color name="goal_tint_protein">#C7980C</color>
     <color name="goal_tint_create">#673AB7</color>
+    <color name="goal_carb">#70D774</color>
+    <color name="goal_tint_carb">#419D46</color>
+    <color name="goal_fat">#FF9800</color>
+    <color name="goal_tint_fat">#FCFEFF</color>
 </resources>
