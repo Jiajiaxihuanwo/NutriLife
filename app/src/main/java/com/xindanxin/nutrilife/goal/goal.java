@@ -133,21 +133,23 @@ public class goal extends Fragment {
     }
 
     private void loadMacroDataAndUpdateUI(int waterCurrent) {
-        caloriesViewModel.getTotalMacros().observe(getViewLifecycleOwner(), macroInfo -> {
-            if (macroInfo == null) return;
-
-            int proteinCurrent = macroInfo.getProtein();
-            int carbCurrent = macroInfo.getCarbs();
-            int fatCurrent = macroInfo.getFats();
-
-            int newFoodCurrent = 1;
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        new DailyGoalsFirestore(uid).getHasCreatedFood(isCreated -> {
+            int newFoodCurrent = isCreated ? 1 : 0;
             int newFoodTotal = 1;
+            caloriesViewModel.getTotalMacros().observe(getViewLifecycleOwner(), macroInfo -> {
+                if (macroInfo == null) return;
 
-            updateAllGoals(waterCurrent, waterGoalTotal,
-                    carbCurrent, carbGoalTotal,
-                    proteinCurrent, proteinGoalTotal,
-                    fatCurrent, fatGoalTotal,
-                    newFoodCurrent, newFoodTotal);
+                int proteinCurrent = macroInfo.getProtein();
+                int carbCurrent = macroInfo.getCarbs();
+                int fatCurrent = macroInfo.getFats();
+
+                updateAllGoals(waterCurrent, waterGoalTotal,
+                        carbCurrent, carbGoalTotal,
+                        proteinCurrent, proteinGoalTotal,
+                        fatCurrent, fatGoalTotal,
+                        newFoodCurrent, newFoodTotal);
+            });
         });
     }
 

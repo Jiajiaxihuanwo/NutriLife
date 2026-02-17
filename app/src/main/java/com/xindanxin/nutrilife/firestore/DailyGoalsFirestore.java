@@ -65,15 +65,13 @@ public class DailyGoalsFirestore {
         Map<String, Object> data = new HashMap<>();
         data.put(WATER_INTAKE_FIELD, waterIntake);
 
-        // 使用update而不是set，避免覆盖其他字段
         db.collection("users")
                 .document(uid)
                 .collection("goals")
                 .document(DOC_NAME)
                 .update(data)
-                // 如果文档不存在，先创建再更新
                 .addOnFailureListener(e -> {
-                    saveGoals(0, 0, 0, 0, 0); // 先初始化空文档
+                    saveGoals(0, 0, 0, 0, 0);
                     db.collection("users")
                             .document(uid)
                             .collection("goals")
@@ -82,7 +80,6 @@ public class DailyGoalsFirestore {
                 });
     }
 
-    // 新增方法2：获取已饮用的水量（get agua tomada）
     public void getWaterIntake(@NonNull OnSuccessListener<Integer> listener) {
         db.collection("users")
                 .document(uid)
@@ -95,6 +92,40 @@ public class DailyGoalsFirestore {
                         waterIntake = document.getLong(WATER_INTAKE_FIELD).intValue();
                     }
                     listener.onSuccess(waterIntake);
+                });
+    }
+
+    private static final String HAS_CREATED_FOOD = "hasCreatedFood";
+
+    public void saveHasCreatedFood(boolean isCreated) {
+        Map<String, Object> data = new HashMap<>();
+        data.put(HAS_CREATED_FOOD, isCreated);
+
+        db.collection("users")
+                .document(uid)
+                .collection("goals")
+                .document(DOC_NAME)
+                .update(data)
+                .addOnFailureListener(e -> {
+                    saveGoals(0, 0, 0, 0, 0);
+                    db.collection("users")
+                            .document(uid)
+                            .collection("goals")
+                            .document(DOC_NAME)
+                            .update(data);
+                });
+    }
+
+    public void getHasCreatedFood(OnSuccessListener<Boolean> listener) {
+        db.collection("users")
+                .document(uid)
+                .collection("goals")
+                .document(DOC_NAME)
+                .get()
+                .addOnSuccessListener(document -> {
+                    boolean isCreated = document.exists() && document.getBoolean(HAS_CREATED_FOOD) != null
+                            ? document.getBoolean(HAS_CREATED_FOOD) : false;
+                    listener.onSuccess(isCreated);
                 });
     }
 }

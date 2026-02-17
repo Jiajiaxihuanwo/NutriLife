@@ -15,7 +15,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+
+import com.google.firebase.auth.FirebaseAuth;
 import com.xindanxin.nutrilife.R;
+import com.xindanxin.nutrilife.firestore.DailyGoalsFirestore;
 
 public class CreateNewFoodDialogFragment extends DialogFragment {
 
@@ -75,6 +78,9 @@ public class CreateNewFoodDialogFragment extends DialogFragment {
                 if (listener != null) {
                     listener.onNewFoodCreated(newFood);
                 }
+                String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                new DailyGoalsFirestore(uid).saveHasCreatedFood(true);
+
                 dismiss();
 
             } else {
