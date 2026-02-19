@@ -65,6 +65,38 @@
     <string name="email" translatable="false">Email</string>
     <string name="password">Password</string>
     <string name="save_changes">Save Changes</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="dashboard">dashboard</string>
+    <string name="meals">meals</string>
+    <string name="goals">goals</string>
+    <string name="profile">profile</string>
+    <string name="water_master">Water Master</string>
+    <string name="complete_your_daily_water_intake">Complete your daily water intake</string>
+    <string name="carb_champion">Carb Champion</string>
+    <string name="hit_your_daily_carb_target">Hit your daily carb target</string>
+    <string name="protein_hunter">Protein Hunter</string>
+    <string name="hit_your_daily_protein_target">Hit your daily protein target</string>
+    <string name="fat_strategist">Fat Strategist</string>
+    <string name="optimize_your_healthy_fat_intake">Optimize your healthy fat intake</string>
+    <string name="new_food_try">New Food Try</string>
+    <string name="create_a_new_food">Create a new Food</string>
+    <string name="diet_goal">Diet goal</string>
+    <string name="not_completed">Not completed</string>
+    <string name="add_food_to_lunch">Add Food To Lunch</string>
+    <string name="search_food">Search food...</string>
+    <string name="new_food">New Food</string>
+    <string name="crear_nuevo_alimento">Create new food</string>
+    <string name="nombre_del_alimento">Food Name</string>
+    <string name="ej_pechuga_de_pollo">E.g. rice</string>
+    <string name="calor_as_kcal">Calories (kcal)</string>
+    <string name="ej_250">E.g. 250</string>
+    <string name="protein_g" translatable="false">Protein (g)</string>
+    <string name="carbs_g" translatable="false">Carbs (g)</string>
+    <string name="fat_g" translatable="false">Fat (g)</string>
+    <string name="add">Add</string>
+
+    <string name="breakfast">Breakfast</string>
+    <string name="lunch">Lunch</string>
+    <string name="dinner">Dinner</string>
+    <string name="snacks">Snacks</string>
 
 </resources>
