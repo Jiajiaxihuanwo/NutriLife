@@ -1,45 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
-    <color name="grey">#B0B0B0</color>
+    <color name="grey">#959595</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="light_grey">#EEEEEE</color>
     <color name="transparente">#00000000</color>
 
     <color name="verde">#00A445</color>
     <color name="verdeoscuro">#004616</color>
 
     <color name="primary">#00A445</color>
-    <color name="primary_dark">#007333</color>
-    <color name="primary_light">#2EA864</color>
-    <color name="surface">#121212</color>
-    <color name="on_surface">#E0E0E0</color>
-    <color name="accent">#FF8C53</color>
+    <color name="primary_dark">#008C3A</color>
+    <color name="primary_light">#4DBF72</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="on_surface">#1A1A1A</color>
+    <color name="accent">#FF6B35</color>
 
-    <color name="greenApp">#00B76B</color>
 
+    <color name="greenApp">#009e59</color>
+    <color name="bgApp">#F9FAFB</color>
     <!-- meals -->
-    <color name="whiteMeals">#1E1E1E</color>
-    <color name="yellowMeals">#3D3A2D</color>
-    <color name="purpleMeals">#2B2233</color>
-    <color name="blueMeals">#262E3C</color>
+    <color name="whiteMeals">#FFFBEB</color>
+    <color name="d_whiteMeals">#E17100</color>
+    <color name="yellowMeals">#FFF7ED</color>
+    <color name="d_yellowMeals">#F54900</color>
+    <color name="purpleMeals">#FAF5FF</color>
+    <color name="d_purpleMeals">#9839F6</color>
+    <color name="blueMeals">#EEF2FF</color>
+    <color name="d_blueMeals">#4F39F6</color>
+    <color name="defaultMeals">#DDDDDD</color>
 
-    <!-- Dashboard -->
-    <color name="greenGoalDeshboard">#1B3B2E</color>
-    <color name="blueProteinDeshboard">#1E2E42</color>
-    <color name="yellowCarbsDeshboard">#3C3724</color>
-    <color name="redFatsDeshboard">#3E2C26</color>
-    <color name="blueWaterDeshboard">#1A3B3F</color>
-    <color name="verdeProgress1Deshboard">#0F5E3C</color>
-    <color name="verdeProgress2Deshboard">#077E54</color>
+    <!-- Deshboard -->
+    <color name="greenGoalDeshboard">#eefdf5</color>
+    <color name="blueProteinDeshboard">#dbeafe</color>
+    <color name="blueProteinDeshboard_ic">#3877CA</color>
+    <color name="yellowCarbsDeshboard">#fef3c6</color>
+    <color name="yellowCarbsDeshboard_ic">#D08F30</color>
+    <color name="redFatsDeshboard">#ffedd4</color>
+    <color name="redFatsDeshboard_ic">#D95B4D</color>
+    <color name="blueWaterDeshboard">#cefafe</color>
+    <color name="blueWaterDeshboard_ic">#0E7A85</color>
+    <color name="verdeProgress1Deshboard">#b9f8cf</color>
+    <color name="verdeProgress2Deshboard">#7bf1a8</color>
+
+    <!-- Profile -->
+
 
     <!-- Planner -->
-    <color name="greenBreackfastPlanner">#164731</color>
-    <color name="tipsPlanner">#1C362C</color>
+    <color name="greenBreackfastPlanner">#dbfce7</color>
+    <color name="tipsPlanner">#eefdf4</color>
 
     <!-- Goals -->
-    <color name="weightGoals">#164731</color>
-    <color name="exerciseGoal">#1B2D40</color>
-    <color name="calorieGoal">#2B2233</color>
-    <color name="achievements1Goal">#3B3020</color>
-    <color name="achievements2Goal">#3C3724</color>
+    <color name="weightGoals">#dbfce7</color>
+    <color name="exerciseGoal">#eff6ff</color>
+    <color name="calorieGoal">#faf5ff</color>
+    <color name="achievements1Goal">#fffcea</color>
+    <color name="achievements2Goal">#fef3c6</color>
+
+    <!--Gradient-->
+    <color name="v1">#00a63e</color>
+    <color name="v2">#00a34a</color>
+    <color name="v3">#009e59</color>
+    <color name="colorSelected">#009e59</color> <!-- Verde -->
+    <color name="colorUnselected">#555555</color> <!-- Gris -->
+
+    <color name="goal_plan">#F0A68A</color>
+    <color name="goal_protein">#FAE565</color>
+    <color name="goal_create">#BBA0EB</color>
+    <color name="goal_tint_water">#00A4BA</color>
+    <color name="goal_tint_plan">#8C5000</color>
+    <color name="goal_tint_protein">#C7980C</color>
+    <color name="goal_tint_create">#673AB7</color>
+    <color name="goal_carb">#70D774</color>
+    <color name="goal_tint_carb">#419D46</color>
+    <color name="goal_fat">#FF9800</color>
+    <color name="goal_tint_fat">#FCFEFF</color>
 </resources>

@@ -19,9 +19,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginTop="30dp"
+            android:fontFamily="@font/passion_one"
+            android:textSize="40sp"
             android:text="@string/app_name"
             android:textColor="@color/white"
-            android:textSize="32sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -117,7 +118,7 @@
                                     android:layout_height="wrap_content"
                                     android:fontFamily="sans-serif-medium"
                                     android:layout_margin="1dp"
-                                    android:textColor="#10B981"
+                                    android:textColor="@color/black"
                                     android:textSize="15sp" />
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -125,7 +126,7 @@
                                     android:fontFamily="sans-serif-medium"
                                     android:text="/"
                                     android:layout_margin="1dp"
-                                    android:textColor="#10B981"
+                                    android:textColor="@color/black"
                                     android:textSize="15sp" />
                                 <TextView
                                     android:id="@+id/agua_total"
@@ -133,7 +134,7 @@
                                     android:layout_height="wrap_content"
                                     android:fontFamily="sans-serif-medium"
                                     android:layout_margin="1dp"
-                                    android:textColor="#10B981"
+                                    android:textColor="@color/black"
                                     android:textSize="15sp" />
                             </LinearLayout>
 
@@ -159,7 +160,6 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- 新增：Carb Champion (碳水冠军) 模块 -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -226,7 +226,7 @@
                                     android:layout_height="wrap_content"
                                     android:fontFamily="sans-serif-medium"
                                     android:layout_margin="1dp"
-                                    android:textColor="#10B981"
+                                    android:textColor="@color/black"
                                     android:textSize="15sp" />
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -234,7 +234,7 @@
                                     android:fontFamily="sans-serif-medium"
                                     android:text="/"
                                     android:layout_margin="1dp"
-                                    android:textColor="#10B981"
+                                    android:textColor="@color/black"
                                     android:textSize="15sp" />
                                 <TextView
                                     android:id="@+id/carb_total"
@@ -242,7 +242,7 @@
                                     android:layout_height="wrap_content"
                                     android:fontFamily="sans-serif-medium"
                                     android:layout_margin="1dp"
-                                    android:textColor="#10B981"
+                                    android:textColor="@color/black"
                                     android:textSize="15sp" />
                             </LinearLayout>
 
@@ -335,7 +335,7 @@
                                     android:layout_height="wrap_content"
                                     android:fontFamily="sans-serif-medium"
                                     android:layout_margin="1dp"
-                                    android:textColor="#10B981"
+                                    android:textColor="@color/black"
                                     android:textSize="15sp" />
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -343,7 +343,7 @@
                                     android:fontFamily="sans-serif-medium"
                                     android:text="/"
                                     android:layout_margin="1dp"
-                                    android:textColor="#10B981"
+                                    android:textColor="@color/black"
                                     android:textSize="15sp" />
                                 <TextView
                                     android:id="@+id/azucar_total"
@@ -351,7 +351,7 @@
                                     android:layout_height="wrap_content"
                                     android:fontFamily="sans-serif-medium"
                                     android:layout_margin="1dp"
-                                    android:textColor="#10B981"
+                                    android:textColor="@color/black"
                                     android:textSize="15sp" />
                             </LinearLayout>
 
@@ -444,7 +444,7 @@
                                     android:layout_height="wrap_content"
                                     android:fontFamily="sans-serif-medium"
                                     android:layout_margin="1dp"
-                                    android:textColor="#10B981"
+                                    android:textColor="@color/black"
                                     android:textSize="15sp" />
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -452,7 +452,7 @@
                                     android:fontFamily="sans-serif-medium"
                                     android:text="/"
                                     android:layout_margin="1dp"
-                                    android:textColor="#10B981"
+                                    android:textColor="@color/black"
                                     android:textSize="15sp" />
                                 <TextView
                                     android:id="@+id/fat_total"
@@ -460,7 +460,7 @@
                                     android:layout_height="wrap_content"
                                     android:fontFamily="sans-serif-medium"
                                     android:layout_margin="1dp"
-                                    android:textColor="#10B981"
+                                    android:textColor="@color/black"
                                     android:textSize="15sp" />
                             </LinearLayout>
 
@@ -555,7 +555,7 @@
                                     android:layout_height="wrap_content"
                                     android:fontFamily="sans-serif-medium"
                                     android:layout_margin="1dp"
-                                    android:textColor="#10B981"
+                                    android:textColor="@color/black"
                                     android:textSize="15sp" />
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -563,7 +563,7 @@
                                     android:fontFamily="sans-serif-medium"
                                     android:text="/"
                                     android:layout_margin="1dp"
-                                    android:textColor="#10B981"
+                                    android:textColor="@color/black"
                                     android:textSize="15sp" />
                                 <TextView
                                     android:id="@+id/vez"
@@ -572,7 +572,7 @@
                                     android:fontFamily="sans-serif-medium"
                                     android:text="1"
                                     android:layout_margin="1dp"
-                                    android:textColor="#10B981"
+                                    android:textColor="@color/black"
                                     android:textSize="15sp" />
                             </LinearLayout>
 
@@ -606,7 +606,7 @@
                 android:text="@string/diet_goal"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:textColor="#1F2937"
+                android:textColor="@color/black"
                 android:layout_marginBottom="16dp"
                 android:drawableStart="@drawable/goal_goal_foreground"
                 android:drawablePadding="8dp"
@@ -671,7 +671,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/not_completed"
                             android:textSize="11sp"
-                            android:textColor="#9CA3AF"
+                            android:textColor="@color/grey"
                             android:layout_marginTop="8dp"
                             android:drawablePadding="4dp" />
                     </LinearLayout>
@@ -721,7 +721,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/carb_champion"
                             android:textSize="14sp"
-                            android:textColor="#1F2937"
+                            android:textColor="@color/black"
                             android:layout_marginBottom="4dp" />
 
                         <TextView
@@ -730,7 +730,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/not_completed"
                             android:textSize="11sp"
-                            android:textColor="#9CA3AF"
+                            android:textColor="@color/grey"
                             android:layout_marginTop="8dp"
                             android:drawablePadding="4dp" />
                     </LinearLayout>
@@ -781,7 +781,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/protein_hunter"
                             android:textSize="14sp"
-                            android:textColor="#1F2937"
+                            android:textColor="@color/black"
                             android:layout_marginBottom="4dp" />
 
                         <TextView
@@ -790,7 +790,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/not_completed"
                             android:textSize="11sp"
-                            android:textColor="#9CA3AF"
+                            android:textColor="@color/grey"
                             android:layout_marginTop="8dp"
                             android:drawablePadding="4dp" />
 
@@ -838,6 +838,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/fat_strategist"
                             android:textSize="14sp"
+                            android:textColor="@color/black"
                             android:layout_marginBottom="4dp" />
 
                         <TextView
@@ -846,7 +847,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/not_completed"
                             android:textSize="11sp"
-                            android:textColor="#9CA3AF"
+                            android:textColor="@color/grey"
                             android:layout_marginTop="8dp"
                             android:drawablePadding="4dp" />
                     </LinearLayout>
@@ -902,7 +903,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/not_completed"
                             android:textSize="11sp"
-                            android:textColor="#9CA3AF"
+                            android:textColor="@color/grey"
                             android:layout_marginTop="8dp"
                             android:drawablePadding="4dp" />
                     </LinearLayout>
