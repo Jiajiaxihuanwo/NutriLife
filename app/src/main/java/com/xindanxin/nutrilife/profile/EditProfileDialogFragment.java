@@ -56,8 +56,7 @@ public class EditProfileDialogFragment extends DialogFragment {
         UserProfileFirestore firestore = new UserProfileFirestore(uid);
 
         // Spinner de actividad
-        String[] activities = {"Sedentary", "Light", "Moderate", "Active", "Very Active"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, activities);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(requireContext(), R.array.activity_levels, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerActivity.setAdapter(adapter);
 
