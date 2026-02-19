@@ -107,8 +107,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Water Master"
-                                    android:textColor="@color/black"
+                                    android:text="@string/water_master"
+                                    android:textColor="#1F2937"
                                     android:textSize="16sp"
                                     android:textStyle="bold" />
 
@@ -142,8 +142,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
-                                android:text="Complete your daily water intake"
-                                android:textColor="@color/grey"
+                                android:text="@string/complete_your_daily_water_intake"
+                                android:textColor="#6B7280"
                                 android:textSize="12sp" />
 
                         </LinearLayout>
@@ -215,8 +215,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Carb Champion"
-                                    android:textColor="@color/black"
+                                    android:text="@string/carb_champion"
+                                    android:textColor="#1F2937"
                                     android:textSize="16sp"
                                     android:textStyle="bold" />
 
@@ -250,8 +250,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
-                                android:text="Hit your daily carb target"
-                                android:textColor="@color/grey"
+                                android:text="@string/hit_your_daily_carb_target"
+                                android:textColor="#6B7280"
                                 android:textSize="12sp" />
 
                         </LinearLayout>
@@ -324,8 +324,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Protein Hunter"
-                                    android:textColor="@color/black"
+                                    android:text="@string/protein_hunter"
+                                    android:textColor="#1F2937"
                                     android:textSize="16sp"
                                     android:textStyle="bold" />
 
@@ -359,8 +359,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
-                                android:text="Consume ≥ 50 g of protein today"
-                                android:textColor="@color/grey"
+                                android:text="@string/hit_your_daily_protein_target"
+                                android:textColor="#6B7280"
                                 android:textSize="12sp" />
 
                         </LinearLayout>
@@ -433,8 +433,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Fat Strategist"
-                                    android:textColor="@color/black"
+                                    android:text="@string/fat_strategist"
+                                    android:textColor="#1F2937"
                                     android:textSize="16sp"
                                     android:textStyle="bold" />
 
@@ -468,8 +468,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
-                                android:text="Optimize your healthy fat intake"
-                                android:textColor="@color/grey"
+                                android:text="@string/optimize_your_healthy_fat_intake"
+                                android:textColor="#6B7280"
                                 android:textSize="12sp" />
 
                         </LinearLayout>
@@ -544,8 +544,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="New Food Try"
-                                    android:textColor="@color/black"
+                                    android:text="@string/new_food_try"
+                                    android:textColor="#1F2937"
                                     android:textSize="16sp"
                                     android:textStyle="bold" />
 
@@ -580,8 +580,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
-                                android:text="Create a new Food"
-                                android:textColor="@color/grey"
+                                android:text="@string/create_a_new_food"
+                                android:textColor="#6B7280"
                                 android:textSize="12sp" />
 
                         </LinearLayout>
@@ -603,7 +603,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Diet goal"
+                android:text="@string/diet_goal"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="@color/black"
@@ -661,8 +661,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Water Master"
-                            android:textColor="@color/black"
+                            android:text="@string/water_master"
                             android:textSize="14sp"
                             android:layout_marginBottom="4dp" />
 
@@ -670,7 +669,7 @@
                             android:id="@+id/water_status"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text=" Not completed"
+                            android:text="@string/not_completed"
                             android:textSize="11sp"
                             android:textColor="@color/grey"
                             android:layout_marginTop="8dp"
@@ -720,7 +719,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Carb Champion"
+                            android:text="@string/carb_champion"
                             android:textSize="14sp"
                             android:textColor="@color/black"
                             android:layout_marginBottom="4dp" />
@@ -729,7 +728,7 @@
                             android:id="@+id/carb_status"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Not completed"
+                            android:text="@string/not_completed"
                             android:textSize="11sp"
                             android:textColor="@color/grey"
                             android:layout_marginTop="8dp"
@@ -780,7 +779,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Protein Hunter"
+                            android:text="@string/protein_hunter"
                             android:textSize="14sp"
                             android:textColor="@color/black"
                             android:layout_marginBottom="4dp" />
@@ -789,7 +788,7 @@
                             android:id="@+id/protein_status"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Not completed"
+                            android:text="@string/not_completed"
                             android:textSize="11sp"
                             android:textColor="@color/grey"
                             android:layout_marginTop="8dp"
@@ -837,7 +836,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Fat Strategist"
+                            android:text="@string/fat_strategist"
                             android:textSize="14sp"
                             android:textColor="@color/black"
                             android:layout_marginBottom="4dp" />
@@ -846,7 +845,7 @@
                             android:id="@+id/fat_status"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Not completed"
+                            android:text="@string/not_completed"
                             android:textSize="11sp"
                             android:textColor="@color/grey"
                             android:layout_marginTop="8dp"
@@ -894,8 +893,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="New Food Try"
-                            android:textColor="@color/black"
+                            android:text="@string/new_food_try"
                             android:textSize="14sp"
                             android:layout_marginBottom="4dp" />
 
@@ -903,7 +901,7 @@
                             android:id="@+id/new_food_status"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Not completed"
+                            android:text="@string/not_completed"
                             android:textSize="11sp"
                             android:textColor="@color/grey"
                             android:layout_marginTop="8dp"

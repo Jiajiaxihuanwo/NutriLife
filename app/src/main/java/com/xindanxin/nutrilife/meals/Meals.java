@@ -16,6 +16,7 @@ import com.xindanxin.nutrilife.firestore.MealsStorageFirestore;
 import com.xindanxin.nutrilife.util.CaloriesViewModel;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 public class Meals extends Fragment {
 
@@ -33,12 +34,7 @@ public class Meals extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // Crear lista de ejemplo
-        List<String> itemList = new ArrayList<>();
-        itemList.add("Breakfast");
-        itemList.add("Lunch");
-        itemList.add("Dinner");
-        itemList.add("Snacks");
-        itemList.add("Default");
+        List<String> items = Arrays.asList("breakfast", "lunch", "dinner", "snacks");
 
         caloriesViewModel = new ViewModelProvider(requireActivity())
                 .get(CaloriesViewModel.class);
@@ -50,7 +46,7 @@ public class Meals extends Fragment {
         // Crear adaptador y asignarlo
         MealsAdapter adapter = new MealsAdapter(
                 requireContext(),
-                itemList,
+                items,
                 caloriesViewModel,
                 mealType -> {
 

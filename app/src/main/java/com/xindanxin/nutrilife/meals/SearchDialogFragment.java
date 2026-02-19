@@ -20,7 +20,9 @@ import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.xindanxin.nutrilife.R;
+import com.xindanxin.nutrilife.firestore.UserFoodsFirestore;
 import com.xindanxin.nutrilife.util.FoodRepository;
 
 import java.util.ArrayList;
@@ -79,18 +81,25 @@ public class SearchDialogFragment extends DialogFragment {
         RecyclerView rvResults = view.findViewById(R.id.rvResults);
         rvResults.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        //lista provisional
-        allFoods = FoodRepository.getListaProvisional(requireContext());
-
+        // Inicializa el adapter con lista vacía temporalmente
+        allFoods = new ArrayList<>();
         adapter = new SearchFoodAdapter(allFoods, food -> {
-            //envía el alimento al fragmento padre.
+            // Envía el alimento al fragmento padre
             listener.onFoodSelected(food);
 
-            //cierra el dialogo automáticamente
+            // Cierra el diálogo automáticamente
             dismiss();
         });
-
         rvResults.setAdapter(adapter);
+
+        // Carga los alimentos desde Firebase (o cache si ya se cargaron)
+        FoodRepository.getInstance().getFoods(foods -> {
+            allFoods.clear();
+            allFoods.addAll(foods);
+
+            // Notifica al adapter que los datos cambiaron
+            adapter.updateList(allFoods); // <- usar updateList aquí asegura que se vea la lista al abrir
+        });
 
         //Logica del boton cancel==========================================================
         Button btnCancel = view.findViewById(R.id.btnCancel);
@@ -106,7 +115,9 @@ public class SearchDialogFragment extends DialogFragment {
                     mutableFoods.add(0, nuevoFood);
                     allFoods = mutableFoods;
 
-                    // aqui hay que implementar un guardado en la base de datos (si quieres guardarlo en Firestore)
+                    String uid = FirebaseAuth.getInstance().getUid();
+                    UserFoodsFirestore userFoodsFirestore = new UserFoodsFirestore(uid);
+                    userFoodsFirestore.addFood(nuevoFood);
 
                     adapter.updateList(allFoods);
 

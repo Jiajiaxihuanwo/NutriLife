@@ -1,36 +1,93 @@
 package com.xindanxin.nutrilife.util;
 
-import android.content.Context;
+import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.xindanxin.nutrilife.meals.FoodItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FoodRepository {
-    public static List<FoodItem> getListaProvisional(Context context) {
-        return List.of(
-                new FoodItem("Oatmeal with Banana", 320, 10, 55, 6),
-                new FoodItem("Scrambled Eggs", 280, 18, 2, 22),
-                new FoodItem("Greek Yogurt", 150, 12, 8, 5),
-                new FoodItem("Apple", 95, 0, 25, 0),
-                new FoodItem("Protein Bar", 210, 20, 23, 7),
-                new FoodItem("Grilled Chicken Salad", 420, 35, 25, 18),
-                new FoodItem("Rice with Vegetables", 380, 8, 70, 6),
-                new FoodItem("Salmon Fillet", 450, 40, 0, 30),
-                new FoodItem("Pasta Bolognese", 560, 22, 75, 18),
-                new FoodItem("Lentil Soup", 300, 18, 40, 6),
-                new FoodItem("Mixed Nuts", 250, 8, 10, 22),
-                new FoodItem("Smoothie", 280, 12, 45, 6),
-                new FoodItem("Toast with Avocado", 320, 7, 30, 20),
-                new FoodItem("Cottage Cheese", 180, 22, 6, 4),
-                new FoodItem("Dark Chocolate", 170, 2, 18, 12),
-                new FoodItem("Grilled Steak", 520, 45, 0, 38),
-                new FoodItem("Mashed Potatoes", 260, 5, 45, 6),
-                new FoodItem("Roasted Vegetables", 220, 6, 30, 10),
-                new FoodItem("Chicken Wrap", 480, 32, 50, 16),
-                new FoodItem("Yogurt with Honey", 200, 8, 30, 4),
-                new FoodItem("Chen Salchichon", 999, 666, 67, 69)
-        );
+
+    private static final String COLLECTION_BASE = "foods_base";
+    private static FoodRepository instance; // singleton
+
+    private List<FoodItem> cachedFoods = null; // cache en memoria
+    private boolean isLoading = false;
+    private List<OnFoodsLoadedListener> pendingListeners = new ArrayList<>();
+
+    private FoodRepository() { }
+
+    public static synchronized FoodRepository getInstance() {
+        if (instance == null) {
+            instance = new FoodRepository();
+        }
+        return instance;
     }
 
+    /**
+     * Obtiene la lista de alimentos. Si ya se cargó, devuelve la cache inmediatamente.
+     * Si no, carga desde Firestore y notifica a todos los listeners, esto evita tener que
+     * consultar a firebase cada vez que busquemos algo.
+     */
+    public void getFoods(OnFoodsLoadedListener listener) {
+        if (cachedFoods != null) {
+            // Ya tenemos cache, devolvemos inmediatamente
+            listener.onFoodsLoaded(cachedFoods);
+            return;
+        }
+
+        // Agregamos listener pendiente
+        pendingListeners.add(listener);
+
+        // Si ya está cargando, no hacemos otra petición
+        if (isLoading) return;
+
+        isLoading = true;
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection(COLLECTION_BASE)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        cachedFoods = new ArrayList<>();
+                        if (task.isSuccessful() && task.getResult() != null) {
+                            for (QueryDocumentSnapshot doc : task.getResult()) {
+                                String nombre = doc.getString("nombre");
+                                int calorias = doc.getLong("calorias") != null ? doc.getLong("calorias").intValue() : 0;
+                                int grasas = doc.getDouble("grasas") != null ? doc.getDouble("grasas").intValue() : 0;
+                                int carbohidratos = doc.getDouble("carbohidratos") != null ? doc.getDouble("carbohidratos").intValue() : 0;
+                                int proteinas = doc.getDouble("proteinas") != null ? doc.getDouble("proteinas").intValue() : 0;
+
+                                cachedFoods.add(new FoodItem(nombre, calorias, grasas, carbohidratos, proteinas));
+                            }
+                        }
+
+                        // Notificar a todos los listeners pendientes
+                        for (OnFoodsLoadedListener l : pendingListeners) {
+                            l.onFoodsLoaded(cachedFoods);
+                        }
+                        pendingListeners.clear();
+                        isLoading = false;
+                    }
+                });
+    }
+
+    // Interfaz de callback
+    public interface OnFoodsLoadedListener {
+        void onFoodsLoaded(List<FoodItem> foods);
+    }
+
+    /**
+     * Limpiar cache (opcional)
+     */
+    public void clearCache() {
+        cachedFoods = null;
+    }
 }
