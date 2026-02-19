@@ -41,4 +41,10 @@
     <string name="daily_goals">Metas Diarias</string>
     <string name="current_weight">Peso Actual</string>
     <string name="activity_level_label">Nivel de Actividad</string>
+    <string name="userName">Nombre de Usuario</string>
+    <string name="sedentary">Sedentario</string>
+    <string name="light">Bajo</string>
+    <string name="moderate">Moderado</string>
+    <string name="active">Activo</string>
+    <string name="very_active">Muy Activo</string>
 </resources>

@@ -58,8 +58,7 @@ public class EditProfileDialogFragment extends DialogFragment {
         etAge.setText(prefs.getString("age", ""));
 
         // Spinner de actividad
-        String[] activities = {"Sedentary", "Light", "Moderate", "Active", "Very Active"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, activities);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(requireContext(), R.array.activity_levels, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerActivity.setAdapter(adapter);
         String currentActivity = prefs.getString("activity", "Moderate");

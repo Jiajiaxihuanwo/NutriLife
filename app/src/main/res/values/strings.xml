@@ -65,6 +65,20 @@
     <string name="email" translatable="false">Email</string>
     <string name="password">Password</string>
     <string name="save_changes">Save Changes</string>
+    <string name="userName">User Name</string>
+    <string name="sedentary">Sedentary</string>
+    <string name="light">Light</string>
+    <string name="moderate">Moderate</string>
+    <string name="active">Active</string>
+    <string name="very_active">Very Active</string>
+    <string-array name="activity_levels">
+        <item>@string/sedentary</item>
+        <item>@string/light</item>
+        <item>@string/moderate</item>
+        <item>@string/active</item>
+        <item>@string/very_active</item>
+    </string-array>
+
     <!-- TODO: Remove or change this placeholder text -->
 
 </resources>
