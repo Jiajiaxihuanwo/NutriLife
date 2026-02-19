@@ -47,4 +47,34 @@
     <string name="moderate">Moderado</string>
     <string name="active">Activo</string>
     <string name="very_active">Muy Activo</string>
+    <string name="dashboard">Inicio</string>
+    <string name="meals">Comidas</string>
+    <string name="goals">Objetivos</string>
+    <string name="profile">Perfil</string>
+    <string name="water_master">Maestro del agua</string>
+    <string name="complete_your_daily_water_intake">Completa tu consumo diario e agua</string>
+    <string name="carb_champion">Campeón de carb</string>
+    <string name="hit_your_daily_carb_target">Alcanza tu meta diaria de carbohidratos</string>
+    <string name="protein_hunter">Cazador de Proteínas</string>
+    <string name="hit_your_daily_protein_target">Alcanza tu meta diaria de proteínas</string>
+    <string name="fat_strategist">Estratega de Grasas</string>
+    <string name="optimize_your_healthy_fat_intake">Optimiza tu consumo de grasas saludables</string>
+    <string name="new_food_try">Nuevo Alimento</string>
+    <string name="create_a_new_food">Crea un nuevo alimento</string>
+    <string name="diet_goal">Objetivo nutricional</string>
+    <string name="not_completed">No completado</string>
+    <string name="add_food_to_lunch">Añadir comida</string>
+    <string name="search_food">Buscar alimento...</string>
+    <string name="new_food">Nueva comida</string>
+    <string name="crear_nuevo_alimento">Crear nuevo alimento</string>
+    <string name="nombre_del_alimento">Nombre del alimento</string>
+    <string name="ej_pechuga_de_pollo">Ej. Pechuga de pollo</string>
+    <string name="calor_as_kcal">Calorías (kcal)</string>
+    <string name="ej_250">Ej. 250</string>
+    <string name="add">Añadir</string>
+
+    <string name="breakfast">Desayuno</string>
+    <string name="lunch">Almuerzo</string>
+    <string name="dinner">Cena</string>
+    <string name="snacks">Snacks</string>
 </resources>

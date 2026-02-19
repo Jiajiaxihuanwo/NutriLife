@@ -12,14 +12,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.xindanxin.nutrilife.R;
+import com.xindanxin.nutrilife.firestore.MealsStorageFirestore;
 import com.xindanxin.nutrilife.util.CaloriesViewModel;
-import com.xindanxin.nutrilife.util.MealsStorage;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 public class Meals extends Fragment {
 
     private CaloriesViewModel caloriesViewModel;
+    private MealsStorageFirestore firestoreStorage;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -32,21 +34,19 @@ public class Meals extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // Crear lista de ejemplo
-        List<String> itemList = new ArrayList<>();
-        itemList.add("Breakfast");
-        itemList.add("Lunch");
-        itemList.add("Dinner");
-        itemList.add("Snacks");
-        itemList.add("Default");
+        List<String> items = Arrays.asList("breakfast", "lunch", "dinner", "snacks");
 
         caloriesViewModel = new ViewModelProvider(requireActivity())
                 .get(CaloriesViewModel.class);
 
 
+        // Inicializamos Firestore
+        firestoreStorage = new MealsStorageFirestore();
+
         // Crear adaptador y asignarlo
         MealsAdapter adapter = new MealsAdapter(
                 requireContext(),
-                itemList,
+                items,
                 caloriesViewModel,
                 mealType -> {
 
@@ -54,14 +54,15 @@ public class Meals extends Fragment {
                     SearchDialogFragment dialog =
                             new SearchDialogFragment(selectedFood -> {
 
-                                // Guardar el alimento
-                                List<FoodItem> list =
-                                        MealsStorage.loadFoodList(requireContext(), mealType);
-                                list.add(selectedFood);
-                                MealsStorage.saveFoodList(requireContext(), mealType, list);
+                                // GUARDAR EN FIRESTORE
+                                firestoreStorage.addFoodItem(mealType, selectedFood);
 
-                                // Refrescar RecyclerView
-                                recyclerView.getAdapter().notifyDataSetChanged();
+                                // LEER DE FIRESTORE PARA ACTUALIZAR
+                                firestoreStorage.getFoodItems(mealType, foodList -> {
+                                    // Aquí puedes actualizar tu RecyclerView o ViewModel
+                                    // Por ejemplo, notificar al adaptador
+                                    recyclerView.getAdapter().notifyDataSetChanged();
+                                });
                             });
 
                     // mostramos el dialog

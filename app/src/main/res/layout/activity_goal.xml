@@ -1,0 +1,914 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:background="@color/bgApp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".goal.goal">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gradient_dashboard">
+
+        <TextView
+            android:id="@+id/nutrilife"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/passion_one"
+            android:textSize="40sp"
+            android:text="@string/app_name"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/frase"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:paddingBottom="30dp"
+            android:text="@string/app_phrase"
+            android:textColor="@color/blueWaterDeshboard"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nutrilife" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:layout_marginTop="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
+            android:orientation="vertical">
+
+            <!-- Water Master 模块 -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/water_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:layout_marginEnd="16dp"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_gravity="center"
+                                android:layout_margin="16dp"
+                                android:background="@drawable/cup_background"
+                                android:padding="6dp"
+                                android:src="@drawable/goal_cup_foreground"
+                                app:tint="#00A4BA" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/water_master"
+                                    android:textColor="#1F2937"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/agua_tomado"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:layout_margin="1dp"
+                                    android:textColor="@color/black"
+                                    android:textSize="15sp" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="/"
+                                    android:layout_margin="1dp"
+                                    android:textColor="@color/black"
+                                    android:textSize="15sp" />
+                                <TextView
+                                    android:id="@+id/agua_total"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:layout_margin="1dp"
+                                    android:textColor="@color/black"
+                                    android:textSize="15sp" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="@string/complete_your_daily_water_intake"
+                                android:textColor="#6B7280"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <ProgressBar
+                        android:id="@+id/water_progress"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:layout_marginVertical="16dp"
+                        android:max="100"
+                        android:progress="0" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:layout_marginEnd="16dp"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_gravity="center"
+                                android:layout_margin="16dp"
+                                android:background="@drawable/carb_background"
+                                android:padding="6dp"
+                                android:src="@drawable/goal_carb_foreground"
+                                app:tint="#419D46" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/carb_champion"
+                                    android:textColor="#1F2937"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/carb_tomado"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:layout_margin="1dp"
+                                    android:textColor="@color/black"
+                                    android:textSize="15sp" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="/"
+                                    android:layout_margin="1dp"
+                                    android:textColor="@color/black"
+                                    android:textSize="15sp" />
+                                <TextView
+                                    android:id="@+id/carb_total"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:layout_margin="1dp"
+                                    android:textColor="@color/black"
+                                    android:textSize="15sp" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="@string/hit_your_daily_carb_target"
+                                android:textColor="#6B7280"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <ProgressBar
+                        android:id="@+id/carb_progress"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:layout_marginVertical="16dp"
+                        android:max="100"
+                        android:progress="0" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Protein Hunter 模块 (保留) -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:layout_marginEnd="16dp"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_gravity="center"
+                                android:layout_margin="16dp"
+                                android:background="@drawable/muscle_background"
+                                android:padding="6dp"
+                                android:src="@drawable/goal_muscle_foreground"
+                                app:tint="#C7980C" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/protein_hunter"
+                                    android:textColor="#1F2937"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/azugar_tomado"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:layout_margin="1dp"
+                                    android:textColor="@color/black"
+                                    android:textSize="15sp" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="/"
+                                    android:layout_margin="1dp"
+                                    android:textColor="@color/black"
+                                    android:textSize="15sp" />
+                                <TextView
+                                    android:id="@+id/azucar_total"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:layout_margin="1dp"
+                                    android:textColor="@color/black"
+                                    android:textSize="15sp" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="@string/hit_your_daily_protein_target"
+                                android:textColor="#6B7280"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <ProgressBar
+                        android:id="@+id/protein_progress"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:layout_marginVertical="16dp"
+                        android:max="100"
+                        android:progress="0" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- 新增：Fat Strategist (脂肪策略师) 模块 -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:layout_marginEnd="16dp"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_gravity="center"
+                                android:layout_margin="16dp"
+                                android:background="@drawable/fat_background"
+                                android:padding="8dp"
+                                android:src="@drawable/goal_fat_foreground"
+                                app:tint="#FCFEFF" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/fat_strategist"
+                                    android:textColor="#1F2937"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/fat_tomado"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:layout_margin="1dp"
+                                    android:textColor="@color/black"
+                                    android:textSize="15sp" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="/"
+                                    android:layout_margin="1dp"
+                                    android:textColor="@color/black"
+                                    android:textSize="15sp" />
+                                <TextView
+                                    android:id="@+id/fat_total"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:layout_margin="1dp"
+                                    android:textColor="@color/black"
+                                    android:textSize="15sp" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="@string/optimize_your_healthy_fat_intake"
+                                android:textColor="#6B7280"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <ProgressBar
+                        android:id="@+id/fat_progress"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:layout_marginVertical="16dp"
+                        android:max="100"
+                        android:progress="0" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- New Food Try 模块 (保留) -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/new_food_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:layout_marginEnd="16dp"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_gravity="center"
+                                android:layout_margin="16dp"
+                                android:background="@drawable/create_background"
+                                android:padding="6dp"
+                                android:src="@drawable/goal_create_foreground"
+                                app:tint="#673AB7" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/new_food_try"
+                                    android:textColor="#1F2937"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/nueva_prueba"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:layout_margin="1dp"
+                                    android:textColor="@color/black"
+                                    android:textSize="15sp" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="/"
+                                    android:layout_margin="1dp"
+                                    android:textColor="@color/black"
+                                    android:textSize="15sp" />
+                                <TextView
+                                    android:id="@+id/vez"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="1"
+                                    android:layout_margin="1dp"
+                                    android:textColor="@color/black"
+                                    android:textSize="15sp" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="@string/create_a_new_food"
+                                android:textColor="#6B7280"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <ProgressBar
+                        android:id="@+id/new_food_progress"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:layout_marginVertical="16dp"
+                        android:max="100"
+                        android:progress="0" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/diet_goal"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginBottom="16dp"
+                android:drawableStart="@drawable/goal_goal_foreground"
+                android:drawablePadding="8dp"
+                android:drawableTint="#10B981" />
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:rowCount="3"
+                android:alignmentMode="alignMargins"
+                android:columnOrderPreserved="false"
+                android:padding="4dp"
+                android:layout_marginBottom="24dp">
+
+                <!-- Water Master (保留) -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/goal1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    app:cardElevation="2dp"
+                    app:cardCornerRadius="12dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="8dp"
+                    app:cardBackgroundColor="#C5C5C5"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp"
+                        android:gravity="center">
+
+                        <LinearLayout
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:gravity="center"
+                            android:layout_marginBottom="8dp">
+
+                            <ImageView
+                                android:id="@+id/water_icon"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:padding="4dp"
+                                android:src="@drawable/goal_cup_foreground"
+                                android:background="@drawable/not_completed"
+                                app:tint="#DEDEDE" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/water_master"
+                            android:textSize="14sp"
+                            android:layout_marginBottom="4dp" />
+
+                        <TextView
+                            android:id="@+id/water_status"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/not_completed"
+                            android:textSize="11sp"
+                            android:textColor="@color/grey"
+                            android:layout_marginTop="8dp"
+                            android:drawablePadding="4dp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- 新增：Carb Champion 网格项 -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/goal2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="16dp"
+                    app:cardElevation="2dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardBackgroundColor="@color/white"
+                    android:backgroundTint="#C5C5C5"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp"
+                        android:gravity="center">
+
+                        <LinearLayout
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:gravity="center"
+                            android:layout_marginBottom="8dp">
+
+                            <ImageView
+                                android:id="@+id/carb_icon"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/goal_carb_foreground"
+                                android:padding="8dp"
+                                android:background="@drawable/not_completed"
+                                app:tint="#DEDEDE" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/carb_champion"
+                            android:textSize="14sp"
+                            android:textColor="@color/black"
+                            android:layout_marginBottom="4dp" />
+
+                        <TextView
+                            android:id="@+id/carb_status"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/not_completed"
+                            android:textSize="11sp"
+                            android:textColor="@color/grey"
+                            android:layout_marginTop="8dp"
+                            android:drawablePadding="4dp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Protein Hunter (保留) -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/goal3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    app:cardElevation="2dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardBackgroundColor="@color/white"
+                    android:backgroundTint="#C5C5C5"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="16dp"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp"
+                        android:gravity="center">
+
+                        <LinearLayout
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:gravity="center"
+                            android:layout_marginBottom="8dp">
+
+                            <ImageView
+                                android:id="@+id/protein_icon"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:padding="8dp"
+                                android:background="@drawable/not_completed"
+                                android:src="@drawable/goal_muscle_foreground"
+                                app:tint="#DEDEDE" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/protein_hunter"
+                            android:textSize="14sp"
+                            android:textColor="@color/black"
+                            android:layout_marginBottom="4dp" />
+
+                        <TextView
+                            android:id="@+id/protein_status"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/not_completed"
+                            android:textSize="11sp"
+                            android:textColor="@color/grey"
+                            android:layout_marginTop="8dp"
+                            android:drawablePadding="4dp" />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- 新增：Fat Strategist 网格项 -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/goal4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    app:cardElevation="2dp"
+                    app:cardCornerRadius="12dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="16dp"
+                    app:cardBackgroundColor="#C5C5C5">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp"
+                        android:gravity="center">
+
+                        <LinearLayout
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:gravity="center"
+                            android:layout_marginBottom="8dp">
+
+                            <ImageView
+                                android:id="@+id/fat_icon"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:padding="8dp"
+                                android:src="@drawable/goal_fat_foreground"
+                                android:background="@drawable/not_completed"
+                                app:tint="#DEDEDE" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/fat_strategist"
+                            android:textSize="14sp"
+                            android:textColor="@color/black"
+                            android:layout_marginBottom="4dp" />
+
+                        <TextView
+                            android:id="@+id/fat_status"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/not_completed"
+                            android:textSize="11sp"
+                            android:textColor="@color/grey"
+                            android:layout_marginTop="8dp"
+                            android:drawablePadding="4dp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- New Food Try (保留) -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/goal5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    app:cardElevation="2dp"
+                    app:cardCornerRadius="12dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="16dp"
+                    app:cardBackgroundColor="#C5C5C5"
+                    android:layout_columnSpan="2">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp"
+                        android:gravity="center">
+
+                        <LinearLayout
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:gravity="center"
+                            android:layout_marginBottom="8dp">
+
+                            <ImageView
+                                android:id="@+id/new_food_icon"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:padding="8dp"
+                                android:src="@drawable/goal_create_foreground"
+                                android:background="@drawable/not_completed"
+                                app:tint="#DEDEDE" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/new_food_try"
+                            android:textSize="14sp"
+                            android:layout_marginBottom="4dp" />
+
+                        <TextView
+                            android:id="@+id/new_food_status"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/not_completed"
+                            android:textSize="11sp"
+                            android:textColor="@color/grey"
+                            android:layout_marginTop="8dp"
+                            android:drawablePadding="4dp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </GridLayout>
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

@@ -17,7 +17,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.appcompat.widget.AppCompatButton;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.xindanxin.nutrilife.R;
+import com.xindanxin.nutrilife.firestore.UserProfileFirestore;
 
 public class EditProfileDialogFragment extends DialogFragment {
 
@@ -50,38 +52,36 @@ public class EditProfileDialogFragment extends DialogFragment {
         AppCompatButton btnSave = view.findViewById(R.id.btnSaveProfile);
         AppCompatButton btnCancel = view.findViewById(R.id.btnCancelProfile);
 
-        // Cargamos datos desde SharedPreferences
-        SharedPreferences prefs = requireActivity().getSharedPreferences("UserProfile", Context.MODE_PRIVATE);
-        etUserName.setText(prefs.getString("name", ""));
-        etWeight.setText(prefs.getString("weight", ""));
-        etHeight.setText(prefs.getString("height", ""));
-        etAge.setText(prefs.getString("age", ""));
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        UserProfileFirestore firestore = new UserProfileFirestore(uid);
 
         // Spinner de actividad
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(requireContext(), R.array.activity_levels, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerActivity.setAdapter(adapter);
-        String currentActivity = prefs.getString("activity", "Moderate");
-        spinnerActivity.setSelection(adapter.getPosition(currentActivity));
 
-        // Guardar cambios
+        // Cargar datos al iniciar el dialog
+        firestore.getProfile(profile -> {
+            etUserName.setText(profile.get("name"));
+            etWeight.setText(profile.get("weight"));
+            etHeight.setText(profile.get("height"));
+            etAge.setText(profile.get("age"));
+            String activity = profile.get("activity");
+            spinnerActivity.setSelection(adapter.getPosition(activity));
+        });
+
+        // Guardar datos al pulsar guardar
         btnSave.setOnClickListener(v -> {
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putString("name", etUserName.getText().toString());
-            editor.putString("weight", etWeight.getText().toString());
-            editor.putString("height", etHeight.getText().toString());
-            editor.putString("age", etAge.getText().toString());
-            editor.putString("activity", spinnerActivity.getSelectedItem().toString());
-            editor.apply();
+            String name = etUserName.getText().toString();
+            String weight = etWeight.getText().toString();
+            String height = etHeight.getText().toString();
+            String age = etAge.getText().toString();
+            String activity = spinnerActivity.getSelectedItem().toString();
+
+            firestore.saveProfile(name, weight, height, age, activity);
 
             if (listener != null) {
-                listener.onProfileUpdated(
-                        etUserName.getText().toString(),
-                        etWeight.getText().toString(),
-                        etHeight.getText().toString(),
-                        etAge.getText().toString(),
-                        spinnerActivity.getSelectedItem().toString()
-                );
+                listener.onProfileUpdated(name, weight, height, age, activity);
             }
 
             dismiss();

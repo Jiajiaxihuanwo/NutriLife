@@ -5,35 +5,28 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.snackbar.Snackbar;
-import com.google.gson.Gson;
+import com.google.firebase.auth.FirebaseAuth;
 import com.xindanxin.nutrilife.R;
-import com.xindanxin.nutrilife.util.FoodRepository;
-import com.xindanxin.nutrilife.util.MealsStorage;
+import com.xindanxin.nutrilife.firestore.DailyGoalsFirestore;
 
 public class CreateNewFoodDialogFragment extends DialogFragment {
 
     public interface OnAddNewFoodClickListener{
-        void addNewFoodClick(String json);
+        void onNewFoodCreated(FoodItem food);
     }
 
-    OnAddNewFoodClickListener listener;
+    private OnAddNewFoodClickListener listener;
 
     public CreateNewFoodDialogFragment(OnAddNewFoodClickListener listener) {
         this.listener = listener;
@@ -69,11 +62,28 @@ public class CreateNewFoodDialogFragment extends DialogFragment {
                     !TextUtils.isEmpty(etCarbs.getText()) &&
                     !TextUtils.isEmpty(etFat.getText())) {
 
-                String macros = String.format("P:%sg C:%sg F:%sg",etProtein.getText().toString(),etCarbs.getText().toString(),etFat.getText().toString());
-                FoodItem newFood = new FoodItem(MealsStorage.getNextFoodId(requireContext()),etNombre.getText().toString(),"08:00",etKcal.getText().toString()+" kcal",macros);
-                listener.addNewFoodClick(new Gson().toJson(newFood));
+                int calories = Integer.parseInt(etKcal.getText().toString().trim());
+                int protein = Integer.parseInt(etProtein.getText().toString().trim());
+                int carbs = Integer.parseInt(etCarbs.getText().toString().trim());
+                int fats = Integer.parseInt(etFat.getText().toString().trim());
+
+                FoodItem newFood = new FoodItem(
+                        etNombre.getText().toString().trim(),
+                        calories,
+                        protein,
+                        carbs,
+                        fats
+                );
+
+                if (listener != null) {
+                    listener.onNewFoodCreated(newFood);
+                }
+                String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                new DailyGoalsFirestore(uid).saveHasCreatedFood(true);
+
                 dismiss();
-            }else{
+
+            } else {
                 Toast.makeText(getContext(), "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show();
             }
         });

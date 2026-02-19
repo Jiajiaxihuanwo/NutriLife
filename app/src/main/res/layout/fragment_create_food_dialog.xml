@@ -19,7 +19,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Crear nuevo alimento"
+            android:text="@string/crear_nuevo_alimento"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@android:color/black"
@@ -30,7 +30,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nombre del alimento"
+            android:text="@string/nombre_del_alimento"
             android:textSize="16sp"
             android:textColor="@android:color/black" />
 
@@ -38,7 +38,7 @@
             android:id="@+id/etNombre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Ej. Pechuga de pollo"
+            android:hint="@string/ej_pechuga_de_pollo"
             android:inputType="text"
             android:layout_marginTop="6dp"
             android:background="@drawable/bg_edittext_border"/>
@@ -46,7 +46,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Calorías (kcal)"
+            android:text="@string/calor_as_kcal"
             android:layout_marginTop="12dp"
             android:textSize="16dp"
             android:textColor="@android:color/black" />
@@ -56,7 +56,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
-            android:hint="Ej. 250"
+            android:hint="@string/ej_250"
             android:inputType="number"
             android:background="@drawable/bg_edittext_border"
             android:layout_marginBottom="10dp"/>
@@ -80,7 +80,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Protein (g)"
+                    android:text="@string/protein_g"
                     android:textSize="14sp"
                     android:textColor="@android:color/black"
                     android:background="@drawable/macro_background"
@@ -110,7 +110,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Carbs (g)"
+                    android:text="@string/carbs_g"
                     android:textSize="14sp"
                     android:textColor="@android:color/black"
                     android:background="@drawable/macro_background"
@@ -138,7 +138,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Fat (g)"
+                    android:text="@string/fat_g"
                     android:textSize="14sp"
                     android:textColor="@android:color/black"
                     android:background="@drawable/macro_background"
@@ -170,7 +170,7 @@
                 android:id="@+id/btnCancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cancel"
+                android:text="@string/cancel"
                 android:backgroundTint="@android:color/darker_gray"
                 android:textColor="@android:color/white" />
 
@@ -178,7 +178,7 @@
                 android:id="@+id/btnAdd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add"
+                android:text="@string/add"
                 android:layout_marginStart="12dp"
                 android:backgroundTint="@color/greenApp"
                 android:textColor="@android:color/white" />

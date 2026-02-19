@@ -62,7 +62,8 @@
         android:layout_height="60dp"
         app:layout_constraintStart_toStartOf="@id/gl1"
         app:layout_constraintEnd_toEndOf="@id/gl2"
-        app:layout_constraintTop_toBottomOf="@id/til1">
+        app:layout_constraintTop_toBottomOf="@id/til1"
+        app:endIconMode="password_toggle">
 
         <EditText
             android:id="@+id/password"
@@ -71,6 +72,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/psw"
             android:singleLine="true"
+            android:inputType="textPassword"
             android:drawablePadding="10dp"/>
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -81,7 +83,8 @@
         android:layout_height="60dp"
         app:layout_constraintStart_toStartOf="@id/gl1"
         app:layout_constraintEnd_toEndOf="@id/gl2"
-        app:layout_constraintTop_toBottomOf="@id/til2">
+        app:layout_constraintTop_toBottomOf="@id/til2"
+        app:endIconMode="password_toggle">
 
         <EditText
             android:id="@+id/password2"
@@ -89,6 +92,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/psw2"
+            android:inputType="textPassword"
             android:singleLine="true"
             android:drawablePadding="10dp"/>
 

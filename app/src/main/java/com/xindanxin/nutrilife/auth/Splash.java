@@ -14,6 +14,7 @@ import androidx.cardview.widget.CardView;
 
 import com.bumptech.glide.Glide;
 import com.xindanxin.nutrilife.R;
+import com.xindanxin.nutrilife.main.MainActivity;
 
 
 public class Splash extends AppCompatActivity {
@@ -43,7 +44,7 @@ public class Splash extends AppCompatActivity {
     private void openApp(){
         Handler handler = new Handler();
         handler.postDelayed(()-> {
-            Intent intent = new Intent(Splash.this, Login.class);
+            Intent intent = new Intent(Splash.this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).
                     addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);

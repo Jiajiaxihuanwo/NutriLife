@@ -64,4 +64,15 @@
     <color name="colorSelected">#009e59</color> <!-- Verde -->
     <color name="colorUnselected">#555555</color> <!-- Gris -->
 
+    <color name="goal_plan">#F0A68A</color>
+    <color name="goal_protein">#FAE565</color>
+    <color name="goal_create">#BBA0EB</color>
+    <color name="goal_tint_water">#00A4BA</color>
+    <color name="goal_tint_plan">#8C5000</color>
+    <color name="goal_tint_protein">#C7980C</color>
+    <color name="goal_tint_create">#673AB7</color>
+    <color name="goal_carb">#70D774</color>
+    <color name="goal_tint_carb">#419D46</color>
+    <color name="goal_fat">#FF9800</color>
+    <color name="goal_tint_fat">#FCFEFF</color>
 </resources>
