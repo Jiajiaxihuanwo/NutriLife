@@ -108,29 +108,30 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealsViewHol
     public void onBindViewHolder(@NonNull MealsViewHolder holder, int position) {
 
         String mealType = items.get(position);
-        holder.title.setText(mealType);
+        int resId = context.getResources().getIdentifier(mealType, "string", context.getPackageName());
+        holder.title.setText(context.getString(resId));
 
         //asignamos los iconos correspondientes
         Icon icon;
         int color;
         int dColor;
         switch (mealType){
-            case "Breakfast":
+            case "breakfast":
                 icon = Icon.createWithResource(context,R.drawable.ic_breakfast);
                 color = holder.itemView.getContext().getColor(R.color.whiteMeals);
                 dColor = holder.itemView.getContext().getColor(R.color.d_whiteMeals);
                 break;
-            case "Lunch":
+            case "lunch":
                 icon = Icon.createWithResource(context,R.drawable.ic_lunch);
                 color = holder.itemView.getContext().getColor(R.color.yellowMeals);
                 dColor = holder.itemView.getContext().getColor(R.color.d_yellowMeals);
                 break;
-            case "Dinner":
+            case "dinner":
                 icon = Icon.createWithResource(context,R.drawable.ic_dinner);
                 color = holder.itemView.getContext().getColor(R.color.purpleMeals);
                 dColor = holder.itemView.getContext().getColor(R.color.d_purpleMeals);
                 break;
-            case "Snacks":
+            case "snacks":
                 icon = Icon.createWithResource(context,R.drawable.ic_snacks);
                 color = holder.itemView.getContext().getColor(R.color.blueMeals);
                 dColor = holder.itemView.getContext().getColor(R.color.d_blueMeals);
