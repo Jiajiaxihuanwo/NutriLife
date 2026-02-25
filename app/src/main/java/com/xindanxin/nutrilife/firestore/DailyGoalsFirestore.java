@@ -18,7 +18,7 @@ public class DailyGoalsFirestore {
         this.uid = uid;
     }
 
-    // Leer metas diarias
+    // Leer metas diarias desde Firestore
     public void getGoals(@NonNull OnSuccessListener<Map<String, Integer>> listener) {
         db.collection("users")
                 .document(uid)
@@ -41,6 +41,7 @@ public class DailyGoalsFirestore {
                         goals.put("Fats", 0);
                         goals.put("Water", 0);
                     }
+                    //listener devuelve los datos
                     listener.onSuccess(goals);
                 });
     }
@@ -60,7 +61,7 @@ public class DailyGoalsFirestore {
                 .document(DOC_NAME)
                 .set(data);
     }
-
+    //guarda el consumo del agua actual
     public void saveWaterIntake(int waterIntake) {
         Map<String, Object> data = new HashMap<>();
         data.put(WATER_INTAKE_FIELD, waterIntake);
@@ -71,6 +72,7 @@ public class DailyGoalsFirestore {
                 .document(DOC_NAME)
                 .update(data)
                 .addOnFailureListener(e -> {
+                    //excepcion por si falla crea el documento primero
                     saveGoals(0, 0, 0, 0, 0);
                     db.collection("users")
                             .document(uid)

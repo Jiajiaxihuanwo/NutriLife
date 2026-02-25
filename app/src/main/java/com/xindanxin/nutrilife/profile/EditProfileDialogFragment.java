@@ -22,13 +22,13 @@ import com.xindanxin.nutrilife.R;
 import com.xindanxin.nutrilife.firestore.UserProfileFirestore;
 
 public class EditProfileDialogFragment extends DialogFragment {
-
+    //la interface actualiza la ventana principal(profile)
     public interface OnProfileUpdatedListener {
         void onProfileUpdated(String name, String weight, String height, String age, String activity);
     }
 
     private final OnProfileUpdatedListener listener;
-
+    //constructor para comunicar ambos
     public EditProfileDialogFragment(OnProfileUpdatedListener listener) {
         this.listener = listener;
     }
@@ -38,7 +38,7 @@ public class EditProfileDialogFragment extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        // Inflamos el layout que me enviaste
+        // Inflamos el layout que me enviaste(carga xml
         View view = inflater.inflate(R.layout.fragment_edit_profile, container, false);
 
         // EditTexts del layout
@@ -52,15 +52,16 @@ public class EditProfileDialogFragment extends DialogFragment {
         AppCompatButton btnSave = view.findViewById(R.id.btnSaveProfile);
         AppCompatButton btnCancel = view.findViewById(R.id.btnCancelProfile);
 
+        //Obtengo el usuario actual y accedo al FireBase
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         UserProfileFirestore firestore = new UserProfileFirestore(uid);
 
-        // Spinner de actividad
+        // Configuro el Spinner
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(requireContext(), R.array.activity_levels, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerActivity.setAdapter(adapter);
 
-        // Cargar datos al iniciar el dialog
+        // Cargo datos actuales
         firestore.getProfile(profile -> {
             etUserName.setText(profile.get("name"));
             etWeight.setText(profile.get("weight"));
@@ -81,6 +82,7 @@ public class EditProfileDialogFragment extends DialogFragment {
             firestore.saveProfile(name, weight, height, age, activity);
 
             if (listener != null) {
+                //Actualiza al fragment principal(perfil)
                 listener.onProfileUpdated(name, weight, height, age, activity);
             }
 
@@ -97,7 +99,7 @@ public class EditProfileDialogFragment extends DialogFragment {
     public void onStart() {
         super.onStart();
         if (getDialog() != null && getDialog().getWindow() != null) {
-            // Hacer que ocupe casi todo el ancho de la pantalla
+            // Ajusto el ancho de la pantalla
             int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.9);
             int height = ViewGroup.LayoutParams.WRAP_CONTENT; // altura automática
             getDialog().getWindow().setLayout(width, height);

@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UserProfileFirestore {
-
+    //instancia conecta con la base de datos
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private final String uid;
     private static final String DOC_NAME = "profile";
@@ -40,6 +40,7 @@ public class UserProfileFirestore {
                         profile.put("age", "");
                         profile.put("activity", "Moderate");
                     }
+                    //listener para devolver los datos(profile o Dialog Profile
                     listener.onSuccess(profile);
                 });
     }
@@ -47,12 +48,13 @@ public class UserProfileFirestore {
     // Guardar perfil
     public void saveProfile(String name, String weight, String height, String age, String activity) {
         Map<String, Object> data = new HashMap<>();
+        //cGuarda datos
         data.put("name", name);
         data.put("weight", weight);
         data.put("height", height);
         data.put("age", age);
         data.put("activity", activity);
-
+        //Guarda en FireBase
         db.collection("users")
                 .document(uid)
                 .collection("userData")

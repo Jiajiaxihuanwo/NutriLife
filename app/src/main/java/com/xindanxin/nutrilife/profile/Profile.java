@@ -24,9 +24,10 @@ public class Profile extends Fragment {
     private TextView tvName, tvWeight, tvAge, tvHeight, tvActivity;
     private EditText etCal, etProtein, etCarbs, etFats, etWater;
     private DailyGoalsFirestore dailyGoalsFirestore;
+    //Variables
 
     public Profile() {
-        // Required empty public constructor
+
     }
 
     @Override
@@ -35,7 +36,7 @@ public class Profile extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        // TextViews de perfil
+        // TextViews de perfil (variables conectadas al xml
         tvName = view.findViewById(R.id.userName);
         tvWeight = view.findViewById(R.id.DatoPeso);
         tvAge = view.findViewById(R.id.DatoEdad);
@@ -48,24 +49,29 @@ public class Profile extends Fragment {
         etCarbs = view.findViewById(R.id.etCarbsGoal);
         etFats = view.findViewById(R.id.etFatGoals);
         etWater = view.findViewById(R.id.etWaterGoals);
-
+        //Obtengo el usuario logeado
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        //Con esto accedo a los datos de usuario FireStore
         UserProfileFirestore firestore = new UserProfileFirestore(uid);
         dailyGoalsFirestore = new DailyGoalsFirestore(uid);
 
-        // Sign out
+        // Btn cerrar sesion
         AppCompatButton btnSignOut = view.findViewById(R.id.btnSingOut);
         btnSignOut.setOnClickListener(v -> {
+            //cierra la sesion
             FirebaseAuth.getInstance().signOut();
+            //Lleva al login
             Intent intent = new Intent(requireContext(), Login.class);
+            //borro el historial de pantalla
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         });
 
-        // Edit profile
+        // Editar Perfil
         AppCompatButton btnEdit = view.findViewById(R.id.btnEditProfile);
         btnEdit.setOnClickListener(v -> {
             new EditProfileDialogFragment((name, weight, height, age, activity) -> {
+                //se actualiazan los datos (Setters
                 tvName.setText(name);
                 tvWeight.setText(weight);
                 tvHeight.setText(height);
@@ -76,12 +82,14 @@ public class Profile extends Fragment {
 
         // Guardar Daily Goals
         AppCompatButton btnSaveGoals = view.findViewById(R.id.btnSave);
+        //llama al metodo saveDailyGoals
         btnSaveGoals.setOnClickListener(v -> saveDailyGoals());
 
         return view;
     }
 
     @Override
+    //Cada vez q se vuelve a pantalla se ejecuta cargando los datos desde FireBase
     public void onResume() {
         super.onResume();
         loadUserDataFromFirestore();
@@ -102,7 +110,7 @@ public class Profile extends Fragment {
         });
     }
 
-    // Cargar Daily Goals
+    // Cargar daatos de las Metas diarias
     private void loadDailyGoalsFromFirestore() {
         dailyGoalsFirestore.getGoals(goals -> {
             etCal.setText(String.valueOf(goals.get("Cal")));
@@ -113,7 +121,7 @@ public class Profile extends Fragment {
         });
     }
 
-    // Guardar Daily Goals en Firestore
+    // Guardar MetasDiarias en Firestore
     private void saveDailyGoals() {
         try {
             int cal = Integer.parseInt(etCal.getText().toString());
@@ -121,8 +129,9 @@ public class Profile extends Fragment {
             int carbs = Integer.parseInt(etCarbs.getText().toString());
             int fats = Integer.parseInt(etFats.getText().toString());
             int water = Integer.parseInt(etWater.getText().toString());
-
+            //Guardo en Firestore
             dailyGoalsFirestore.saveGoals(cal, carbs, protein, fats, water);
+            //Toast muestra el mensaje
             Toast.makeText(requireContext(), "Daily Goals updated!", Toast.LENGTH_SHORT).show();
         } catch (NumberFormatException e) {
             Toast.makeText(requireContext(), "Please enter valid numbers", Toast.LENGTH_SHORT).show();
