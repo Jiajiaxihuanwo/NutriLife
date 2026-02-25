@@ -31,17 +31,15 @@ El perfil centraliza la experiencia personalizada del usuario.
 
 ---
 
-### Sección de calendario
+### Menu del usuario
 
-![](IMG/comida_semanal.png)
+![](IMG/dashboard.png)
 
-La aplicación incluye un **calendario nutricional**, donde el usuario puede:
-- Visualizar su planificación alimentaria por día
-- Navegar entre fechas
-- Consultar comidas registradas
-- Revisar el historial de alimentación
+El apartado de **dashboard** permite:
+- Visualizar las metas diarias introducidas desde el perfil
+- Gestionar las ingestas de agua y registrar el peso diario
 
-Este módulo facilita el seguimiento continuo de los hábitos alimenticios.
+El dashboard se centra en un panel general para controlar macros, ingestas de agua y peso.
 
 ---
 
@@ -50,51 +48,43 @@ Este módulo facilita el seguimiento continuo de los hábitos alimenticios.
 ![](IMG/comida_diaria.png)
 
 En la sección de **comida diaria**, el usuario puede:
-- Registrar las comidas del día (desayuno, merienda, cena y snacks)
-- Asociar alimentos a cada comida
-- Ajustar cantidades y porciones
+- Buscar las comidas para el día
+
+![](IMG/comida_diaria_buscador.png)
+
+- Registrar las comidas del día 
+
+![](IMG/crear_comida.png)
+![](IMG/crear_comida2.png)
+
 - Visualizar el consumo diario de forma estructurada
 
 Está pensada para un uso rápido y frecuente.
 
----
-
-### Plan semanal de alimentación
-El **plan semanal** permite:
-- Generar y organizar comidas para toda la semana
-- Visualizar la distribución nutricional semanal
-- Modificar comidas específicas de cualquier día
-
-Este módulo actúa como gestor principal de la alimentación.
 
 ---
 
-### Datos de alimentos
+### Objetivos/logros
 
-![](IMG/dashboard.png)
+![](IMG/goals.png)
 
-La aplicación incluye un sistema de **gestión de alimentos**, que permite:
-- Consultar información nutricional básica
-- Utilizar los alimentos como base para generar comidas
-- Reutilizar alimentos en distintos planes
+El apartado de **logros** permite:
 
+- Visualizar los logros obtenidos en función del cumplimiento de metas diarias.
+- Desbloquear reconocimientos al completar objetivos de macros, ingestas de agua y registro de peso.
+- Recibir feedback motivacional y seguimiento del progreso personal.
+
+El apartado de logros se centra en reforzar la constancia del usuario mediante recompensas visuales e indicadores de progreso, fomentando así la adherencia a sus objetivos de salud y nutrición.
 ---
 
-### Actualización de contenido
-Se incorporan componentes modernos de Android como:
-- Actualización de contenido mediante gestos
-- Carga dinámica de información
-- Animaciones para mejorar la experiencia de usuario
-
----
 
 ## Estructura general del proyecto
 
 - Autenticación (Login y Registro)
 - Perfil de usuario
-- Calendario nutricional
+- Menu principar con características diarias
 - Comida diaria
-- Plan semanal de alimentación
+- Logros
 - Gestión y datos de alimentos
 
 ---
@@ -106,6 +96,8 @@ Este proyecto ha sido desarrollado y modificado con aportaciones de:
 - **Xinbo Liu**
 - **Xinlei Chen**
 - **Daniel Enrrique Vega**
+
+## Todos los íconos fueron sacados desde svgRepo
 
 ---
 
