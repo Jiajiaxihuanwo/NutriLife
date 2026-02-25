@@ -45,7 +45,7 @@ El dashboard se centra en un panel general para controlar macros, ingestas de ag
 
 ### Apartado de comida diaria
 
-![](IMG/comida_diaria.png)
+![](IMG/comida_diaria2.png)
 
 En la sección de **comida diaria**, el usuario puede:
 - Buscar las comidas para el día
